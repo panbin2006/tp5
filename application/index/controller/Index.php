@@ -26,7 +26,22 @@ class Index extends Controller
     	// return $this->fetch();
     }
 
+    public function test()
+    {
+        return '这是一个测试方法！';
+    }
 
+
+    protected function hello2()
+    {
+        return '只是protected方法！';
+    }
+
+
+    private function hello3()
+    {
+        return '这是private方法！';
+    }
 //request对象操作
     /*
     public function hellorequest($name='thinkphp'){ //传统方式调用request
@@ -490,7 +505,7 @@ class Index extends Controller
    // 5.5闭包查询
    // find和select方法可以直接使用闭包查询
    public function query13(){
-        $result = Db::name('date')->select(functon($query){
+        $result = Db::name('date')->select(function($query){
             $query->where('name', 'like', '%think%')
                 ->where('id', 'in', '1,2,3')
                 ->limit(10);
@@ -510,7 +525,7 @@ class Index extends Controller
 
    // 5.7 获取单个数据值
    public function query15(){
-      获取id为8的data数据的name字段值
+      // 获取id为8的data数据的name字段值
       $name = Db::name('data')  
         ->where('id', 8)
         ->value('name'); 
@@ -526,7 +541,7 @@ class Index extends Controller
         dump($list);
    }
 
-   public function query16(){ //返回id为索引的name列数据
+   public function query17(){ //返回id为索引的name列数据
         //获取data表的name列
         $list = Db::name('data')
             ->where('status', 1)
@@ -535,7 +550,7 @@ class Index extends Controller
    }
 
 
-   public function query16(){ //返回主键为索引的数据集
+   public function query18(){ //返回主键为索引的数据集
         //获取data表的name列
         $list = Db::name('data')
             ->where('status', 1)
@@ -544,7 +559,7 @@ class Index extends Controller
    }
 
    // 5.9 聚合查询
-   public function query17(){
+   public function query19(){
         // 统计data表的数据
         $count = Db::name('data')
             ->where('status', 1)
@@ -558,7 +573,7 @@ class Index extends Controller
    }
 
    //5.10 字符串查询
-   public function query18(){ //原生字符串查询
+   public function query20(){ //原生字符串查询
         $result = Db::name('data')
             ->where('id> :id AND nane IS NOT NULL',['id' => 10])
             ->select();
@@ -570,7 +585,7 @@ class Index extends Controller
             日期查询对create_time字段类型没有要求， 可以是int/string/timestamp/datetime/date
             中的任何一种， 系统会自动识别进行处理。
        */
-   public function query19(){
+   public function query21(){
         //查询创建时间大于2016-1-1的数据
         $result = Db::name('data')
             ->whereTime('create_time', '>', '2016-1-1')
@@ -609,22 +624,33 @@ class Index extends Controller
         dump($result);
    }
 
+   // 5.12 分块查询
+   // 分块查询是为了查询大量数据的布设计，可以把1万条记录分成100次处理···ooo
+   public function query22(){
+        //按主键查询
+        $result = Db::name('data')
+            ->where('status', '>', 0)
+            ->chunk(100,function($list){
+                //处理100条记录
+                foreach($list as $data){
+                      //返回false则中断后续查询
+                    return false;
+                }
+            });
+        //指定查询的排序字段
+        $result = Db::name('data')
+            ->where('status', '>', 0)
+            ->chunk(100,function($list){
+                //处理100条记录
+                foreach($list as $data){
 
-    public function test()
-    {
-        return '这是一个测试方法！';
-    }
+                }
+            }, 'uid');
+   }
 
-
-    protected function hello2()
-    {
-        return '只是protected方法！';
-    }
-
-
-    private function hello3()
-    {
-        return '这是private方法！';
-    }
+// 六、模型和关联
+   //================================================================================================
+   //================================================================================================
+    
 
 }

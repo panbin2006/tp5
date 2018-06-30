@@ -23,15 +23,21 @@ return [
         'month' => '\d{2}',
     ],
     'hellorequest12/:name' =>['index/hellorequest12',[],['name'=>'\w+']],
-    //'hello/:name' =>'index/index/hello',
+    //index/user模块路由定义
+    'user/index'        => 'index/user/index',
+    'user/create'       => 'index/user/create',
+    'user/add'          => 'index/user/add',
+    'user/add_list'     => 'index/user/addList', 
+    'user/update/:id'   => 'index/user/update', 
+    'user/delete/:id'   => 'index/user/delete', 
+    'user/:id'          => 'index/user/read', 
     // 'hello/[:name]$'=>['index/hello',['method'=>'get','ext'=>'html']],
 
     // 'hello_request/[:name]$'=>['index/hello_request',['method'=>'get','ext'=>'html']],
     
    // 'index'=>'index/index',
     // 定义闭包
-    // 'hello/[:name]'=>function($name='bibao'){
-    // 	return 'hello,' . $name .'!';
+    // 'hello/[:name]'=>function($name='bibao')    // 	return 'hello,' . $name .'!';
     // },
 
     //Blog路由
