@@ -345,7 +345,7 @@ class Index extends Controller
         dump($list);
     }
 
-    public function db_transaction1(){ //事务支持transaction
+    public function db_transaction1(){ //事务支持transaction(闭包形式)
         Db::transaction(function (){
             Db::table('think_user')
                 ->delete(1);
@@ -373,21 +373,258 @@ class Index extends Controller
     }
 
 
+//五。查询语言-----------------------------------------
+//================================================================================================================
+    //5.1查询表达式
+   public function query1(){
+        $result = Db::name('data')
+            ->where('id',1)
+            ->find(); //find方法用于查询满足条件的第一个记录。（即使你的查询条件有多个符合的数据），如果查询成功，返回
+                       //的是一个一维数组，没有满足条件的话则默认返回 null （也支持设置是否抛出异常）。
+        dump($result);
+   } 
+
+   public function query2(){
+        $result = Db::name('data')
+            ->where('id','>',1)
+            ->limit(2)
+            ->select();
+        dump($result);
+   }
+
+   public function query3(){//EXP条件表达式的话，表示后面是原生的SQL语句表达式
+        $result = Db::name('data')
+            ->where('id','exp','>=1')
+            ->limit(10)
+            ->select();
+        dump($result);
+   }
+
+   public function query4(){
+        // $result = Db::name('data')
+        //     //id是1、2、3其中的数字
+        //     ->where('id','in',[1,2,3])
+        //     ->select();
+
+        $result = Db::name('data')
+            //id 在 5到8之间的
+            ->where('id','between',[5,8])
+            ->select();
+        dump($result);
+   }
+
+   public function query5(){ //多个字段查询
+        $result = Db::name('data')
+            //id在 1到3 之间
+            ->where('id','between',[1,3])
+            ->where('name','like','%think%')
+            ->select();
+        dump($result);
+   }
+
+   public function query6(){ //查询某个字段为NULL的记录
+        $result = Db::name('data')
+            ->where ('name','null')
+            ->select();
+        dump($result);
+   }
+
+   //5.2批量查询
+   public function query7(){
+        $result= Db::name('data')
+            ->where([
+                'id' => ['between','1,3'],
+                'name' =>['like','%think%'],
+            ])->select();
+        dump($result);
+   }
+
+   public function query8(){ //复杂用法
+       $result = Db::name('data') 
+            //name中包含think
+            ->where('name', 'like', '%think%')
+            ->where('id',['in',[1, 2, 3]], ['between', '5,8'], 'or')
+            ->limit(10)
+            ->select();
+        dump($result);
+   }
+
+
+   public function query9(){//复杂查询（批量方式）
+    //name中包含think
+        $result = DB::name('data')
+            ->where([
+                'name' => ['like', '%think%'],
+                'id'   => [['in',[1, 2, 3]], ['between', '5, 8'], 'or']
+            ])->limit(10)->select();
+        dump($result);
+   }
+
+//5.3快捷查询
+   public function query10(){ // "&" and方式查询
+        $result = Db::name('data')
+            ->where('id&status', '>', 0)
+            ->limit(10)
+            ->select();
+        dump($result);
+   }
+
+   public function query11(){ // "|" or方式查询
+        $result = Db::name('data')
+            ->where('id|status', '>', 0)
+            ->limit(10)
+            ->select();
+        dump($result);
+   }
+
+   //5.4 视图查询
+   //如果查询多个表的数据，可以使用视图查询，相当于在数据库创建了一个视图
+   public function query12(){
+        $result = Db::view('user', 'id,name,status')
+            ->view('profile', ['name'=>'truenmae','phone','email'],'profile.user_id=user.id')
+            ->order('id desc')
+            ->select();
+        dump($result);
+   }
+
+   // 5.5闭包查询
+   // find和select方法可以直接使用闭包查询
+   public function query13(){
+        $result = Db::name('date')->select(functon($query){
+            $query->where('name', 'like', '%think%')
+                ->where('id', 'in', '1,2,3')
+                ->limit(10);
+        });
+        dump($result);
+   }
+
+   //5.6使用query对象
+   public function query14(){
+       $query = new \think\db\Query;
+       $query->name('city') ->where('name', 'like', '%think%')
+            ->where('id', 'in', '1,2,3')
+            ->limit(10);
+       $result = Db::select($query);
+       dump($result);
+   }
+
+   // 5.7 获取单个数据值
+   public function query15(){
+      获取id为8的data数据的name字段值
+      $name = Db::name('data')  
+        ->where('id', 8)
+        ->value('name'); 
+      dump($name);
+   }
+
+   // 5.8 获取列数据
+   public function query16(){ //使用column方法，获取某个列的数据
+        //获取data表的name列
+        $list = Db::name('data')
+            ->where('status', 1)
+            ->column('name');
+        dump($list);
+   }
+
+   public function query16(){ //返回id为索引的name列数据
+        //获取data表的name列
+        $list = Db::name('data')
+            ->where('status', 1)
+            ->column('name', 'id');
+        dump($list);
+   }
+
+
+   public function query16(){ //返回主键为索引的数据集
+        //获取data表的name列
+        $list = Db::name('data')
+            ->where('status', 1)
+            ->column('*', 'id');
+        dump($list);
+   }
+
+   // 5.9 聚合查询
+   public function query17(){
+        // 统计data表的数据
+        $count = Db::name('data')
+            ->where('status', 1)
+            ->count();
+        dump($count);
+        // 统计user表的最高分
+        $max = Db::name('user')
+            ->where('status', 1)
+            ->max('score');
+        dump($max);
+   }
+
+   //5.10 字符串查询
+   public function query18(){ //原生字符串查询
+        $result = Db::name('data')
+            ->where('id> :id AND nane IS NOT NULL',['id' => 10])
+            ->select();
+        dump($result);
+   }
+
+   // 5.11 时间(日期)查询
+       /*
+            日期查询对create_time字段类型没有要求， 可以是int/string/timestamp/datetime/date
+            中的任何一种， 系统会自动识别进行处理。
+       */
+   public function query19(){
+        //查询创建时间大于2016-1-1的数据
+        $result = Db::name('data')
+            ->whereTime('create_time', '>', '2016-1-1')
+            ->select();
+        dump($result);
+
+        // 查询本周添加的数据
+        $result = Db::name('data')
+            ->whereTime('create_time', '>', 'this week')
+            ->select();
+        dump($result);
+        // 查询最近两天添加的数据
+        $result = Db::name('data')
+            ->whereTime('create_time', '>', '-2 days')
+            ->select();
+        dump($result);
+        // 查询创建时间在2016-1-1~2016-7-1的数据
+        $result = Db::name('data')
+            ->whereTime('create_time', 'between',['2016-1-1','2016-7-1'])
+            ->select();
+        dump($result);
+        //获取今天的数据 
+        $result = Db::name('data')
+            ->whereTime('create_time', 'today')
+            ->select();
+        dump($result);
+        //获取昨天的数据 
+        $result = Db::name('data')
+            ->whereTime('create_time', 'yesterday')
+            ->select();
+        dump($result);
+        //获取本周的数据
+        $result = Db::name('data')
+            ->whereTime('create_time', 'week')
+            ->select();
+        dump($result);
+   }
+
+
     public function test()
     {
-    	return '这是一个测试方法！';
+        return '这是一个测试方法！';
     }
 
 
     protected function hello2()
     {
-    	return '只是protected方法！';
+        return '只是protected方法！';
     }
 
 
     private function hello3()
     {
-    	return '这是private方法！';
+        return '这是private方法！';
     }
 
 }
