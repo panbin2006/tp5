@@ -31,6 +31,7 @@ return [
     'user/update/:id'   => 'index/user/update', 
     'user/delete/:id'   => 'index/user/delete', 
     'user/:id'          => 'index/user/read', 
+    'user/read_user'          => 'index/user/readUser', 
     // 'hello/[:name]$'=>['index/hello',['method'=>'get','ext'=>'html']],
 
     // 'hello_request/[:name]$'=>['index/hello_request',['method'=>'get','ext'=>'html']],
