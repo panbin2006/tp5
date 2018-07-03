@@ -21,16 +21,26 @@ class User
 	*/
 
 	//新增用户数据2
+	// public function add(){
+	// 	$user['nickname'] = '看云';
+	// 	$user['email'] 	  = 'kancloud@qq.com';
+	// 	// $user['birthday'] = strtotime('2015-04-02');
+	// 	//在usermodel中增加读取器后，简化写法
+	// 	$user['birthday'] = '2015-04-02';
+	// 	if($result = Usermodel::create($user)){
+	// 		return '用户[' . $result->nickname . ':' . $result->id . ']新增成功';
+	// 	}else{
+	// 		return '新增用户失败';
+	// 	}
+	// }
+
+	//通过表单新增用户数据
 	public function add(){
-		$user['nickname'] = '看云';
-		$user['email'] 	  = 'kancloud@qq.com';
-		// $user['birthday'] = strtotime('2015-04-02');
-		//在usermodel中增加读取器后，简化写法
-		$user['birthday'] = '2015-04-02';
-		if($result = Usermodel::create($user)){
-			return '用户[' . $result->nickname . ':' . $result->id . ']新增成功';
+		$user = new UserModel;
+		if ($user->allowField(true)->validate(true)->save(input('post.'))){
+			return '用户[' . $user->nickname . ':' . $user->id . ']新增成功';
 		}else{
-			return '新增用户失败';
+			return $user->getError();
 		}
 	}
 
@@ -49,28 +59,29 @@ class User
 	}
 
 	//查询数据(返回对象，通过对象方式访问)
-	public function read($id){
-		$user = UserModel::get($id);
-		echo $user->nickname .'<br/>';
-		echo $user->email .'<br/>';
-		// echo date('Y/m/d', $user->birthday). '<br/>';
-		//在usermodel中增加读取器后，简化写法
-		echo  $user->birthday .'<br/>';
-		echo  $user->user_birthday .'<br/>';
-		echo  $user->status.'<br/>';
-		echo  $user->create_time.'<br/>';
-		echo  $user->update_time.'<br/>';
-	}
+	// public function read($id){
+	// 	$user = Usermodel::get($id);
+	// 	echo $user->nickname .'<br/>';
+	// 	echo $user->email .'<br/>';
+	// 	// echo date('Y/m/d', $user->birthday). '<br/>';
+	// 	//在usermodel中增加读取器后，简化写法
+	// 	echo  $user->birthday .'<br/>';
+	// 	echo  $user->user_birthday .'<br/>';
+	// 	echo  $user->status.'<br/>';
+	// 	echo  $user->create_time.'<br/>';
+	// 	echo  $user->update_time.'<br/>';
+	// 	dump($user);
+	// }
 
 	//查询数据(模型实现了ArrayAccess接口，通过数组方式访问)
-	/*
+	
 	public function read($id){
 		$user = UserModel::get($id);
 		echo $user['nickname'] .'<br/>';
 		echo $user['email'] .'<br/>';
-		echo date('Y/m/d', $user['birthday']). '<br/>';
+		echo $user['birthday']. '<br/>';
 	}
-	*/
+	
 
 
 	//通过email查询数据
@@ -228,5 +239,9 @@ class User
 	}
 
 
+	public function create(){
+		return view();
+		// return view('user/create');
+	}
 }
 ?>

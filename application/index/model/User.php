@@ -67,11 +67,11 @@
 		}
 
 		// 全局查询范围
-		protected static function base($query){
+		// protected static function base($query){
 
-			//查询状态为1的数据
-			$query->where('status', 1);
-		}
+		// 	//查询状态为1的数据
+		// 	$query->where('status', 1);
+		// }
 	}
     
     //设置完整的数据表
