@@ -57,6 +57,9 @@ class User
 		//在usermodel中增加读取器后，简化写法
 		echo  $user->birthday .'<br/>';
 		echo  $user->user_birthday .'<br/>';
+		echo  $user->status.'<br/>';
+		echo  $user->create_time.'<br/>';
+		echo  $user->update_time.'<br/>';
 	}
 
 	//查询数据(模型实现了ArrayAccess接口，通过数组方式访问)
@@ -131,12 +134,49 @@ class User
 	*/
 
 	//查询用户列表（查询构造器）
+	/*
 	public function index(){
 		$list = Usermodel::where('id', '<', 3)->select();
 		foreach ($list as $user) {
 			echo $user->nickname . '<br/>';
 			echo $user->email. '<br/>';
-			echo date('Y-m-d',$user->birthday) . '<br/>';
+			echo $user->birthday. '<br/>';
+			echo '-------------------------------------------'. '<br/>';
+		}
+	}
+	*/
+
+	//根据查询范围获取用户数据列表
+	// public function index(){
+	// 	$list = Usermodel::scope('email,status')->select();
+	// 	foreach ($list as $user) {
+	// 		echo $user->nickname . '<br/>';
+	// 		echo $user->email. '<br/>';
+	// 		echo $user->birthday. '<br/>';
+	// 		echo $user->status. '<br/>';
+	// 		echo $user->birthday. '<br/>';
+	// 		echo $user->birthday. '<br/>';
+	// 		echo '-------------------------------------------'. '<br/>';
+	// 	}
+	// }
+
+
+	//支持多次调用scope方法，并且可以追加新的查询及链式操作
+	public function index(){
+		// $list = Usermodel::scope('email')
+		// 	->scope('status')
+		// 	->scope(function($query){
+		// 		$query->order('id', 'desc');
+		// 	})->select();
+
+		$list = UserModel::scope('status')->select();
+		foreach ($list as $user) {
+			echo $user->nickname . '<br/>';
+			echo $user->email. '<br/>';
+			echo $user->birthday. '<br/>';
+			echo $user->status. '<br/>';
+			echo $user->birthday. '<br/>';
+			echo $user->birthday. '<br/>';
 			echo '-------------------------------------------'. '<br/>';
 		}
 	}
