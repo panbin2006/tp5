@@ -24,7 +24,9 @@ class User
 	public function add(){
 		$user['nickname'] = '看云';
 		$user['email'] 	  = 'kancloud@qq.com';
-		$user['birthday'] = strtotime('2015-04-02');
+		// $user['birthday'] = strtotime('2015-04-02');
+		//在usermodel中增加读取器后，简化写法
+		$user['birthday'] = '2015-04-02';
 		if($result = Usermodel::create($user)){
 			return '用户[' . $result->nickname . ':' . $result->id . ']新增成功';
 		}else{
@@ -51,7 +53,10 @@ class User
 		$user = UserModel::get($id);
 		echo $user->nickname .'<br/>';
 		echo $user->email .'<br/>';
-		echo date('Y/m/d', $user->birthday). '<br/>';
+		// echo date('Y/m/d', $user->birthday). '<br/>';
+		//在usermodel中增加读取器后，简化写法
+		echo  $user->birthday .'<br/>';
+		echo  $user->user_birthday .'<br/>';
 	}
 
 	//查询数据(模型实现了ArrayAccess接口，通过数组方式访问)
