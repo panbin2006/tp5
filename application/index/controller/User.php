@@ -35,6 +35,7 @@ class User
 	// }
 
 	//通过表单新增用户数据
+	/*
 	public function add(){
 		$user = new UserModel;
 		if ($user->allowField(true)->validate(true)->save(input('post.'))){
@@ -42,6 +43,20 @@ class User
 		}else{
 			return $user->getError();
 		}
+	}*/
+
+	//控制器验证
+	public function add(){
+		$data = input('post.');
+		//数据验证
+		$result = $this->validate($data,'User');
+		if(true !== $result){
+			return $result;
+		}
+		$user = new UserModel;
+		//保存数据
+		$user->allowField(true)->save($data)
+		return '用户[' . $user->nickname . ':' . $user->id .']新增成功';
 	}
 
 	//批量新增用户
