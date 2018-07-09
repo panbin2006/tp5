@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\index\model\User as UserModel;
+use app\index\model\Profile;
 
 class User
 {
@@ -46,18 +47,47 @@ class User
 	}*/
 
 	//控制器验证
+	// public function add(){
+	// 	$data = input('post.');
+	// 	//数据验证
+	// 	$result = $this->validate($data,'User');
+	// 	if(true !== $result){
+	// 		return $result;
+	// 	}
+	// 	$user = new UserModel;
+	// 	//保存数据
+	// 	$user->allowField(true)->save($data)
+	// 	return '用户[' . $user->nickname . ':' . $user->id .']新增成功';
+	// }
+
+	//关联新增数据
 	public function add(){
-		$data = input('post.');
-		//数据验证
-		$result = $this->validate($data,'User');
-		if(true !== $result){
-			return $result;
+		$user           = new UserModel;
+		$user->name     = 'thinkphp';
+		$user->password = '123456';
+		$user->nickname = '流年';
+		if ($user->save()) {
+			//写入关联数据
+			// $profile		   = new Profile;
+			// $profile->truename = '刘晨';
+			// $profile->birthday = '1977-03-05';
+			// $profile->address  = '中国上海';
+			// $profile->email    = 'thinkphp@qq.com';
+			// $user->profile()->save($profile);
+			// return '用户新增成功';
+
+			// 写入关联数据
+			$profile['truename'] = '刘晨';
+			$profile['birthday'] = '1977-03-05';
+			$profile['address'] = '中国上海';
+			$profile['email'] = 'thinkphp@qq.com';
+			$user->profile()->save($profile);
+			return '用户[ ' . $user->name . ' ]新增成功';
+		} else {
+			return $user->getError();
 		}
-		$user = new UserModel;
-		//保存数据
-		$user->allowField(true)->save($data)
-		return '用户[' . $user->nickname . ':' . $user->id .']新增成功';
 	}
+
 
 	//批量新增用户
 	public function addList(){
@@ -89,14 +119,29 @@ class User
 	// }
 
 	//查询数据(模型实现了ArrayAccess接口，通过数组方式访问)
-	
+	/*
 	public function read($id){
 		$user = UserModel::get($id);
 		echo $user['nickname'] .'<br/>';
 		echo $user['email'] .'<br/>';
 		echo $user['birthday']. '<br/>';
 	}
-	
+	*/
+
+	//关联查询
+	public function read($id){
+		//get方法使用第二个参数就表示进行关联预载入查询,以提高查询性能。
+		// $user = UserModel::get($id,'profile');
+		$user = UserModel::get($id);
+		echo $user->name. '<br/>';
+		echo $user->nickname. '<br/>';
+		echo $user->profile->truename. '<br/>';
+		echo $user->profile->email. '<br/>';
+	}
+
+
+
+
 
 
 	//通过email查询数据
@@ -222,12 +267,28 @@ class User
 	*/
 
 	//更新数据，更高效的方法
+	/*
 	public function update($id){
 		$user['id'] = (int) $id;
 		$user['nickname'] = '刘晨2';
 		$user['email'] = 'liu21st@gmail.com';
 		$result		   = userModel::update($user);
 		return '更新成功！';
+	}
+	*/
+
+	//关联更新
+	public function update($id){
+		$user 		= UserModel::get($id);
+		$user->name = 'framework';
+		if ($user->save()) {
+			//更新关联数据
+			$user->profile->email = 'liu21st@gmail.com';
+			$user->profile->save();
+			return '用户[' . $user->name . ']更新成功';
+		} else {
+			return $user->getError();
+		}
 	}
 
 	//删除数据
@@ -243,6 +304,7 @@ class User
 	}
 	*/
 	//删除数据(destroy)
+	/*
 	public function delete($id){
 		$user = UserModel::get($id);
 		if($user){
@@ -250,6 +312,18 @@ class User
 			return '删除用户成功';
 		}else{
 			return '删除的用户不存在'; 
+		}
+	}
+	*/
+
+	public function delete($id){
+		$user = UserModel::get($id);
+		if($user->delete()){
+			//删除关联数据
+			$user->profile->delete();
+			return '用户[' . $user->name . ']删除成功';
+		} else {
+			return $user->getError();
 		}
 	}
 

@@ -39,7 +39,7 @@
 		// protected $autoWriteTimetamp = false;
 
 		// 指定自动写入时间戳的类型为dateTime类型
-		protected $autoWriteTimestamp = 'datetime';
+		protected $autoWriteTimestamp = 'dateTime';
 
 		// 定义自动完成的属性
 		protected $insert = ['status'];
@@ -72,6 +72,12 @@
 		// 	//查询状态为1的数据
 		// 	$query->where('status', 1);
 		// }
+
+		//定义关联方法
+		public function profile(){
+			//用户HAS ONE 档案关联
+			return $this->hasOne('profile','user_id','id',['user'=>'member','profile'=>'info']);
+		}
 	}
     
     //设置完整的数据表
