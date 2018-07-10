@@ -73,15 +73,21 @@
 		// 	$query->where('status', 1);
 		// }
 
-		//定义关联方法
+		//定义一对一关联
 		public function profile(){
 			//用户HAS ONE 档案关联
 			return $this->hasOne('profile','user_id','id',['user'=>'member','profile'=>'info']);
 		}
 
-		//定义关联（一对多）	
+		//定义一对多关联
 		public function books(){
 			return $this->hasMany('Book');
+		}
+
+		// 定义多对多关联
+		public function roles(){
+			// 用户 BELONGS_TO_MANY 角色
+			return $this->belongsToMany('Role', 'access');
 		}
 	}
     

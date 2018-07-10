@@ -4,6 +4,7 @@ namespace app\index\controller;
 use app\index\model\User as UserModel;
 use app\index\model\Profile;
 use app\index\model\Book;
+use app\index\model\Role;
 
 class User
 {
@@ -61,7 +62,8 @@ class User
 	// 	return '用户[' . $user->nickname . ':' . $user->id .']新增成功';
 	// }
 
-	//关联新增数据
+	//关联新增数据(one to one)
+	/*
 	public function add(){
 		$user           = new UserModel;
 		$user->name     = 'thinkphp';
@@ -87,9 +89,10 @@ class User
 		} else {
 			return $user->getError();
 		}
-	}
+	}*/
 
-	//关联新增
+	//关联新增(one to many)
+	/*
 	public function addBook(){
 		$user 				= UserModel::get(2);
 		$book 				= new Book;
@@ -97,9 +100,48 @@ class User
 		$book->publish_time = '2016-05-06';
 		$user->books()->save($book);
 		return '添加Book成功';
-	}
+	}*/
 
-	//关联批量新增
+	// 关联新增数据(many to many)
+	/*
+	public function add(){
+		$user = UserModel::getByNickname('张三');
+		//新增用户角色 并自动写入枢纽表
+		$user->roles()->save(['name' => 'editor','title' => '编辑']);
+		return '用户角色新增成功';
+	}*/
+
+	// 关联新增批量数据（many to many）
+	/*
+	public function add(){
+		$user = UserModel::getByNickname('张三');
+		// 给当前用户新增多个用户角色
+		$user->roles()->saveAll([
+			['name' => 'leader', 'title' => '领导'],
+			['name' => 'admin', 'title' => '管理员'],
+		]);
+		return '用户角色新增成功';
+	}*/
+
+	// 关联新增（many to many）,给当前用户增加角色
+	/*
+	public function add(){
+		$user = UserModel::getByNickname('张三');
+		$role = Role::getByName('admin');
+		//添加枢纽表数据
+		$user->roles()->attach($role);
+		return '用户角色添加成功';
+	}*/
+
+
+	// 关联新增（many to many）,给当前用户增加角色
+	public function add(){
+		$user = UserModel::getByNickname('张三');
+		//添加枢纽表数据,根据id号添加
+		$user->roles()->attach(2);
+		return '用户角色添加成功';
+	}
+	//关联批量新增(one to many)
 	public function addBooks(){
 		$user = UserModel::get(2);
 		$books = [
@@ -179,7 +221,8 @@ class User
 	}
 	*/
 
-	//关联查询
+	//关联查询(一对多)
+	/*
 	public function  read($id){
 		$user  = UserModel::get($id);
 		// 获取状态为1的关联数据
@@ -188,6 +231,12 @@ class User
 		// 获取作者的某本书
 		$book = $user->books()->getByTitle('ThinkPHP5快速入门');
 		dump($book);
+	}*/
+
+	//关联查询（多对多）
+	public function read(){
+		$user = UserModel::getByNickname('张三');
+		dump($user->roles);
 	}
 
 	//关联查询(根据关联数据来查询当前模型数据)
@@ -419,12 +468,31 @@ class User
 	}*/
 
 	// 关联删除（一对多），删除所有的关联数据
+	/*
 	public function delete($id){
 		$user = UserModel::get($id);
 		if($user->delete()){
 			// 删除所有关联数据
 			$user->books()->delete();
 		}
+	}*/
+
+	// 关联删除（多对多）
+	/*
+	public function delete(){
+		$user = UserModel::getByNickname('张三');
+		$role = Role::getByName('admin');
+		// 删除关联数据 但不删除关联模型数据
+		$user->roles()->detach($role);
+	}*/
+
+	// 关联删除(多对多)，删除枢纽表，同时删除role
+	public function delete(){
+		$user = UserModel::getByNickname('张三');
+		$role = Role::getByName('editor');
+		// 删除关联数据 并同时删除关联模型数据
+		$user->roles()->detach($role,true);
+		return '用户角色删除成功';
 	}
 
 
