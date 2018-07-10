@@ -3,6 +3,7 @@ namespace app\index\controller;
 
 use app\index\model\User as UserModel;
 use app\index\model\Profile;
+use app\index\model\Book;
 
 class User
 {
@@ -88,6 +89,26 @@ class User
 		}
 	}
 
+	//关联新增
+	public function addBook(){
+		$user 				= UserModel::get(2);
+		$book 				= new Book;
+		$book->title 		= 'ThinkPHP5快速入门';
+		$book->publish_time = '2016-05-06';
+		$user->books()->save($book);
+		return '添加Book成功';
+	}
+
+	//关联批量新增
+	public function addBooks(){
+		$user = UserModel::get(2);
+		$books = [
+			['title' => 'ThinkPHP5开发手册', 'publish_time' => '2016-05-06'],
+			['title' => 'ThinkPHP5路由开发', 'publish_time' => '2016-03-06'],
+		];
+		$user->books()->saveAll($books);
+		return '添加Books成功';
+	}
 
 	//批量新增用户
 	public function addList(){
@@ -128,7 +149,8 @@ class User
 	}
 	*/
 
-	//关联查询
+	//关联查询(一对一)
+	/*
 	public function read($id){
 		//get方法使用第二个参数就表示进行关联预载入查询,以提高查询性能。
 		// $user = UserModel::get($id,'profile');
@@ -138,9 +160,46 @@ class User
 		echo $user->profile->truename. '<br/>';
 		echo $user->profile->email. '<br/>';
 	}
+	*/
 
+	// 关联查询（一对多）
+	/*
+	public function read($id){
+		$user  = UserModel::get($id);
+		$books = $user->books;
+		dump($books);
+	}*/
 
+	// 关联查询（一对多）,使用预载入查询
+	/*
+	public function read($id){
+		$user  = UserModel::get($id, 'books');
+		$books = $user->books;
+		dump($books);
+	}
+	*/
 
+	//关联查询
+	public function  read($id){
+		$user  = UserModel::get($id);
+		// 获取状态为1的关联数据
+		$books = $user->books()->where('status',1)->select();
+		dump($books);
+		// 获取作者的某本书
+		$book = $user->books()->getByTitle('ThinkPHP5快速入门');
+		dump($book);
+	}
+
+	//关联查询(根据关联数据来查询当前模型数据)
+	/*
+	public function read(){
+		// 查询有写过书的作者列表
+		$user = UserModel::has('books')->select();
+		// 查询写过三本书以上的作者
+		$user = UserModel::has('books','>=',3)->select();	
+		// 查询写过ThinkPHP5快速入门的作者
+		$user = UserModel::hasWhere('books',['title' => 'ThinkPHP5快速入门'])->select();
+	}*/
 
 
 
@@ -277,7 +336,8 @@ class User
 	}
 	*/
 
-	//关联更新
+	//关联更新(一对一)
+	/*
 	public function update($id){
 		$user 		= UserModel::get($id);
 		$user->name = 'framework';
@@ -289,7 +349,27 @@ class User
 		} else {
 			return $user->getError();
 		}
+	}*/
+
+	// 关联更新（一对多）
+	/*
+	public function update($id){
+		$user        = UserModel::get($id);
+		$book 		 = $user->books()->getByTitle('ThinkPHP5开发手册');
+		$book->title = 'ThinkPHP5快速入门';
+		$book->save();
+		echo '数据更新成功！';
+	}*/
+
+	// 使用查询构建器的 update 方法进行更新
+	public function update($id){
+		$user        = UserModel::get($id);
+		$user->books()->where('title', 'ThinkPHP5开发手册')->update(['title' => 'ThinkPHP5开发手册PDF']);
 	}
+
+
+
+
 
 	//删除数据
 	/*
@@ -316,6 +396,8 @@ class User
 	}
 	*/
 
+	// 关联删除（一对多）
+	/*
 	public function delete($id){
 		$user = UserModel::get($id);
 		if($user->delete()){
@@ -324,6 +406,24 @@ class User
 			return '用户[' . $user->name . ']删除成功';
 		} else {
 			return $user->getError();
+		}
+	}*/
+
+	// 关联删除（一对多）
+	/*
+	public function delete($id){
+		$user = UserModel::get($id);
+		// 删除部分关联数据
+		$book = $user->books()->getByTitle('ThinkPHP5开发手册');
+		$book->delete();
+	}*/
+
+	// 关联删除（一对多），删除所有的关联数据
+	public function delete($id){
+		$user = UserModel::get($id);
+		if($user->delete()){
+			// 删除所有关联数据
+			$user->books()->delete();
 		}
 	}
 

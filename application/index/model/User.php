@@ -78,6 +78,11 @@
 			//用户HAS ONE 档案关联
 			return $this->hasOne('profile','user_id','id',['user'=>'member','profile'=>'info']);
 		}
+
+		//定义关联（一对多）	
+		public function books(){
+			return $this->hasMany('Book');
+		}
 	}
     
     //设置完整的数据表
