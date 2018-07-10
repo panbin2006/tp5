@@ -50,7 +50,11 @@
 		}
 
 		//status属性读取器
-		protected function getStatusAttr($value){
+		protected function getUserStatusAttr($value){
+			// $status = array(-1 => '删除' , 0 => '禁用', 1 => '正常', 2 => '待审核');
+			if  (is_null($value)){
+				$value = 0;
+			}
 			$status = [-1 => '删除' , 0 => '禁用', 1 => '正常', 2 => '待审核'];
 			return $status[$value];
 		}

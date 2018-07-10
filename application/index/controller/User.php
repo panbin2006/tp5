@@ -234,11 +234,58 @@ class User
 	}*/
 
 	//关联查询（多对多）
+	/*
 	public function read(){
 		$user = UserModel::getByNickname('张三');
 		dump($user->roles);
+	}*/
+
+	//模型输出(输出数组)
+	// 读取用户数据并输出数组
+	/*
+	public function read($id=''){
+		$user = UserModel::get($id);
+		dump($user->toArray());
+	}*/
+
+
+	// 读取用户数据并输出数组, 隐藏某些属性
+	/*
+	public function read($id=''){
+		$user = UserModel::get($id);
+		dump($user->hidden(['create_time','update_time'])->toArray());
+	}*/
+
+	// 读取用户数据并输出数组, 指定属性 
+	/*
+	public function read($id=''){
+		$user = UserModel::get($id);
+		dump($user->visible(['id','nickname','password'])->toArray());
+	}*/
+
+
+
+	// 读取用户数据并输出数组,追加属性 
+	/*
+	public function read($id=''){
+		$user = UserModel::get($id);
+		dump($user->append(['user_status'])->toArray());
+	}*/
+
+	// 读取用户数据输出JSON
+	/*
+	public function read($id = ''){
+		$user = UserModel::get($id);
+		echo $user->toJson();
+	}*/
+
+
+	// 读取用户数据,简单的方式输出JSON
+	public function read($id = ''){
+		echo UserModel::get($id);
 	}
 
+	//关联查询(根据关联数据来查询当前模型数据)
 	//关联查询(根据关联数据来查询当前模型数据)
 	/*
 	public function read(){
