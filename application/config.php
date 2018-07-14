@@ -17,10 +17,10 @@ return [
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
-    // 是否支持多模块
+    // 
     'app_multi_module'       => true,
     // 入口自动绑定模块
     'auto_bind_module'       => false,
@@ -170,7 +170,7 @@ return [
         // 日志保存目录
         'path'  => LOG_PATH,
         // 日志记录级别
-        'level' => [],
+        'level' => ['error','sql'],
     ],
 
     // +----------------------------------------------------------------------
@@ -179,6 +179,7 @@ return [
     'trace'                  => [
         // 内置Html Console 支持扩展
         'type' => 'Html',
+        // 'type' => 'Console',
     ],
 
     // +----------------------------------------------------------------------

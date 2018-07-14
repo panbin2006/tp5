@@ -283,6 +283,8 @@ class User
 	// 读取用户数据,简单的方式输出JSON
 	public function read($id = ''){
 		echo UserModel::get($id);
+		trace('这是调试信息！');
+		trace([1,2,3]);
 	}
 
 	//关联查询(根据关联数据来查询当前模型数据)

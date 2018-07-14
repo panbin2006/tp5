@@ -9,9 +9,15 @@ class Index extends Controller
 {
     public function index($name='world')
     {
-    	$data = Db::name('data')->find();
-    	$this->assign('result',$data);
-    	return  $this->fetch();
+    	//$data = Db::name('user')->find();
+    	// $this->assign('result',$data);
+    	// return  $this->fetch();
+        // return 'hello' . $_GET['name'];
+        dump('测试');
+        dump(['a', 'b', 'c']);
+        // halt(['a', 'b', 'c']);
+        halt('这里的信息是不会输出的');
+
     }
 
     public function hello(Request $request,$name='thinkphp')
