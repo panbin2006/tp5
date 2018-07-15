@@ -14,6 +14,11 @@
 // 	return 'Hello0,' . $name.'!';
 // });
 
+use think\Route;
+Route::rule(':version/user/:id','api/:version.User/read');
+Route::resource('blogs', 'index/blog');
+// http://tp5.com/v1/user/10
+// http://tp5.com/v2/user/10
 return [
     //全局变量规则定义
     '__pattern__' => [
