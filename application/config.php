@@ -166,16 +166,17 @@ return [
 
     'log'                    => [
         // 日志记录方式，内置 file socket 支持扩展
-        // 'type'  => 'File',
+        'type'  => 'File',
         // 日志保存目录
-        // 'path'  => LOG_PATH,
+        'path'  => LOG_PATH,
         // 日志记录级别
-        // 'level' => ['error','sql'],
-        'type' => 'socket',
-        'host' => 'localhost',
-        'show_included_files' => true,
-        'force_client_ids' => ['slog_b6d7ef','slog_abd89d'],
-        'allow_client_ids' => ['slog_b6d7ef','slog_abd89d'],
+        'level' => ['error','sql'],
+        
+        // 'type' => 'socket',
+        // 'host' => 'localhost',
+        // 'show_included_files' => true,
+        // 'force_client_ids' => ['slog_b6d7ef','slog_abd89d'],
+        // 'allow_client_ids' => ['slog_b6d7ef','slog_abd89d'],
 
     ],
 
