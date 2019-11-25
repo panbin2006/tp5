@@ -11,7 +11,7 @@ namespace app\lib\exception;
 
 class UserException extends  BaseException
 {
-    public $code = '404';
+    public $code = 404;
     public $msg = '用户不存在';
-    public $errorCode = '20000';
+    public $errorCode = 20000;
 }
