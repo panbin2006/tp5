@@ -18,4 +18,5 @@ Route::get('api/:version/user/:id', 'api/:version.Syhqx/getUserById');
 Route::post('api/:version/user/check', 'api/:version.Syhqx/check');
 
 Route::get('api/:version/mpactm/recent', 'api/:version.Mpactm/getRecent');
+Route::get('api/:version/mpactm/:id', 'api/:version.Mpactm/getOne');
 
