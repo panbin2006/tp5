@@ -31,7 +31,7 @@ return [
     // 数据库表前缀
     'prefix'          => '',
     // 数据库调试模式
-    'debug'           => true,
+    'debug'           => false,
     // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
     'deploy'          => 0,
     // 数据库读写是否分离 主从式有效
@@ -40,12 +40,9 @@ return [
     'master_num'      => 1,
     // 指定从服务器序号
     'slave_no'        => '',
-    // 自动读取主库数据
-    'read_master'     => false,
     // 是否严格检查字段是否存在
     'fields_strict'   => true,
     // 数据集返回类型
-//    'resultset_type'  => 'array',
     'resultset_type'  => 'collection',
     // 自动写入时间戳字段
     'auto_timestamp'  => false,
@@ -53,4 +50,8 @@ return [
     'datetime_format' => 'Y-m-d H:i:s',
     // 是否需要进行SQL性能分析
     'sql_explain'     => false,
+    // Builder类
+    'builder'         => '',
+    // Query类
+    'query'           => '\\think\\db\\Query',
 ];

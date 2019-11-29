@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | ThinkPHP [ WE CAN DO IT JUST THINK ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2006~2018 http://thinkphp.cn All rights reserved.
+// | Copyright (c) 2006~2016 http://thinkphp.cn All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
@@ -14,13 +14,15 @@ return [
     // | 应用设置
     // +----------------------------------------------------------------------
 
+    // 应用命名空间
+    'app_namespace'          => 'app',
     // 应用调试模式
     'app_debug'              => true,
     // 应用Trace
-    'app_trace'              => false,
+    'app_trace'              => true,
     // 应用模式状态
     'app_status'             => '',
-    // 
+    // 是否支持多模块
     'app_multi_module'       => true,
     // 入口自动绑定模块
     'auto_bind_module'       => false,
@@ -29,7 +31,7 @@ return [
     // 扩展函数文件
     'extra_file_list'        => [THINK_PATH . 'helper' . EXT],
     // 默认输出类型
-    'default_return_type'    => 'html',
+    'default_return_type'    => 'json',
     // 默认AJAX 数据返回格式,可选json xml ...
     'default_ajax_return'    => 'json',
     // 默认JSONP格式返回的处理方法
@@ -112,8 +114,6 @@ return [
     'request_cache'          => false,
     // 请求缓存有效期
     'request_cache_expire'   => null,
-    // 全局请求缓存排除规则
-    'request_cache_except'   => [],
 
     // +----------------------------------------------------------------------
     // | 模板设置
@@ -122,8 +122,6 @@ return [
     'template'               => [
         // 模板引擎类型 支持 php think 支持扩展
         'type'         => 'Think',
-        // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写
-        'auto_rule'    => 1,
         // 模板路径
         'view_path'    => '',
         // 模板后缀
@@ -159,6 +157,7 @@ return [
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '\app\lib\exception\ExceptionHandler',
+//    'exception_handle'       => '',
 
     // +----------------------------------------------------------------------
     // | 日志设置
@@ -166,24 +165,11 @@ return [
 
     'log'                    => [
         // 日志记录方式，内置 file socket 支持扩展
-        // 'type'  => 'File',
+        'type'  => 'test',
         // 日志保存目录
-        // 'path'  => LOG_PATH,
+        'path'  => LOG_PATH,
         // 日志记录级别
-        // 'level' => ['error','sql'],
-
-        //socketLog    
-        // 'type' => 'socket',
-        // 'host' => 'localhost',
-        // 'show_included_files' => true,
-        // 'force_client_ids' => ['slog_b6d7ef','slog_abd89d'],
-        // 'allow_client_ids' => ['slog_b6d7ef','slog_abd89d'],
-
-        //for email 
-        'type' =>'driver\log\Email',
-        'email_addr' => '502752983@qq.com',
-        'send_level' => ['error','info'],
-
+        'level' => [],
     ],
 
     // +----------------------------------------------------------------------
@@ -192,7 +178,6 @@ return [
     'trace'                  => [
         // 内置Html Console 支持扩展
         'type' => 'Html',
-        // 'type' => 'Console',
     ],
 
     // +----------------------------------------------------------------------
@@ -251,48 +236,5 @@ return [
         'type'      => 'bootstrap',
         'var_page'  => 'page',
         'list_rows' => 15,
-    ],
-
-    //数据库配置1
-    'db1' => [
-        //数据库类型
-        'type' => 'mysql',
-        //服务器地址
-        'hostname' => '127.0.0.1',
-        //数据库名
-        'database'=>'demo',
-        //数据库用户名·
-        'username' => 'root',
-        //数据库密码
-        'password' => '',
-        //数据库连接端口
-        'hostport' => '',
-        //数据库连接参数
-        'params' => [],
-        //数据库编码默认采用utf8
-        'charset' => 'utf8',
-        //数据库表前缀
-       'prefix' => 'think_',
-    ],
-    //数据库配置2
-    'db2' => [
-        //数据库类型
-        'type' => 'mysql',
-        //服务器地址
-        'hostname' => '127.0.0.1',
-        //数据库名
-        'database'=>'test',
-        //数据库用户名·
-        'username' => 'root',
-        //数据库密码
-        'password' => '',
-        //数据库连接端口
-        'hostport' => '',
-        //数据库连接参数
-        'params' => [],
-        //数据库编码默认采用utf8
-        'charset' => 'utf8',
-        //数据库表前缀
-        'prefix' => 'test_',
     ],
 ];
