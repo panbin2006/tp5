@@ -18,5 +18,10 @@ Route::get('api/:version/user/:id', 'api/:version.Syhqx/getUserById');
 Route::post('api/:version/user/check', 'api/:version.Syhqx/check');
 
 Route::get('api/:version/mpactm/recent', 'api/:version.Mpactm/getRecent');
-Route::get('api/:version/mpactm/:id', 'api/:version.Mpactm/getOne');
+Route::get('api/:version/mpactm/by_name', 'api/:version.Mpactm/getMpactmsByName');
+Route::get('api/:version/mpactm/by_state', 'api/:version.Mpactm/getMpactmsByState');
+Route::get('api/:version/mpactm/:id', 'api/:version.Mpactm/getOne',[], ['id' => '\d+']);
+Route::post('api/:version/mpactm/sh', 'api/:version.Mpactm/setSH');
+Route::post('api/:version/mpactm/state', 'api/:version.Mpactm/setState');
+
 

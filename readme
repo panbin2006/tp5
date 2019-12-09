@@ -1,0 +1,16 @@
+登陆：
+       --用户登陆
+           获取所有用户
+           url: api/:version.Syhqx/getAll
+           根据用户id查找用户
+           url: api/:version.Syhqx/getUserById
+           验证用户登陆
+           url: api/:version.Syhqx/check
+
+销售管理：
+        1、客户管理
+        2、工程合同
+            分页查询
+            url: api/:version.Mpactm/getRecent'
+            根据工程代码查询
+            api/:version.Mpactm/getOne
