@@ -31,6 +31,9 @@ Route::post('api/:version/mpactm/sh', 'api/:version.Mpactm/setSH');
 Route::post('api/:version/mpactm/state', 'api/:version.Mpactm/setState');
 
 
+Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent');
+
+
 
 
 
