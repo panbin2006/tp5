@@ -34,6 +34,9 @@ Route::post('api/:version/mpactm/state', 'api/:version.Mpactm/setState');
 Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent');
 
 
+Route::get('api/:version/msaleday/recent', 'api/:version.Msaleday/getRecent');
+
+
 
 
 
