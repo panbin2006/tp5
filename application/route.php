@@ -51,3 +51,7 @@ Route::get('api/:version/msaleodd/:id', 'api/:version.Msaleodd/getOne');
 Route::get('api/:version/mproductrecm/recent', 'api/:version.Mproductrecm/getRecent');
 Route::get('api/:version/mproductrecm/:id', 'api/:version.Mproductrecm/getOne');
 
+Route::get('api/:version/carledviewzb/ledview', 'api/:version.Carledviewzb/ledview');
+
+Route::get('api/:version/carpaiduim/ledview', 'api/:version.Carpaiduim/ledview');
+

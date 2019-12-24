@@ -13,7 +13,8 @@ return [
     // 数据库类型
     'type'            => 'sqlsrv',
     // 服务器地址
-    'hostname'        => 'dx2019.in.8866.org,30753',
+//    'hostname'        => 'dx2019.in.8866.org,30753',
+    'hostname'        => '220.161.53.194,8888',
 //    'hostname'        => 'localhost',
     // 数据库名
     'database'        => 'jbzsoft',
