@@ -48,4 +48,6 @@ Route::get('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
 Route::get('api/:version/msaleodd/:id', 'api/:version.Msaleodd/getOne');
 
 
+Route::get('api/:version/mproductrecm/recent', 'api/:version.Mproductrecm/getRecent');
+Route::get('api/:version/mproductrecm/:id', 'api/:version.Mproductrecm/getOne');
 

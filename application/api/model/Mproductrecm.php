@@ -46,5 +46,35 @@ class Mproductrecm extends Model
             "SZRate1",
             "SZRate2",
             "NoteMan",
+            "mproductrecds",
     ];
+
+    public static  function getMostRecent($size, $page, $pdateS, $pdateE, $name=''){
+
+        $mproducts = self::whereBetween('Pdate',[$pdateS, $pdateE])
+            ->where('CustName|ProjectName', 'like', '%'.$name.'%')
+            ->paginate($size,false, ['page' => $page]);
+
+        return $mproducts;
+    }
+
+    public static function getSummary($pdateS, $pdateE, $name){
+        $summary = self::whereBetween('Pdate',[$pdateS, $pdateE])
+            ->where('ProjectName|CustName', 'like', '%'.$name.'%')
+            ->field(['sum(Quality)' => 'total_quality'])
+            ->find();
+        return $summary;
+    }
+
+    public function mproductrecds(){
+        return $this->hasMany('Mproductrecd', 'ProductID', 'ProductID');
+    }
+
+    public static function getMproductrecmDetail($id){
+        $mproductrecm =  self::with(['mproductrecds' => function($query){
+            $query->order('iden_id asc');
+        }])
+            ->find($id);
+        return $mproductrecm;
+    }
 }
