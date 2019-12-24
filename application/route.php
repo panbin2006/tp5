@@ -34,7 +34,16 @@ Route::post('api/:version/mpactm/state', 'api/:version.Mpactm/setState');
 Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent');
 
 
+
 Route::get('api/:version/msaleday/recent', 'api/:version.Msaleday/getRecent');
+
+
+Route::get('api/:version/mpplan/recent', 'api/:version.Mpplan/getRecent');
+Route::get('api/:version/mpplan/:id', 'api/:version.Mpplan/getOne');
+Route::post('api/:version/mpplan/sh', 'api/:version.Mpplan/setSH');
+Route::post('api/:version/mpplan/state', 'api/:version.Mpplan/setState');
+
+Route::post('api/:version/test/update', 'api/:version.Test/update');
 
 
 

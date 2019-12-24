@@ -14,6 +14,7 @@ return [
     'type'            => 'sqlsrv',
     // 服务器地址
     'hostname'        => 'dx2019.in.8866.org,30753',
+//    'hostname'        => 'localhost',
     // 数据库名
     'database'        => 'jbzsoft',
     // 用户名
