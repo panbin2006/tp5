@@ -43,9 +43,9 @@ Route::get('api/:version/mpplan/:id', 'api/:version.Mpplan/getOne');
 Route::post('api/:version/mpplan/sh', 'api/:version.Mpplan/setSH');
 Route::post('api/:version/mpplan/state', 'api/:version.Mpplan/setState');
 
-Route::post('api/:version/test/update', 'api/:version.Test/update');
 
-
+Route::get('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
+Route::get('api/:version/msaleodd/:id', 'api/:version.Msaleodd/getOne');
 
 
 
