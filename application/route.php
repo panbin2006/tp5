@@ -55,3 +55,6 @@ Route::get('api/:version/carledviewzb/ledview', 'api/:version.Carledviewzb/ledvi
 
 Route::get('api/:version/carpaiduim/ledview', 'api/:version.Carpaiduim/ledview');
 
+Route::get('api/:version/matinfo/recent', 'api/:version.Matinfo/getRecent');
+
+Route::get('api/:version/matsupplier/recent', 'api/:version.Matsupplier/getRecent');
