@@ -58,3 +58,6 @@ Route::get('api/:version/carpaiduim/ledview', 'api/:version.Carpaiduim/ledview')
 Route::get('api/:version/matinfo/recent', 'api/:version.Matinfo/getRecent');
 
 Route::get('api/:version/matsupplier/recent', 'api/:version.Matsupplier/getRecent');
+
+
+Route::get('api/:version/matin/recent', 'api/:version.Matin/getRecent');
