@@ -15,5 +15,5 @@ class MsaleoddException extends BaseException
 
     public $message = '送货单记录不存在！';
 
-    public $errorCode = 60000;
+    public $errorCode = 40001;
 }

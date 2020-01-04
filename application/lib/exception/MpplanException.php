@@ -13,7 +13,7 @@ class MpplanException extends BaseException
 {
     public $code = 404;
 
-    public $errorCode = 5000;
+    public $errorCode = 40000;
 
     public $message = '计划单不存在';
 }

@@ -15,5 +15,5 @@ class McustomerException extends  BaseException
 
     public $message = '请求的客户不存在';
 
-    public  $errorCode = 4000;
+    public  $errorCode = 30002;
 }

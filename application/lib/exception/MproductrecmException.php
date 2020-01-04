@@ -16,6 +16,6 @@ class MproductrecmException extends BaseException
 
     public $message = '生产记录不存在！';
 
-    public $errorCode = 70000;
+    public $errorCode = 40002;
 
 }

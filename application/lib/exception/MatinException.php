@@ -15,5 +15,5 @@ class MatinException extends BaseException
 
     public $message = '材料入库单不存在！';
 
-    public $errorCode = 70001;
+    public $errorCode = 50000;
 }
