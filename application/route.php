@@ -66,3 +66,5 @@ Route::get('api/:version/matin/recent', 'api/:version.Matin/getRecent');
 Route::get('api/:version/mproductrecd/recent', 'api/:version.Mproductrecd/getSummary');
 
 Route::get('api/:version/matcwm/recent', 'api/:version.Matcwm/getRecent');
+
+Route::post('api/:version/cw_stat/recent', 'api/:version.Tmpcwiostat/getRecent');

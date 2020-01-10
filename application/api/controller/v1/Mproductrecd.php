@@ -29,8 +29,10 @@ class Mproductrecd
         //collection转数组
         $matOutArr = $matOut->toArray();
 
+
         //按材料种类汇总
         $matTypeSummary = $this->formatData($matOutArr, 'MatType');
+
 
         //材料名称汇总
         $matNameSummary = $this->formatData($matOutArr, 'MatName');

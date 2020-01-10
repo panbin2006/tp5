@@ -25,12 +25,13 @@ class Matcwm extends Model
         "CreateTime",
         "EditMan",
         "EditTime",
-        "matcwds"
+        "matcwds",
     ];
 
     public function matcwds(){
         return self::hasMany('Matcwd', 'CheckID', 'CheckID');
     }
+
     public static function getMostRecent($pdateS, $pdateE, $size, $page)
     {
         $matcheckms = self::whereBetween('Pdate', [$pdateS, $pdateE])
@@ -43,4 +44,9 @@ class Matcwm extends Model
         return $matcheckms;
     }
 
+    public static function getLastPdate(){
+        $Pdate = self::field(['Max(Pdate)' => 'Pdate'])
+            ->find();
+        return $Pdate;
+    }
 }
