@@ -68,3 +68,7 @@ Route::get('api/:version/mproductrecd/recent', 'api/:version.Mproductrecd/getSum
 Route::get('api/:version/matcwm/recent', 'api/:version.Matcwm/getRecent');
 
 Route::post('api/:version/cw_stat/recent', 'api/:version.Tmpcwiostat/getRecent');
+
+
+Route::get('api/:version/carinfo/recent', 'api/:version.Carinfo/getRecent');
+Route::post('api/:version/carinfo/update', 'api/:version.Carinfo/update');
