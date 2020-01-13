@@ -13,6 +13,8 @@ use think\Model;
 
 class Carinfo extends Model
 {
+//    public $pk =["CarID", "CoID"];
+
     public $visible = [
         "CarID",
         "CoID",

@@ -17,8 +17,8 @@ return [
 //    'hostname'        => '220.161.53.194,8888',
     'hostname'        => 'localhost',
     // 数据库名
-    'database'        => 'jbzsoft_19_xh',
-//    'database'        => 'jbzsoftJinRong05',
+//    'database'        => 'jbzsoft_19_xh',
+    'database'        => 'jbzsoftJinRong05',
     // 用户名
     'username'        => 'jbzsoftnew',
     // 密码

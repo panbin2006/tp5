@@ -71,4 +71,6 @@ Route::post('api/:version/cw_stat/recent', 'api/:version.Tmpcwiostat/getRecent')
 
 
 Route::get('api/:version/carinfo/recent', 'api/:version.Carinfo/getRecent');
-Route::post('api/:version/carinfo/update', 'api/:version.Carinfo/update');
+Route::post('api/:version/carinfo/save', 'api/:version.Carinfo/save');
+Route::post('api/:version/carinfo/statistics', 'api/:version.Carinfo/statistics');
+Route::post('api/:version/carinfo/group', 'api/:version.Carinfo/groupData');
