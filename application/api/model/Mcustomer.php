@@ -15,27 +15,61 @@ use think\Model;
 class Mcustomer extends Model
 {
 
-    public static function  getMostRecent($size, $page, $name, $state)
+    protected $pk = 'custid';
+
+    public $visible = [
+        "CustID",
+        "CoID",
+        "CustName",
+        "PDate",
+        "ExecState",
+        "ClassID1",
+        "ClassName1",
+        "NoteMan",
+        "KHpwd",
+    ];
+
+    public static function getMostRecent($size, $page, $name, $state)
     {
 
-        $mcustomers = self::where('Custname', 'like', '%'.$name.'%')
-            ->where('ExecState', 'like', '%'.$state.'%')
+        $mcustomers = self::where('Custname', 'like', '%' . $name . '%')
+            ->where('ExecState', 'like', '%' . $state . '%')
             ->order('CreateTime desc')
             ->paginate($size, true, ['page' => $page]);
         return $mcustomers;
     }
 
-    public  static function  upSHTag($id, $flag){
+
+    public static function getOne($id)
+    {
+
+        $cust = self::find($id);
+
+        return $cust;
+    }
+
+
+    public static function upSHTag($id, $flag)
+    {
         $result = self::where('CustID', '=', $id)
             ->update(['SHTag' => $flag]);
         return $result;
     }
 
 
-    public  static function  upState($id, $state){
+    public static function upState($id, $state)
+    {
         $result = self::where('CustID', '=', $id)
             ->update(['ExecState' => $state]);
         return $result;
+    }
+
+    public static function check($where)
+    {
+        $cust = self::where($where)
+            ->find();
+
+        return $cust;
     }
 
 }

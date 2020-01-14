@@ -11,6 +11,7 @@ use app\api\model\Mcustomer as McustomerModel;
 use app\api\validate\Count;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\lib\exception\McustomerException;
+use app\lib\exception\SuccessMessage;
 
 class Mcustomer
 {
@@ -19,11 +20,13 @@ class Mcustomer
      * @param $id
      */
     public  static  function getOne($id){
-        $customer = McustomerModel::where('custid', '=', $id)
-            ->find();
+
+        $customer = McustomerModel::getOne($id);
+
         if(!$customer){
             throw new McustomerException();
         }
+
         return $customer;
     }
 
@@ -78,4 +81,45 @@ class Mcustomer
         return $result;
     }
 
+    /**
+     * 客户登陆
+     * @method  POST
+     * @return mixed
+     */
+    public static function login()
+    {
+        $where = input('post.');
+        $cust = McustomerModel::check($where);
+
+        if(!$cust){
+            throw new McustomerException(['msg' => '用户名或密码错误']);
+        }
+
+        return $cust;
+    }
+
+    /**
+     * 新增/修改客户
+     * @return \think\response\Json
+     */
+    public static function save(){
+
+        $inputs  = input('post.');
+        $data = $inputs['data'];
+        $where = $inputs['where'];
+
+        $cust = McustomerModel::get($where);
+        if(empty($cust)){
+
+            $result = McustomerModel::create(array_merge($data, $where));
+        }else{
+            //数据库表更新触发器问题，TriTag必须与原记录的值不一样，这样才不会触发更新触发器
+            //不然数据更新失败
+            $data['TrigTag'] = $cust->TrigTag +1;
+            $result = McustomerModel::update($data, $where);
+        }
+
+
+        return json(new SuccessMessage(['msg' => $result]), 201);
+    }
 }

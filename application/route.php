@@ -28,6 +28,7 @@ Route::get('api/:version/mcustomer/:id', 'api/:version.Mcustomer/getOne');
 Route::post('api/:version/mcustomer/sh', 'api/:version.Mcustomer/setSH');
 Route::post('api/:version/mcustomer/state', 'api/:version.Mcustomer/setState');
 Route::post('api/:version/mcustomer/login', 'api/:version.Mcustomer/login');
+Route::post('api/:version/mcustomer/save', 'api/:version.Mcustomer/save');
 
 
 Route::get('api/:version/mpactm/recent', 'api/:version.Mpactm/getRecent');
