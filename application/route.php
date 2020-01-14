@@ -17,10 +17,17 @@ Route::get('api/:version/user', 'api/:version.Syhqx/getAll');
 Route::get('api/:version/user/:id', 'api/:version.Syhqx/getUserById');
 Route::post('api/:version/user/login', 'api/:version.Syhqx/check');
 
+
+Route::get('api/:version/driver', 'api/:version.Sygda/getRecent');
+Route::get('api/:version/driver/:id', 'api/:version.Sygda/getDriver');
+Route::post('api/:version/driver/login', 'api/:version.Sygda/login');
+Route::post('api/:version/driver/save', 'api/:version.Sygda/save');
+
 Route::get('api/:version/mcustomer/recent', 'api/:version.Mcustomer/getRecent');
 Route::get('api/:version/mcustomer/:id', 'api/:version.Mcustomer/getOne');
 Route::post('api/:version/mcustomer/sh', 'api/:version.Mcustomer/setSH');
 Route::post('api/:version/mcustomer/state', 'api/:version.Mcustomer/setState');
+Route::post('api/:version/mcustomer/login', 'api/:version.Mcustomer/login');
 
 
 Route::get('api/:version/mpactm/recent', 'api/:version.Mpactm/getRecent');
