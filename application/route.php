@@ -15,7 +15,7 @@ use think\Route;
 //Route::get('api/:version/user/:id','api/:version.Syhqx/read');
 Route::get('api/:version/user', 'api/:version.Syhqx/getAll');
 Route::get('api/:version/user/:id', 'api/:version.Syhqx/getUserById');
-Route::post('api/:version/user/check', 'api/:version.Syhqx/check');
+Route::post('api/:version/user/login', 'api/:version.Syhqx/check');
 
 Route::get('api/:version/mcustomer/recent', 'api/:version.Mcustomer/getRecent');
 Route::get('api/:version/mcustomer/:id', 'api/:version.Mcustomer/getOne');
