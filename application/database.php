@@ -18,7 +18,7 @@ return [
     'hostname'        => 'localhost',
     // 数据库名
 //    'database'        => 'jbzsoft_19_xh',
-    'database'        => 'jbzsoftJinRong05',
+    'database'        => 'jbzsoft_20_dghd',
     // 用户名
     'username'        => 'jbzsoftnew',
     // 密码

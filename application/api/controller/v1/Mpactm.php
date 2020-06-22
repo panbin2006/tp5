@@ -28,8 +28,8 @@ class Mpactm
      * $page  int 当前页码
      */
     public  function  getRecent($size=15, $page=1){
-        (new Count())->goCheck($size);
-        (new PageNumberMustBePositiveInt())->goCheck($page);
+//        (new Count())->goCheck($size);
+//        (new PageNumberMustBePositiveInt())->goCheck($page);
         $pageMpactms = MpactmModel::getMostRecent($size, $page);
         if ($pageMpactms->isEmpty()){
             return [
