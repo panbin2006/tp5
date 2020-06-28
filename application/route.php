@@ -38,6 +38,13 @@ Route::get('api/:version/mpactm/:id', 'api/:version.Mpactm/getOne',[], ['id' => 
 Route::post('api/:version/mpactm/sh', 'api/:version.Mpactm/setSH');
 Route::post('api/:version/mpactm/state', 'api/:version.Mpactm/setState');
 
+Route::get('api/:version/mpplancust/recent', 'api/:version.Mpplancust/getRecent');
+Route::get('api/:version/mpplancust/by_name', 'api/:version.Mpplancust/getInfoByName');
+Route::get('api/:version/mpplancust/by_state', 'api/:version.Mpplancust/getInfoByState');
+Route::get('api/:version/mpplancust/:id', 'api/:version.Mpplancust/getOne',[], ['id' => '\d+']);
+Route::post('api/:version/mpplancust/sh', 'api/:version.Mpplancust/setSH');
+Route::post('api/:version/mpplancust/state', 'api/:version.Mpplancust/setState');
+Route::post('api/:version/mpplancust/save', 'api/:version.Mpplancust/save');
 
 Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent');
 
