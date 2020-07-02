@@ -26,7 +26,7 @@ class Mpplancust extends Model
 
     public static function getMostRecent($size,$page){
         $mpplancusts = self::order('CreateTime desc')
-            ->paginate($size, true, ['page' => $page]);
+            ->paginate($size, false, ['page' => $page]);
         return $mpplancusts;
     }
 
@@ -34,14 +34,14 @@ class Mpplancust extends Model
         $mpplancusts = self::where('ProjectName|CustName','like', '%'.$name.'%')
 //            ->whereOr('CustName', 'like','%'.$name.'%')
             ->order('CreateTime desc')
-            ->paginate($size, true, ['page' => $page]);
+            ->paginate($size, false, ['page' => $page]);
         return $mpplancusts;
     }
 
     public static function getInfoByExecState($size,$page,$state){
         $mpplancusts = self::whereLike('ExecState', '%'.$state.'%')
             ->order('CreateTime desc')
-            ->paginate($size, true, ['page' => $page]);
+            ->paginate($size, false, ['page' => $page]);
         return $mpplancusts;
     }
 

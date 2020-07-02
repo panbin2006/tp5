@@ -28,16 +28,21 @@ class Mpplancust
         (new Count())->goCheck($size);
         (new PageNumberMustBePositiveInt())->goCheck($page);
         $pageMpplancusts = MpplancustModel::getMostRecent($size, $page);
-        if ($pageMpplancusts->isEmpty()){
+          if ($pageMpplancusts->isEmpty()){
             return [
                 'current_page' => $pageMpplancusts->currentPage(),
+                'hasPages' =>  $pageMpplancusts->hasPages(),
+                'total' => 0,
                 'data' => []
             ];
         }
         $data  = $pageMpplancusts->getCollection()
         ->toArray();
+
         return [
             'current_page' => $pageMpplancusts->currentPage(),
+            'total' => $pageMpplancusts->total(),
+            'hasPages' =>  $pageMpplancusts->hasPages(),
             'data' => $data
         ];
     }
@@ -72,10 +77,12 @@ class Mpplancust
         (new Count())->goCheck($size);
         (new PageNumberMustBePositiveInt())->goCheck($page);
         $pageMpplancusts = MpplancustModel::getInfoByName($size, $page, $name);
-        return $pageMpplancusts;
+//        return $pageMpplancusts;
         if($pageMpplancusts->isEmpty()){
             return [
                 'current_page' => $pageMpplancusts->currentPage(),
+                'total' => $pageMpplancusts->total(),
+                'hasPages' =>  $pageMpplancusts->hasPages(),
                 'data' => []
             ];
         }
@@ -84,6 +91,8 @@ class Mpplancust
             ->toArray();
         return [
             'current_page' => $pageMpplancusts->currentPage(),
+            'total' => $pageMpplancusts->total(),
+            'hasPages' =>  $pageMpplancusts->hasPages(),
             'data' => $data
         ];
     }
@@ -105,6 +114,8 @@ class Mpplancust
         if($pageMpplancusts->isEmpty()){
             return [
                 'current_page' => $pageMpplancusts->currentPage(),
+                'total' => $pageMpplancusts->total(),
+                'hasPages' =>  $pageMpplancusts->hasPages(),
                 'data' => []
             ];
         }
@@ -113,6 +124,8 @@ class Mpplancust
             ->toArray();
         return [
             'current_page' => $pageMpplancusts->currentPage(),
+            'total' => $pageMpplancusts->total(),
+            'hasPages' =>  $pageMpplancusts->hasPages(),
             'data' => $data
         ];
     }
