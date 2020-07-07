@@ -27,17 +27,16 @@ class Bbtld
 
         $bbtlds= BbtldModel::getMostRecent();
         if ($bbtlds->isEmpty()) {
-            return [
-                'data' => []
-            ];
+            return [];
         }
 
-//        $data = $bbtlds->getCollection()
-//            ->toArray();
+        //取出每一个tld，生成一维数组
+        $result = [];
+        foreach ($bbtlds as $key=>$val){
+            $result[] =  $val->TLD;
+        }
 
-        return [
-            'data' => $bbtlds
-        ];
+        return $result;
     }
 
 
