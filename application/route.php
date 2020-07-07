@@ -91,3 +91,11 @@ Route::post('api/:version/carinfo/statistics', 'api/:version.Carinfo/statistics'
 Route::post('api/:version/carinfo/group', 'api/:version.Carinfo/groupData');
 
 Route::post('api/:version/coding', 'api/:version.Coding/getCode');
+
+
+
+Route::get('api/:version/bbtld/recent', 'api/:version.Bbtld/getRecent');
+
+
+
+
