@@ -96,6 +96,8 @@ Route::post('api/:version/coding', 'api/:version.Coding/getCode');
 
 Route::get('api/:version/bbtld/recent', 'api/:version.Bbtld/getRecent');
 
+Route::get('api/:version/bbtrans/recent', 'api/:version.Bbtrans/getRecent');
+
 
 
 
