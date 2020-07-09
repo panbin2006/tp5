@@ -39,6 +39,11 @@ class Mcustomer extends Model
         return $mcustomers;
     }
 
+    //根据客户名称查找客户
+    public static function getMcustomerByCustName($custName){
+        $mcustomer = self::where('CustName','=', $custName)->find();
+        return $mcustomer;
+    }
 
     public static function getOne($id)
     {

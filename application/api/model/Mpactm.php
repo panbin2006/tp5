@@ -38,6 +38,12 @@ class Mpactm extends Model
         return $mpactms;
     }
 
+    //根据工程名称查找合同
+    public static function getMpactByProjName($projectName){
+        $mpactm = self::where('ProjectName','=', $projectName)->find();
+        return $mpactm;
+    }
+
     public static function getMpactsByExecState($size,$page,$state){
         $mpactms = self::whereLike('ExecState', '%'.$state.'%')
             ->order('CreateTime desc')

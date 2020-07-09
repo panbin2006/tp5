@@ -13,6 +13,7 @@ use app\api\model\Mpplancust as MpplancustModel;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\lib\enum\PlanStatusEnum as PlanStatusEnum;
 use app\lib\exception\SuccessMessage;
+use app\api\service\Order;
 
 class Mpplancust
 {
@@ -160,7 +161,6 @@ class Mpplancust
      * @return \think\response\Json
      */
     public static function save(){
-
         $inputs  = input('post.');
         $data = $inputs['data'];
         $where = $inputs['where'];
@@ -178,5 +178,20 @@ class Mpplancust
 
 
         return json(new SuccessMessage(['msg' => $result]), 201);
+    }
+
+    /*
+     *
+     * 使用orderService创建订单
+     */
+
+    public function createOrder(){
+        $inputs  = input('post.');
+        $uid = $inputs['uid'];
+        $mpactm = $inputs['mpactm'];
+        $orderDetail = $inputs['orderDetail'];
+        $orderService = new Order();
+        $result = $orderService->place($uid, $mpactm, $orderDetail);
+        return $result;
     }
 }
