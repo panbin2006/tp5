@@ -25,7 +25,7 @@ class Mpplancust extends Model
     }
 
     public static function getMostRecent($size,$page){
-        $mpplancusts = self::order('CreateTime desc')
+        $mpplancusts = self::order('PlanID desc')
             ->paginate($size, false, ['page' => $page]);
         return $mpplancusts;
     }

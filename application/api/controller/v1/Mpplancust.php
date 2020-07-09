@@ -167,8 +167,8 @@ class Mpplancust
 
         $cust = MpplancustModel::get($where);
         if(empty($cust)){
-
-            $result = MpplancustModel::create(array_merge($data, $where));
+            $result = MpplancustModel::create($data);
+            //$result = MpplancustModel::create(array_merge($data, $where));
         }else{
             //数据库表更新触发器问题，TriTag必须与原记录的值不一样，这样才不会触发更新触发器
             //不然数据更新失败
