@@ -1,0 +1,25 @@
+//订单新增从合同订单取值字段
+select ProjectID,ProjectName,ProjectShort,CustID,
+CustName,BuildID,BuildName,Address,SPACE,HTBH,Linkman1,QualityMode,StyleMode,
+QualityOrder,QualityOver,HideTag,ClassID1,ClassName1,ClassName5,PriceID,Rate,PriceDown,HideTagB,HideTagC,HideTagD,HideTagE,
+MoneyMode,Area,Remark1,Remark2,Remark3,Remark4,TrigTag,SaleTag,SaleCOID,SRemark1,
+SRemark2,SRemark3,SRemark4,FRemark1,FRemark2,FRemark3 from mpactm
+
+
+select ProjectID,ProjectName,ProjectShort,CustID,
+CustName,BuildID,BuildName,Address,SPACE,HTBH,Linkman,QualityMode,StyleMode,
+QualityOrder,QualityOver,HideTag,ClassID1,ClassName1,ClassName5,PriceID,Rate,PriceDown,HideTagB,HideTagC,HideTagD,HideTagE,
+MoneyMode,Area,Remark1,Remark2,Remark3,Remark4,TrigTag,SaleTag,SaleCOID,SRemark1,
+SRemark2,SRemark3,SRemark4,FRemark1,FRemark2,FRemark3 from mpplancust
+
+
+
+//订货单保存时赋值字段
+select PlanID,CoID,PlanName,Pline,PDate,ProjectID,ProjectName,ProjectShort,CustID,
+CustName,BuildID,BuildName,Address,TransID,SPACE,HTBH,LinkMan,QualityMode,StyleMode,
+Grade,TSID,TSName,tld,Part,Btrans,QualityOrder,QualityOver,QualityGive,QualityWS,CarNum,
+PlanState,ExecState,ShaRate1,ShaRate2,SZRate1,SZRate2,NoteMan,CreateTime,EditMan,EditTime,EditTag,
+SHMan,SHTag,SHTagA,SHTime,GZMan,GZTag,GZTagA,GZTime,HideTag,QualitySingle,Price,EditTag,
+ClassID1,ClassName1,ClassName5,PriceID,Rate,PriceDown,PriceTS,BiaoJi,DDID,HideTagB,HideTagC,HideTagD,HideTagE,
+MoneyMode,DaysXY,PDateEnd,JSID,PriceTag,Area,Remark1,Remark2,Remark3,Remark4,TrigTag,SaleTag,SaleCOID,SRemark1,
+SRemark2,SRemark3,SRemark4,FRemark1,FRemark2,FRemark3 from MPPlanCusT

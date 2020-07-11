@@ -26,7 +26,7 @@ class Coding
         $sql_code='select @CodeID as codeid;';
         $sql = $sql_declare."exec GetCodeID  '".$ModuleID."' , '".$CoID."' ,".$IsUpdate." ,'".$PDate."' ,'".$PType."' ,"." @CodeID output;".$sql_code;
         $CodeID = Db::query($sql);
-        return json_encode($CodeID);
+        return $CodeID;
 
     }
 }
