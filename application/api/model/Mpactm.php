@@ -13,10 +13,10 @@ use think\Model;
 
 class Mpactm extends Model
 {
-    protected $visible = ['ProjectID','ProjectName', 'CoID', 'ProjectShort', 'CustID', 'CustName',
-        'BuildName', 'BuildName', 'HTBH', 'QualityOrder','QualityGive','Address', 'ClassID1', 'ClassName1', 'ClassID2',
-        'ClassName2', 'ClassName3', 'ClassName4', 'ClassName5', 'ExecState', 'Space',
-        'PriceMode', 'StyleMode', 'QualityMode', 'NoteMan', 'CreateTime','mpactds'];
+//    protected $visible = ['ProjectID','ProjectName', 'CoID', 'ProjectShort', 'CustID', 'CustName',
+//        'BuildName', 'BuildName', 'HTBH', 'QualityOrder','QualityGive','Address', 'ClassID1', 'ClassName1', 'ClassID2',
+//        'ClassName2', 'ClassName3', 'ClassName4', 'ClassName5', 'ExecState', 'Space',
+//        'PriceMode', 'StyleMode', 'QualityMode', 'NoteMan', 'CreateTime','mpactds'];
 
     protected $pk = 'ProjectID';
 
