@@ -160,8 +160,23 @@ class Mpplancust
      * 新增/修改订单
      * @return \think\response\Json
      */
-    public static function save(){
+    public static function edit(){
         $inputs  = input('post.');
+        $mpactLock = $inputs['mpactLock'];
+        if($mpactLock){
+//            self::save($inputs);
+            return 'oldPact';
+        }else{
+//            self::createOrder($inputs);
+            return 'newPact';
+        }
+    }
+
+    /**
+     * 新增/修改订单
+     * @return \think\response\Json
+     */
+    private function save($inputs){
         $data = $inputs['data'];
         $where = $inputs['where'];
 
@@ -185,7 +200,7 @@ class Mpplancust
      * 使用orderService创建订单
      */
 
-    public function createOrder(){
+    private function createOrder(){
         $inputs  = input('post.');
         $uid = $inputs['uid'];
         $mpactm = $inputs['mpactm'];

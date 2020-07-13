@@ -44,7 +44,7 @@ Route::get('api/:version/mpplancust/by_state', 'api/:version.Mpplancust/getInfoB
 Route::get('api/:version/mpplancust/:id', 'api/:version.Mpplancust/getOne',[], ['id' => '\d+']);
 Route::post('api/:version/mpplancust/sh', 'api/:version.Mpplancust/setSH');
 Route::post('api/:version/mpplancust/state', 'api/:version.Mpplancust/setState');
-Route::post('api/:version/mpplancust/save', 'api/:version.Mpplancust/save');
+Route::post('api/:version/mpplancust/edit', 'api/:version.Mpplancust/edit');
 //通过orderService新增订单
 Route::post('api/:version/mpplancust/create', 'api/:version.Mpplancust/createOrder');
 
