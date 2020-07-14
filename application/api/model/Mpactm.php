@@ -68,4 +68,12 @@ class Mpactm extends Model
             ->update(['ExecState' => $state]);
         return $result;
     }
+
+    public static function getOne($id)
+    {
+
+        $mpact = self::find($id);
+
+        return $mpact;
+    }
 }

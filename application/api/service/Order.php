@@ -7,9 +7,9 @@
  */
 
 namespace app\api\service;
-use app\api\model\Mpactm;
-use app\api\model\Mcustomer;
-use app\api\model\Mpplancust;
+use app\api\model\Mpactm as MpactmModel;
+use app\api\model\Mcustomer as McustomerModel;
+use app\api\model\Mpplancust as MpplancustModel;
 
 class Order
 {
@@ -58,5 +58,109 @@ class Order
 
         //3、根据合同信息、订单信息生成完整的订单信息
         //4、保存订单
+    }
+
+    //现有合同下单
+    public  function save($projectId, $order){
+        $this->order = $order;
+        $this->mpactm =  MpactmModel::where('ProjectID', '=', $projectId)
+//            ->fetchSql(true)
+            ->find();
+//        $id = $mpactDetil->ProjectID;
+//        $tld = $order['tld'];
+//        $str = 'CoID';
+//        $coid = $mpactDetil->$str;
+        $this->paddOrder();
+        return 'projectid';
+        $order->ProjectID = $mpact->ProjectID;
+        $order->CoID = $mpact->CoID;
+        $order->ProjectName = $mpact->ProjectName;
+        $order->ProjectShort = $mpact->ProjectShort;
+        $order->CustID = $mpact->CustID;
+        $order->CustName = $mpact->CustName;
+        $order->BuildID = $mpact->BuildID;
+        $order->BuildName = $mpact->BuildName;
+        $order->Address = $mpact->Address;
+        $order->Space = $mpact->Space;
+        $order->HTBH = $mpact->HTBH;
+        $order->LinkMan = $mpact->Linkman1;
+        $order->QualityMode = $mpact->QualityMode;
+        $order->StyleMode = $mpact->StyleMode;
+        $order->QualityOrder = $mpact->QualityOrder;
+        $order->QualityOver = $mpact->QualityOver;
+        $order->HideTag = $mpact->HideTag;
+        $order->ClassID1 = $mpact->ClassID1;
+        $order->ClassName1 = $mpact->ClassName1;
+        $order->ClassName5 = $mpact->ClassName5;
+        $order->PriceID = $mpact->PriceID;
+        $order->Rate = $mpact->Rate;
+        $order->PriceDown = $mpact->PriceDown;
+        $order->HideTagB = $mpact->HideTagB;
+        $order->HideTagC = $mpact->HideTagC;
+        $order->HideTagD = $mpact->HideTagD;
+        $order->HideTagE = $mpact->HideTagE;
+        $order->MoneyMode = $mpact->MoneyMode;
+        $order->Area = $mpact->Area;
+        $order->Remark1 = $mpact->Remark1;
+        $order->Remark2 = $mpact->Remark2;
+        $order->Remark3 = $mpact->Remark3;
+        $order->Remark4 = $mpact->Remark4;
+        $order->SaleTag = $mpact->SaleTag;
+        $order->SaleCOID = $mpact->SaleCOID;
+        $order->SRemark1 = $mpact->SRemark1;
+        $order->SRemark2 = $mpact->SRemark2;
+        $order->SRemark3 = $mpact->SRemark3;
+        $order->SRemark4 = $mpact->SRemark4;
+        $order->FRemark1 = $mpact->FRemark1;
+        $order->FRemark2 = $mpact->FRemark2;
+        $order->FRemark3 = $mpact->FRemark3;
+    }
+
+    //把合同信息加到订单中
+    private function paddOrder(){
+        //订单要从合同读取的字段名数组
+        $orderArr = ['ProjectID',
+		'CoID',
+		'ProjectName',
+		'ProjectShort',
+		'CustID',
+		'CustName ',
+		'BuildID',
+		'BuildName',
+		'Address',
+		'Space',
+		'HTBH',
+		'LinkMan',
+		'QualityMode',
+		'StyleMode',
+		'QualityOrder',
+		'QualityOver',
+		'HideTag',
+		'ClassID1',
+		'ClassName1',
+		'ClassName5',
+		'PriceID',
+		'Rate',
+		'PriceDown',
+		'HideTagB',
+		'HideTagC',
+		'HideTagD',
+		'HideTagE ',
+		'MoneyMode',
+		'Area',
+		'Remark1',
+		'Remark2',
+		'Remark3',
+		'Remark4',
+		'SaleTag',
+		'SaleCOID',
+		'SRemark1',
+		'SRemark2',
+		'SRemark3',
+		'SRemark4',
+		'FRemark1',
+		'FRemark2',
+		'FRemark3'
+	    ];
     }
 }

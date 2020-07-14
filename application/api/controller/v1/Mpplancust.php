@@ -1,6 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
+ * Created by PhpStorm->
  * User: panbin
  * Date: 2019/11/25
  * Time: 11:07
@@ -13,7 +13,7 @@ use app\api\model\Mpplancust as MpplancustModel;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\lib\enum\PlanStatusEnum as PlanStatusEnum;
 use app\lib\exception\SuccessMessage;
-use app\api\service\Order;
+use app\api\service\Order as OrderService;
 
 class Mpplancust
 {
@@ -163,9 +163,13 @@ class Mpplancust
     public static function edit(){
         $inputs  = input('post.');
         $mpactLock = $inputs['mpactLock'];
+        $order = $inputs['order'];
+        $mpact = $inputs['mpact'];
+        $projectId = $mpact['ProjectID'];
         if($mpactLock){
-//            self::save($inputs);
-            return 'oldPact';
+              OrderService::save($projectId,$order);
+//            return 'oldPact';
+//            return $mpact['ProjectID'];
         }else{
 //            self::createOrder($inputs);
             return 'newPact';
@@ -176,24 +180,26 @@ class Mpplancust
      * 新增/修改订单
      * @return \think\response\Json
      */
-    private function save($inputs){
-        $data = $inputs['data'];
-        $where = $inputs['where'];
-
-        $cust = MpplancustModel::get($where);
-        if(empty($cust)){
-            $result = MpplancustModel::create($data);
-            //$result = MpplancustModel::create(array_merge($data, $where));
-        }else{
-            //数据库表更新触发器问题，TriTag必须与原记录的值不一样，这样才不会触发更新触发器
-            //不然数据更新失败
-            $data['TrigTag'] = $cust->TrigTag +1;
-            $result = MpplancustModel::update($data, $where);
-        }
+    private static function save($inputs){
+        return '123';
+//        $data = $inputs['data'];
+//        $where = $inputs['where'];
+//
+//        $cust = MpplancustModel::get($where);
+//        if(empty($cust)){
+//            $result = MpplancustModel::create($data);
+//            //$result = MpplancustModel::create(array_merge($data, $where));
+//        }else{
+//            //数据库表更新触发器问题，TriTag必须与原记录的值不一样，这样才不会触发更新触发器
+//            //不然数据更新失败
+//            $data['TrigTag'] = $cust->TrigTag +1;
+//            $result = MpplancustModel::update($data, $where);
+//        }
 
 
         return json(new SuccessMessage(['msg' => $result]), 201);
     }
+
 
     /*
      *
