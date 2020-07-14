@@ -25,6 +25,9 @@ class Mpplancust
      * $size  int 每页记录数
      * $page  int 当前页码
      */
+
+
+
     public  function  getRecent($size=15, $page=1){
         (new Count())->goCheck($size);
         (new PageNumberMustBePositiveInt())->goCheck($page);
@@ -166,8 +169,9 @@ class Mpplancust
         $order = $inputs['order'];
         $mpact = $inputs['mpact'];
         $projectId = $mpact['ProjectID'];
+        $orderService = new OrderService();
         if($mpactLock){
-              OrderService::save($projectId,$order);
+             $orderService->save($projectId,$order);
 //            return 'oldPact';
 //            return $mpact['ProjectID'];
         }else{
