@@ -13,7 +13,7 @@ use think\Db;
 
 class Code
 {
-    public function getCode($ModuleID,$CoID,$IsUpdate ,$PDate ,$PType=' ')
+    public static function getCode($ModuleID,$CoID,$IsUpdate ,$PDate ,$PType=' ')
     {
 
         // thinkphp调用存储过程(所有语句要全部连接起来，一起提交执行，不然会报错)
@@ -21,7 +21,6 @@ class Code
         $sql_code='select @CodeID as codeid;';
         $sql = $sql_declare."exec GetCodeID  '".$ModuleID."' , '".$CoID."' ,".$IsUpdate." ,'".$PDate."' ,'".$PType."' ,"." @CodeID output;".$sql_code;
         $CodeID = Db::query($sql);
-        return json_encode($CodeID);
-
+        return $CodeID;
     }
 }

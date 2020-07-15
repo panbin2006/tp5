@@ -7,9 +7,13 @@
  */
 
 namespace app\api\service;
+use app\api\model\Bpline;
 use app\api\model\Mpactm as MpactmModel;
 use app\api\model\Mcustomer as McustomerModel;
 use app\api\model\Mpplancust as MpplancustModel;
+use app\api\model\Tscolumns;
+use app\api\service\Code as CodeService;
+use app\lib\exception\SuccessMessage;
 
 class Order
 {
@@ -62,112 +66,80 @@ class Order
 
     //现有合同下单
     public  function save($projectId, $order){
+        //读取订单信息
         $this->order = $order;
         $this->mpactm =  MpactmModel::where('ProjectID', '=', $projectId)
 //            ->fetchSql(true)
             ->find();
-//        $id = $mpactDetil->ProjectID;
-//        $tld = $order['tld'];
-//        $str = 'CoID';
-//        $coid = $mpactDetil->$str;
+        //读取合同信息到订单
         $this->paddOrder();
-       // return 'projectid';
-//        $order->ProjectID = $mpact->ProjectID;
-//        $order->CoID = $mpact->CoID;
-//        $order->ProjectName = $mpact->ProjectName;
-//        $order->ProjectShort = $mpact->ProjectShort;
-//        $order->CustID = $mpact->CustID;
-//        $order->CustName = $mpact->CustName;
-//        $order->BuildID = $mpact->BuildID;
-//        $order->BuildName = $mpact->BuildName;
-//        $order->Address = $mpact->Address;
-//        $order->Space = $mpact->Space;
-//        $order->HTBH = $mpact->HTBH;
-//        $order->LinkMan = $mpact->Linkman1;
-//        $order->QualityMode = $mpact->QualityMode;
-//        $order->StyleMode = $mpact->StyleMode;
-//        $order->QualityOrder = $mpact->QualityOrder;
-//        $order->QualityOver = $mpact->QualityOver;
-//        $order->HideTag = $mpact->HideTag;
-//        $order->ClassID1 = $mpact->ClassID1;
-//        $order->ClassName1 = $mpact->ClassName1;
-//        $order->ClassName5 = $mpact->ClassName5;
-//        $order->PriceID = $mpact->PriceID;
-//        $order->Rate = $mpact->Rate;
-//        $order->PriceDown = $mpact->PriceDown;
-//        $order->HideTagB = $mpact->HideTagB;
-//        $order->HideTagC = $mpact->HideTagC;
-//        $order->HideTagD = $mpact->HideTagD;
-//        $order->HideTagE = $mpact->HideTagE;
-//        $order->MoneyMode = $mpact->MoneyMode;
-//        $order->Area = $mpact->Area;
-//        $order->Remark1 = $mpact->Remark1;
-//        $order->Remark2 = $mpact->Remark2;
-//        $order->Remark3 = $mpact->Remark3;
-//        $order->Remark4 = $mpact->Remark4;
-//        $order->SaleTag = $mpact->SaleTag;
-//        $order->SaleCOID = $mpact->SaleCOID;
-//        $order->SRemark1 = $mpact->SRemark1;
-//        $order->SRemark2 = $mpact->SRemark2;
-//        $order->SRemark3 = $mpact->SRemark3;
-//        $order->SRemark4 = $mpact->SRemark4;
-//        $order->FRemark1 = $mpact->FRemark1;
-//        $order->FRemark2 = $mpact->FRemark2;
-//        $order->FRemark3 = $mpact->FRemark3;
+        //生成订货单编号
+        $planId = $this->getCode();
+        $this->order['PlanID'] = $planId;
+        $this->order['PlanName'] = $planId;
+        //生成计划生产线字段
+        $pline = $this->getPlines();
+        $this->order['Pline'] = $pline;
+        //读取系统默认值
+        $this->getDefault();
+
+        //保存订单
+        $result = MpplancustModel::create($this->order);
+
+        if($result){
+            return json(new SuccessMessage(['msg' => $result]), 201);
+        }else{
+            return json(new SuccessMessage(['msg'=> []]), 40000);
+        }
+
     }
 
     //把合同信息加到订单中
     private function paddOrder(){
         //订单要从合同读取的字段名数组
-        $orderArr = ['ProjectID',
-		'CoID',
-		'ProjectName',
-		'ProjectShort',
-		'CustID',
-		'CustName ',
-		'BuildID',
-		'BuildName',
-		'Address',
-		'Space',
-		'HTBH',
-		'LinkMan',
-		'QualityMode',
-		'StyleMode',
-		'QualityOrder',
-		'QualityOver',
-		'HideTag',
-		'ClassID1',
-		'ClassName1',
-		'ClassName5',
-		'PriceID',
-		'Rate',
-		'PriceDown',
-		'HideTagB',
-		'HideTagC',
-		'HideTagD',
-		'HideTagE ',
-		'MoneyMode',
-		'Area',
-		'Remark1',
-		'Remark2',
-		'Remark3',
-		'Remark4',
-		'SaleTag',
-		'SaleCOID',
-		'SRemark1',
-		'SRemark2',
-		'SRemark3',
-		'SRemark4',
-		'FRemark1',
-		'FRemark2',
-		'FRemark3'
-	    ];
-
+        $orderArr = ['ProjectID', 'CoID', 'ProjectName', 'ProjectShort', 'CustID', 'CustName', 'BuildId', 'BuildName', 'Address', 'Space',
+		'HTBH', 'LinkMan', 'QualityMode', 'StyleMode', 'QualityOrder', 'QualityOver', 'HideTag', 'ClassID1', 'ClassName1', 'ClassName5',
+		'PriceID', 'Rate', 'PriceDown', 'HideTagB', 'HideTagC', 'HideTagD', 'HideTagE', 'MoneyMode', 'Area', 'Remark1', 'Remark2', 'Remark3', 'Remark4', 'SaleTag', 'SaleCoID',
+		'SRemark1', 'SRemark2', 'SRemark3', 'SRemark4', 'FRemark1', 'FRemark2', 'FRemark3'];
         foreach ($orderArr as $field){
-            echo $field . "</br>";
-            $this->order[$field] = $this->mpactm->$field;
+            if($field == 'LinkMan'){
+                $this->order[$field] = $this->mpactm['Linkman1'];
+            }else{
+                $this->order[$field] = $this->mpactm[$field];
+            }
         }
-        $result = $this->order;
-        return $result;
+    }
+
+    //获取生产线列表
+    private function getPlines(){
+
+        $plines = Bpline::getMostRecent();
+        $plinesStr = '';
+        foreach ($plines as $pline){
+            $plinesStr .=  $pline['Pline'] .',';
+        }
+        $plinesStr = substr($plinesStr,0,strlen($plinesStr)-1);
+        return $plinesStr;
+    }
+
+    //生成订货单编号
+    private function getCode(){
+        $id = CodeService::getCode('Mpplancust',$this->order['CoID'],1,'2020-07-15','');
+        $planId = $id[0]['codeid'];
+        return $planId;
+    }
+
+    //读取系统默认值
+    private function getDefault(){
+        $arr = [];
+        $default = Tscolumns::where('TblID','=','MPPlanCust')
+            ->select(['ShaRate1','ShaRate2','SZRate1','SZRate2','SNStyle','SZStyle','WJJStyle','']);
+        foreach ($default as $item){
+            $key = $item['ColsID'];
+            $value = $item['iniValue'];
+            echo  $key.':'.$value.'<br>';
+            $this->order[$key] = $value;
+        }
+        return $default;
     }
 }

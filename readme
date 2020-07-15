@@ -14,3 +14,10 @@
             url: api/:version.Mpactm/getRecent'
             根据工程代码查询
             api/:version.Mpactm/getOne
+
+
+
+use jbzsoft_20_dghd
+go
+
+Alter Table MPactM  Alter Column [BuildID] [varchar](20) NULL

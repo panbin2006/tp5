@@ -171,13 +171,15 @@ class Mpplancust
         $projectId = $mpact['ProjectID'];
         $orderService = new OrderService();
         if($mpactLock){
-             $orderService->save($projectId,$order);
+            $result =  $orderService->save($projectId,$order);
 //            return 'oldPact';
 //            return $mpact['ProjectID'];
         }else{
 //            self::createOrder($inputs);
             return 'newPact';
         }
+
+        return $result;
     }
 
     /**
