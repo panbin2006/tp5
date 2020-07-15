@@ -21,6 +21,7 @@ class Code
         $sql_code='select @CodeID as codeid;';
         $sql = $sql_declare."exec GetCodeID  '".$ModuleID."' , '".$CoID."' ,".$IsUpdate." ,'".$PDate."' ,'".$PType."' ,"." @CodeID output;".$sql_code;
         $CodeID = Db::query($sql);
+        $CodeID = $CodeID[0]['codeid'];
         return $CodeID;
     }
 }

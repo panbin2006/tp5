@@ -14,6 +14,9 @@ use app\api\model\Mpplancust as MpplancustModel;
 use app\api\model\Tscolumns;
 use app\api\service\Code as CodeService;
 use app\lib\exception\SuccessMessage;
+use app\api\service\Tscolumns as TscolumnsService;
+use app\api\service\Custmoter as CustmoterService;
+use app\api\service\Mpact as MpactService;
 
 class Order
 {
@@ -32,20 +35,18 @@ class Order
     protected  $uid;
 
     //下达订单
-    public function place($uid,$mpactm,$orderDetail){
+    public function place($mpactm,$order){
+        $this->order = $order;
         //客户名称
-        $custNmae = $mpactm['custname'];
+        $custNmae = $mpactm['CustName'];
         //工程名称
-        $projectName = $mpactm['projectname'];
+        $projectName = $mpactm['ProjectName'];
 
         //1、查询客户名称是否存在；如果存在该客户名称直接用原客户信息,不存在创建新的客户,并返回客户信息
-        $cust = Mcustomer::getMcustomerByCustName($custNmae);
-        if(!$cust){//不存在客户
-            //创建客户资料
-            //创建新合同
-            //保存订单
-            return;
-        }
+        $this->customer = CustmoterService::hasCust($custNmae);
+        return $this->customer;
+
+        $this->mpactm = MpplancustModel::create($this->customer);
 
         //2、查询工程名称是否存在：如果存在该工程名称并且客户名称也与原合同中的一致，直接用原合同信息；否则创建新的合同
         $project= Mpactm::getMpactByProjName($projectName);
@@ -69,20 +70,26 @@ class Order
         //读取订单信息
         $this->order = $order;
         $this->mpactm =  MpactmModel::where('ProjectID', '=', $projectId)
-//            ->fetchSql(true)
+
             ->find();
+
         //读取合同信息到订单
         $this->paddOrder();
+
         //生成订货单编号
-        $planId = $this->getCode();
+       // $planId = $this->getCode();
+        $planId = Code::getCode('Mpplancust',$this->order['CoID'],1,'2020-07-15','');
         $this->order['PlanID'] = $planId;
         $this->order['PlanName'] = $planId;
+
         //生成计划生产线字段
         $pline = $this->getPlines();
         $this->order['Pline'] = $pline;
-        //读取系统默认值
-        $this->getDefault();
 
+        //读取系统默认值
+        $defaultFields = ['ShaRate1','ShaRate2','SZRate1','SZRate2','SNStyle','SZStyle','WJJStyle',''];
+//        $this->getDefault('MPPlanCust',$defaultFields,$this->order);
+        $this->order =  TscolumnsService::getDefault('MPPlanCust',$defaultFields,$this->order);
         //保存订单
         $result = MpplancustModel::create($this->order);
 
@@ -122,23 +129,17 @@ class Order
         return $plinesStr;
     }
 
-    //生成订货单编号
-    private function getCode(){
-        $id = CodeService::getCode('Mpplancust',$this->order['CoID'],1,'2020-07-15','');
-        $planId = $id[0]['codeid'];
-        return $planId;
-    }
 
     //读取系统默认值
-    private function getDefault(){
+    private function getDefault($tblId,$defaultFields,$obj){
         $arr = [];
-        $default = Tscolumns::where('TblID','=','MPPlanCust')
-            ->select(['ShaRate1','ShaRate2','SZRate1','SZRate2','SNStyle','SZStyle','WJJStyle','']);
+        $default = Tscolumns::where('TblID','=',$tblId)
+            ->select($defaultFields);
         foreach ($default as $item){
             $key = $item['ColsID'];
             $value = $item['iniValue'];
             echo  $key.':'.$value.'<br>';
-            $this->order[$key] = $value;
+            $obj[$key] = $value;
         }
         return $default;
     }

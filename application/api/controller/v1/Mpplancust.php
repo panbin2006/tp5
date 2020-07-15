@@ -172,53 +172,14 @@ class Mpplancust
         $orderService = new OrderService();
         if($mpactLock){
             $result =  $orderService->save($projectId,$order);
-//            return 'oldPact';
-//            return $mpact['ProjectID'];
         }else{
-//            self::createOrder($inputs);
-            return 'newPact';
+
+            $result = $orderService->place($mpact, $order);
         }
 
         return $result;
     }
 
-    /**
-     * 新增/修改订单
-     * @return \think\response\Json
-     */
-    private static function save($inputs){
-        return '123';
-//        $data = $inputs['data'];
-//        $where = $inputs['where'];
-//
-//        $cust = MpplancustModel::get($where);
-//        if(empty($cust)){
-//            $result = MpplancustModel::create($data);
-//            //$result = MpplancustModel::create(array_merge($data, $where));
-//        }else{
-//            //数据库表更新触发器问题，TriTag必须与原记录的值不一样，这样才不会触发更新触发器
-//            //不然数据更新失败
-//            $data['TrigTag'] = $cust->TrigTag +1;
-//            $result = MpplancustModel::update($data, $where);
-//        }
 
 
-        return json(new SuccessMessage(['msg' => $result]), 201);
-    }
-
-
-    /*
-     *
-     * 使用orderService创建订单
-     */
-
-    private function createOrder(){
-        $inputs  = input('post.');
-        $uid = $inputs['uid'];
-        $mpactm = $inputs['mpactm'];
-        $orderDetail = $inputs['orderDetail'];
-        $orderService = new Order();
-        $result = $orderService->place($uid, $mpactm, $orderDetail);
-        return $result;
-    }
 }
