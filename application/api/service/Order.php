@@ -9,76 +9,80 @@
 namespace app\api\service;
 use app\api\model\Bpline;
 use app\api\model\Mpactm as MpactmModel;
-use app\api\model\Mcustomer as McustomerModel;
 use app\api\model\Mpplancust as MpplancustModel;
-use app\api\model\Tscolumns;
-use app\api\service\Code as CodeService;
 use app\lib\exception\SuccessMessage;
 use app\api\service\Tscolumns as TscolumnsService;
 use app\api\service\Custmoter as CustmoterService;
 use app\api\service\Mpact as MpactService;
+use app\api\service\Code as CodeService;
+use think\Db;
+use think\Exception;
 
 class Order
 {
     //工程合同，也就是客户端传过来的合同信息
     protected $mpactm;
-
     //客户资料
     protected  $customer;
-
-    //订单详细信息,客户端传过来的订单信息(混凝土规格、开盘时间、备注等)
-    protected $orderDetail;
-
     //完整的订单信息(合同信息 + 订单详细信息)
     protected $order;
-
+    //用户id
     protected  $uid;
+    //分站代码
+    protected  $coid;
+    //计划日期
+    protected  $pDate;
 
-    //下达订单
-    public function place($mpactm,$order){
+    //新合同下单
+    public function newMpact_place($mpactm,$order){
+        //接收客户端上传的合同与订单信息
         $this->order = $order;
+        $this->mpactm = $mpactm;
         //客户名称
         $custNmae = $mpactm['CustName'];
-        //工程名称
-        $projectName = $mpactm['ProjectName'];
+        $this->coid = $mpactm['CoID'];
+        $this->pDate = $order['PDate'];
 
-        //1、查询客户名称是否存在；如果存在该客户名称直接用原客户信息,不存在创建新的客户,并返回客户信息
-        $this->customer = CustmoterService::hasCust($custNmae);
-        return $this->customer;
+        //查询客户名称是否存在；如果存在该客户名称直接用原客户信息,不存在创建新的客户,并返回客户信息
+        $this->customer = CustmoterService::hasCust($custNmae,$this->coid);
+        //创建合同
+        $this->mpactm = MpactService::create($this->mpactm,$this->customer);
 
-        $this->mpactm = MpplancustModel::create($this->customer);
+        //工程代码
+        $projectId = $this->mpactm['ProjectID'];
+        //根据工程代码，读取完整的合同信息。create方法返回的字段不完整，这里需要重新读取，否则字段映射会出错
+        $this->mpactm =  MpactmModel::where('ProjectID', '=', $projectId)
+                ->find();
+        $result = $this->save();
+        return $result;
 
-        //2、查询工程名称是否存在：如果存在该工程名称并且客户名称也与原合同中的一致，直接用原合同信息；否则创建新的合同
-        $project= Mpactm::getMpactByProjName($projectName);
-        if(!$projectName){ //不存在合同
-                //判断合同中的客户名称与客户端传入的客户名称是否一致
-                if($custNmae == $project->ProjectName){
-                    //使用客户端传入的客户信息
-                }else{
-                    //创建新的客户
-                }
-                //创建新合同
-                //保存订单
-        }
-
-        //3、根据合同信息、订单信息生成完整的订单信息
-        //4、保存订单
     }
 
     //现有合同下单
-    public  function save($projectId, $order){
-        //读取订单信息
+    public function  oldMpact_place($mpactm,$order){
+        //接收客户端上传的合同与订单信息
         $this->order = $order;
+        $this->mpactm = $mpactm;
+        $this->coid = $mpactm['CoID'];
+        $this->pDate = $order['PDate'];
+        //工程代码
+        $projectId = $this->mpactm['ProjectID'];
+
+        //根据工程代码，读取完整的合同信息
         $this->mpactm =  MpactmModel::where('ProjectID', '=', $projectId)
-
             ->find();
+        $result = $this->save();
+        return $result;
 
-        //读取合同信息到订单
+    }
+
+    //保存订单
+    private  function save(){
+        //把合同信息加到订单对象中
         $this->paddOrder();
 
         //生成订货单编号
-       // $planId = $this->getCode();
-        $planId = Code::getCode('Mpplancust',$this->order['CoID'],1,'2020-07-15','');
+        $planId = CodeService::getCode('Mpplancust',$this->coid,1,$this->pDate,'');
         $this->order['PlanID'] = $planId;
         $this->order['PlanName'] = $planId;
 
@@ -88,7 +92,6 @@ class Order
 
         //读取系统默认值
         $defaultFields = ['ShaRate1','ShaRate2','SZRate1','SZRate2','SNStyle','SZStyle','WJJStyle',''];
-//        $this->getDefault('MPPlanCust',$defaultFields,$this->order);
         $this->order =  TscolumnsService::getDefault('MPPlanCust',$defaultFields,$this->order);
         //保存订单
         $result = MpplancustModel::create($this->order);
@@ -129,18 +132,4 @@ class Order
         return $plinesStr;
     }
 
-
-    //读取系统默认值
-    private function getDefault($tblId,$defaultFields,$obj){
-        $arr = [];
-        $default = Tscolumns::where('TblID','=',$tblId)
-            ->select($defaultFields);
-        foreach ($default as $item){
-            $key = $item['ColsID'];
-            $value = $item['iniValue'];
-            echo  $key.':'.$value.'<br>';
-            $obj[$key] = $value;
-        }
-        return $default;
-    }
 }

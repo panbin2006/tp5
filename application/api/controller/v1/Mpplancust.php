@@ -168,13 +168,13 @@ class Mpplancust
         $mpactLock = $inputs['mpactLock'];
         $order = $inputs['order'];
         $mpact = $inputs['mpact'];
-        $projectId = $mpact['ProjectID'];
+
         $orderService = new OrderService();
         if($mpactLock){
-            $result =  $orderService->save($projectId,$order);
+            $result =  $orderService->oldMpact_place($mpact, $order);
         }else{
 
-            $result = $orderService->place($mpact, $order);
+            $result = $orderService->newMpact_place($mpact, $order);
         }
 
         return $result;

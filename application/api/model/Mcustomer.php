@@ -15,7 +15,13 @@ use think\Model;
 class Mcustomer extends Model
 {
 
-    protected $pk = 'custid';
+    protected $pk = 'CustID';
+
+    // 开启时间字段自动写入 并设置字段类型为datetime
+    protected $autoWriteTimestamp = 'datetime';
+    // 定义时间字段名
+    protected $createTime = 'CreateTime';
+    protected $updateTime = 'EditTime';
 
     public $visible = [
         "CustID",

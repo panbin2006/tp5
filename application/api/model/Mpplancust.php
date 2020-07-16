@@ -13,12 +13,11 @@ use think\Model;
 
 class Mpplancust extends Model
 {
-//    protected $visible = ['ProjectID','ProjectName', 'CoID', 'ProjectShort', 'CustID', 'CustName',
-//        'BuildName', 'BuildName', 'HTBH', 'QualityOrder','QualityGive','Address', 'ClassID1', 'ClassName1', 'ClassID2',
-//        'ClassName2', 'ClassName3', 'ClassName4', 'ClassName5', 'ExecState', 'Space',
-//        'PriceMode', 'StyleMode', 'QualityMode', 'NoteMan', 'CreateTime','mpactds'];
-//
-//    protected $pk = 'ProjectID';
+    // 开启时间字段自动写入 并设置字段类型为datetime
+    protected $autoWriteTimestamp = 'datetime';
+    // 定义时间字段名
+    protected $createTime = 'CreateTime';
+    protected $updateTime = 'EditTime';
 
     public  function msaleodds(){
         return  $this->hasMany('Msaleodd', 'PlanID', 'PlanID');
