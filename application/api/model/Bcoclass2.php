@@ -10,8 +10,9 @@ namespace app\api\model;
 
 
 use think\Model;
-//项目类型
-class BCoClass5 extends Model
+
+//合同类型
+class Bcoclass2 extends Model
 {
 
 

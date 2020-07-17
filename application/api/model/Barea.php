@@ -10,8 +10,8 @@ namespace app\api\model;
 
 
 use think\Model;
-//业务员
-class BCoClass1 extends Model
+//区域
+class Barea extends Model
 {
 
 

@@ -10,8 +10,8 @@ namespace app\api\model;
 
 
 use think\Model;
-//区域
-class BArea extends Model
+//项目类型
+class Bcoclass5 extends Model
 {
 
 

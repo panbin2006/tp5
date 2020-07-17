@@ -100,6 +100,10 @@ Route::get('api/:version/bbtld/recent', 'api/:version.Bbtld/getRecent');
 
 Route::get('api/:version/bbtrans/recent', 'api/:version.Bbtrans/getRecent');
 
+//基础数据读取，区域、业务员、结款类型等
+Route::post('api/:version/basedata/recent', 'api/:version.Basedata/getBasedata');
+
+
 
 
 
