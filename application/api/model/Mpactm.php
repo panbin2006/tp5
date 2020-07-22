@@ -36,6 +36,15 @@ class Mpactm extends Model
         return $mpactms;
     }
 
+    public static function getMostRecentWhere($size,$page,$where){
+        $mpactms = self::order('CreateTime desc')
+            ->where($where)
+//            ->fetchSql(true)
+            ->paginate($size, true, ['page' => $page]);
+        return $mpactms;
+    }
+
+
     public static function getMpactsByName($size,$page,$name){
         $mpactms = self::where('ProjectName|CustName','like', '%'.$name.'%')
 //            ->whereOr('CustName', 'like','%'.$name.'%')

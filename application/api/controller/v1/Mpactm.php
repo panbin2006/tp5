@@ -46,6 +46,47 @@ class Mpactm
     }
 
     /**
+     * 根据where查询条件，分页查询工程合同
+     * @url  /mpactm/recent
+     * @http  GET
+     * $size  int 每页记录数
+     * $page  int 当前页码
+     * $where array 查询条件数组
+     */
+    public  function  getRecentWhere($size=15, $page=1,$conditions=[]){
+//        (new Count())->goCheck($size);
+//        (new PageNumberMustBePositiveInt())->goCheck($page);
+        $where = [];
+        $c_name= $conditions['ProjectName|CustName']; //工程名称或者客户名称
+        $c_classname1 = $conditions['classname1']; //业务员
+        $c_custname = $conditions['custname']; //客户名称
+
+        if($c_classname1){
+            $where['ClassName1'] = $c_classname1;
+        }
+        if($c_custname){
+            $where['CustName'] = $c_custname;
+        }
+        if($c_name){
+            $where['ProjectName|CustName']= ['like','%'.$c_name.'%'];
+        }
+        $pageMpactms = MpactmModel::getMostRecentWhere($size, $page,$where);
+//        return $pageMpactms;
+        if ($pageMpactms->isEmpty()){
+            return [
+                'current_page' => $pageMpactms->currentPage(),
+                'data' => []
+            ];
+        }
+        $data  = $pageMpactms->getCollection()
+            ->toArray();
+        return [
+            'current_page' => $pageMpactms->currentPage(),
+            'data' => $data
+        ];
+    }
+
+    /**
      *
      * 获取指定工程代码信息
      * @url  /mpactm/:id
