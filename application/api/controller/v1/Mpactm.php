@@ -57,7 +57,7 @@ class Mpactm
 //        (new Count())->goCheck($size);
 //        (new PageNumberMustBePositiveInt())->goCheck($page);
         $where = [];
-        $c_name= $conditions['ProjectName|CustName']; //工程名称或者客户名称
+        $c_name= $conditions['searchtxt']; //工程名称或者客户名称
         $c_classname1 = $conditions['classname1']; //业务员
         $c_custname = $conditions['custname']; //客户名称
 
