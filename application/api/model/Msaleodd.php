@@ -49,18 +49,19 @@ class Msaleodd extends Model
             "mproductrecms"
     ];
 
-    public static  function getMostRecent($size, $page, $pdateS, $pdateE, $name=''){
+    public static  function getMostRecent($size, $page,$where,$whereBetween ){
 
-       $msaleodds = self::whereBetween('Pdate',[$pdateS, $pdateE])
-            ->where('CustName|ProjectName', 'like', '%'.$name.'%')
+       $msaleodds = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
+           ->order('Pdate desc')
            ->paginate($size,false, ['page' => $page]);
 
        return $msaleodds;
     }
 
-    public static function getSummary($pdateS, $pdateE, $name){
-        $summary = self::whereBetween('Pdate',[$pdateS, $pdateE])
-            ->where('ProjectName|CustName', 'like', '%'.$name.'%')
+    public static function getSummary($where,$whereBetween){
+        $summary = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
             ->field(['sum(Quality)' => 'total_quality',
                 'sum(QualityProd)' => 'total_qualityProd'])
             ->find();

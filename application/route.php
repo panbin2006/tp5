@@ -49,7 +49,7 @@ Route::post('api/:version/mpplancust/edit', 'api/:version.Mpplancust/edit');
 //通过orderService新增订单
 Route::post('api/:version/mpplancust/create', 'api/:version.Mpplancust/createOrder');
 
-Route::get('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
+Route::post('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
 
 Route::get('api/:version/mpplan/recent', 'api/:version.Mpplan/getRecent');
 
