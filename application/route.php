@@ -51,7 +51,7 @@ Route::post('api/:version/mpplancust/create', 'api/:version.Mpplancust/createOrd
 
 Route::post('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
 
-Route::get('api/:version/mpplan/recent', 'api/:version.Mpplan/getRecent');
+Route::post('api/:version/mpplan/recent', 'api/:version.Mpplan/getRecent');
 
 
 Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent');
