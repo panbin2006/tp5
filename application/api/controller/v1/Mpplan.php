@@ -28,17 +28,45 @@ class Mpplan
      * @return array
      * @throws \app\lib\exception\ParameterException
      */
-    public static function getRecent($size=15, $page=1, $pdateS, $pdateE, $name='', $state=9)
+    public static function getRecent($size=15, $page=1)
     {
         (new Count())->goCheck($size);
         (new PageNumberMustBePositiveInt())->goCheck($page);
-        (new MpplanStatus())->goCheck($state);
 
-        //执行状态为9，查询全部计划单（状态值小于9的计划）
-        $stateOP = $state == 9 ? '<': '=';
 
-        $pageMpplans = MpplanModel::getMostRecent($size, $page, $pdateS, $pdateE, $name, $state, $stateOP);
-        $summary = MpplanModel::getSummary($pdateS, $pdateE, $name, $state, $stateOP);
+        //获取查询条件
+        $inputs = input('post.');
+        $where = [];
+        $whereBetween = [];
+        $pdateS = $inputs['pdateS'];
+        $pdateE = $inputs['pdateE'];
+        $searchtxt = $inputs['searchtxt'];
+        $state = $inputs['state'];
+
+
+        if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
+            $whereBetween[0] = $pdateS;
+            $whereBetween[1] = $pdateE;
+        }else{
+            $date_now = date('Y-m-d');
+            $whereBetween[0] = $date_now . ' 00:00:00';
+            $whereBetween[1] = $date_now . ' 23:59:59';
+        }
+        if($searchtxt){ //判断客户端上传的搜索字符串
+            $where['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
+        }
+        if($state){
+            //判断客户端上传的执行状态参数是否存在
+            (new MpplanStatus())->goCheck($state);
+            //执行状态为9，查询全部计划单（状态值小于9的计划）
+            $stateOP = $state == 9 ? '<': '=';
+            $where['ExecState'] = [$stateOP,$state];
+
+        }
+
+
+        $pageMpplans = MpplanModel::getMostRecent($size, $page, $where, $whereBetween);
+        $summary = MpplanModel::getSummary( $where, $whereBetween);
         if ($pageMpplans->isEmpty()) {
             return [
                 'current_page' => $pageMpplans->currentPage(),

@@ -49,9 +49,9 @@ Route::post('api/:version/mpplancust/edit', 'api/:version.Mpplancust/edit');
 //通过orderService新增订单
 Route::post('api/:version/mpplancust/create', 'api/:version.Mpplancust/createOrder');
 
-Route::post('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
 
-Route::post('api/:version/mpplan/recent', 'api/:version.Mpplan/getRecent');
+
+
 
 
 Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent');
@@ -60,14 +60,12 @@ Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent'
 
 Route::get('api/:version/msaleday/recent', 'api/:version.Msaleday/getRecent');
 
-
-Route::get('api/:version/mpplan/recent', 'api/:version.Mpplan/getRecent');
+Route::post('api/:version/mpplan/recent', 'api/:version.Mpplan/getRecent');
 Route::get('api/:version/mpplan/:id', 'api/:version.Mpplan/getOne');
 Route::post('api/:version/mpplan/sh', 'api/:version.Mpplan/setSH');
 Route::post('api/:version/mpplan/state', 'api/:version.Mpplan/setState');
 
-
-Route::get('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
+Route::post('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
 Route::get('api/:version/msaleodd/:id', 'api/:version.Msaleodd/getOne');
 
 

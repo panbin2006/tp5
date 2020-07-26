@@ -60,21 +60,19 @@ class Mpplan extends Model
         return $mpplan;
     }
 
-    public static function getMostRecent($size, $page, $pdateS, $pdateE, $name, $state, $stateOP){
-        $mpplans = self::whereBetween('Pdate',[$pdateS,$pdateE])
-            ->where('ProjectName|CustName', 'like', '%'.$name.'%')
-            ->where('ExecState', $stateOP , $state)
-            ->order('PlanID desc')
+    public static function getMostRecent($size, $page, $where, $whereBetween){
+        $mpplans = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
+            ->order('PlanID asc')
 //            ->fetchSql(true)
             ->paginate($size, false, ['page' => $page]);
         return $mpplans;
     }
 
 
-    public static function getSummary($pdateS, $pdateE, $name, $state, $stateOP){
-        $summary = self::whereBetween('Pdate',[$pdateS, $pdateE])
-            ->where('ProjectName|CustName', 'like', '%'.$name.'%')
-            ->where('ExecState', $stateOP, $state)
+    public static function getSummary($where, $whereBetween){
+        $summary = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
 //            ->fetchSql(true)
             ->field(['sum(QualityPlan)' => 'total_qualityPlan',
                 'sum(QualityGive)' => 'total_qualityGive',
