@@ -32,7 +32,7 @@ class Mpactm extends Model
 
     public static function getMostRecent($size,$page){
         $mpactms = self::order('CreateTime desc')
-            ->paginate($size, true, ['page' => $page]);
+            ->paginate($size, false, ['page' => $page]);
         return $mpactms;
     }
 
@@ -40,7 +40,7 @@ class Mpactm extends Model
         $mpactms = self::order('CreateTime desc')
             ->where($where)
 //            ->fetchSql(true)
-            ->paginate($size, true, ['page' => $page]);
+            ->paginate($size, false, ['page' => $page]);
         return $mpactms;
     }
 

@@ -13,6 +13,7 @@ use app\api\validate\Count;
 use app\api\validate\MpplanStatus;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\api\model\Mpplan as MpplanModel;
+use app\api\model\Msaleodd as MsaleoddModel;
 use app\lib\exception\MpplanException;
 
 class Mpplan
@@ -37,6 +38,7 @@ class Mpplan
         //获取查询条件
         $inputs = input('post.');
         $where = [];
+        $whereGroup = []; //按生产线分组的where条件
         $whereBetween = [];
         $pdateS = $inputs['pdateS'];
         $pdateE = $inputs['pdateE'];
@@ -54,6 +56,7 @@ class Mpplan
         }
         if($searchtxt){ //判断客户端上传的搜索字符串
             $where['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
+            $whereGroup['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
         }
         if($state){
             //判断客户端上传的执行状态参数是否存在
@@ -67,6 +70,7 @@ class Mpplan
 
         $pageMpplans = MpplanModel::getMostRecent($size, $page, $where, $whereBetween);
         $summary = MpplanModel::getSummary( $where, $whereBetween);
+        $summaryGroup  = MsaleoddModel::getSummaryGroup($whereGroup, $whereBetween);
         if ($pageMpplans->isEmpty()) {
             return [
                 'current_page' => $pageMpplans->currentPage(),
@@ -76,13 +80,13 @@ class Mpplan
                 'total_qualityGive' => 0,
                 'total_carNum' => 0,
                 'total_qualityWS' => 0,
+                'group_data'=> [],
                 'data' => []
             ];
         }
 
         $data = $pageMpplans->getCollection()
             ->toArray();
-
         return [
             'current_page' => $pageMpplans->currentPage(),
             'last_page' => $pageMpplans->lastPage(),
@@ -91,6 +95,7 @@ class Mpplan
             'total_qualityGive' => $summary['total_qualityGive'],
             'total_carNum' => $summary['total_carNum'],
             'total_qualityWS' => $summary['total_qualityWS'],
+            'group_data' => $summaryGroup,
             'data' => $data
         ];
     }

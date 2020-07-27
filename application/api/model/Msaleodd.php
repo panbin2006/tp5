@@ -46,7 +46,9 @@ class Msaleodd extends Model
             "NoteMan",
             "Remark3",
             "QualityTrans",
-            "mproductrecms"
+            "mproductrecms",
+            "total_quality",
+            "total_qualityProd"
     ];
 
     public static  function getMostRecent($size, $page,$where,$whereBetween ){
@@ -66,6 +68,18 @@ class Msaleodd extends Model
                 'sum(QualityProd)' => 'total_qualityProd'])
             ->find();
         return $summary;
+    }
+
+    public static function getSummaryGroup($where,$whereBetween){
+        $summaryGroup = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
+            ->group('PLine')
+            ->field([
+                'PLine',
+                'sum(Quality)' => 'total_quality',
+                'sum(QualityProd)' => 'total_qualityProd'])
+            ->select();
+        return $summaryGroup;
     }
 
     public function mproductrecms(){
