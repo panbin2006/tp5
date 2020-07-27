@@ -53,6 +53,7 @@ class Msaleodd
 
         //分页数据
         $pageMsaleodds = MsaleoddModel::getMostRecent($size, $page,$where,$whereBetween);
+//          return MsaleoddModel::getMostRecent($size, $page,$where,$whereBetween);
         //汇总数据
         $summary = MsaleoddModel::getSummary($where,$whereBetween);
 
@@ -62,18 +63,20 @@ class Msaleodd
                 'total_count' => $pageMsaleodds->total(),
                 'total_quality' => 0,
                 'total_qualityProd' => 0,
+                'last_page' => 0,
                 'data' => []
             ];
         }
 
         $data = $pageMsaleodds->getCollection()
             ->toArray();
-
+//        return false;
         return [
             'current_page' => $pageMsaleodds->currentPage(),
             'total_count' => $pageMsaleodds->total(),
             'total_quality' => $summary['total_quality'],
             'total_qualityProd' => $summary['total_qualityProd'],
+            'last_page' => $pageMsaleodds->lastPage(),
             'data' => $data
         ];
     }

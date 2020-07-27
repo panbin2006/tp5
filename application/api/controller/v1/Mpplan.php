@@ -70,6 +70,7 @@ class Mpplan
         if ($pageMpplans->isEmpty()) {
             return [
                 'current_page' => $pageMpplans->currentPage(),
+                'last_page' => 0,
                 'total_count' => $pageMpplans->total(),
                 'total_qualityPlan' => 0,
                 'total_qualityGive' => 0,
@@ -84,6 +85,7 @@ class Mpplan
 
         return [
             'current_page' => $pageMpplans->currentPage(),
+            'last_page' => $pageMpplans->lastPage(),
             'total_count' => $pageMpplans->total(),
             'total_qualityPlan' => $summary['total_qualityPlan'],
             'total_qualityGive' => $summary['total_qualityGive'],

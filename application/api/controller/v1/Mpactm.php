@@ -75,6 +75,7 @@ class Mpactm
         if ($pageMpactms->isEmpty()){
             return [
                 'current_page' => $pageMpactms->currentPage(),
+                'last_page' => 0,
                 'data' => []
             ];
         }
@@ -82,6 +83,7 @@ class Mpactm
             ->toArray();
         return [
             'current_page' => $pageMpactms->currentPage(),
+            'last_page' => $pageMpactms->lastPage(),
             'data' => $data
         ];
     }
