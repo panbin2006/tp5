@@ -76,4 +76,9 @@ class Basedata
         $result = Bbtrans::all();
         return $result;
     }
+
+    private static function getScobm(){
+        $result = Bbtrans::all();
+        return $result;
+    }
 }

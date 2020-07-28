@@ -8,6 +8,7 @@
 
 namespace app\api\controller\v1;
 
+use app\api\model\Scobm;
 use app\api\model\Syhqx as SyhqxModel;
 use app\api\validate\UserValidate;
 use app\api\service\User as UserService;
@@ -44,5 +45,16 @@ class Syhqx
             throw new UserException();
         }
         return $user;
+    }
+
+    /**
+     * 查询部门/用户二维数组
+     * @url  /api/v1/users
+     * @return  Array
+     */
+    public static function getUsers(){
+
+        $users = Scobm::with('children')->select();
+        return $users;
     }
 }

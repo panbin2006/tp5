@@ -14,7 +14,8 @@ use think\Request;
 
 class Syhqx extends Model
 {
-    protected  $visible = ['Iden_id', 'YHID', 'CoID', 'Pwd', 'BMID', 'BMName', 'PriceTag', 'PlanTag', 'LabTag', 'CoIDTag'];
+//    protected  $visible = ['Iden_id', 'YHID','YHName', 'CoID', 'Pwd', 'BMID', 'BMName', 'PriceTag', 'PlanTag', 'LabTag', 'CoIDTag','Users'];
+    protected  $visible = ['Iden_id', 'YHID'];
 
     public static function getUserById($id) {
         $user = self::where('Iden_id', '=', $id)
@@ -29,4 +30,5 @@ class Syhqx extends Model
             ->find();
         return $user;
     }
+
 }
