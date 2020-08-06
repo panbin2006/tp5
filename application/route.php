@@ -15,6 +15,7 @@ use think\Route;
 //Route::get('api/:version/user/:id','api/:version.Syhqx/read');
 //查询部门/用户二维数组，供用户登陆使用
 Route::get('api/:version/users', 'api/:version.Syhqx/getUsers');
+Route::get('api/:version/salemans', 'api/:version.Syhqx/getSalemans');
 Route::get('api/:version/user', 'api/:version.Syhqx/getAll');
 Route::get('api/:version/user/:id', 'api/:version.Syhqx/getUserById');
 Route::post('api/:version/user/login', 'api/:version.Syhqx/check');

@@ -57,4 +57,16 @@ class Syhqx
         $users = Scobm::with('children')->select();
         return $users;
     }
+
+    /**
+     *查询用户权限表，职位为业务员的用户
+     * @url  /api/v1/users
+     * @return  Array
+     */
+    public static function getSalemans($zhiwei){
+
+       $salemans = SyhqxModel::Where('ZhiWei','=',$zhiwei)
+           ->select();
+       return $salemans;
+    }
 }
