@@ -33,6 +33,7 @@ class Syhqx extends Model
 
     public static function  checkSaleman($where){
         $user = self::where($where)
+            ->fetchSql(false)
             ->find();
         return $user;
     }
