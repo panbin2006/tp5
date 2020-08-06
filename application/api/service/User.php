@@ -19,7 +19,12 @@ class User
      }
 
      public  static function checkUser($params){
-           $user = SyhqxModel:: check($params);
+           $user = SyhqxModel:: checkUser($params);
            return $user;
      }
+
+    public  static function checkSaleman($where){
+        $user = SyhqxModel:: checkSaleman($where);
+        return $user;
+    }
 }

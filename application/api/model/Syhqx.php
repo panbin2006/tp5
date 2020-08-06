@@ -23,10 +23,16 @@ class Syhqx extends Model
         return $user;
     }
 
-    public static function  check($params){
+    public static function  checkUser($params){
         $user = self::where('bmid', '=', $params['bmid'])
             ->where('yhid', '=', $params['yhid'])
             ->where('pwd', '=', $params['pwd'])
+            ->find();
+        return $user;
+    }
+
+    public static function  checkSaleman($where){
+        $user = self::where($where)
             ->find();
         return $user;
     }

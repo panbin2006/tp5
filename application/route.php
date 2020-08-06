@@ -19,6 +19,7 @@ Route::get('api/:version/salemans', 'api/:version.Syhqx/getSalemans');
 Route::get('api/:version/user', 'api/:version.Syhqx/getAll');
 Route::get('api/:version/user/:id', 'api/:version.Syhqx/getUserById');
 Route::post('api/:version/user/login', 'api/:version.Syhqx/check');
+Route::post('api/:version/user/login_saleman', 'api/:version.Syhqx/checkSaleman');
 
 
 Route::get('api/:version/driver', 'api/:version.Sygda/getRecent');

@@ -37,9 +37,11 @@ class Syhqx
         return json($user);
     }
 
+    //内部管理用户登陆
     public static  function  check(){
         (new UserValidate())->goCheck();
         $params = input();
+
         $user = UserService::checkUser($params);
         if(!$user) {
             throw new UserException();
@@ -47,6 +49,28 @@ class Syhqx
         return $user;
     }
 
+    //业务员登录
+    public static  function  checkSaleman(){
+        $params = input();
+
+        $where = [];
+        $bmid = $params['bmid'];
+        $yhid = $params['yhid'];
+        $pwd = $params['pwd'];
+
+        //判断客户端是否上传部门信息
+        if($bmid){
+            $where['bmid'] = $bmid;
+        }
+
+        $where['yhid'] = $yhid;
+        $where['pwd'] = $pwd;
+        $user = UserService::checkSaleman($where);
+        if(!$user) {
+            throw new UserException();
+        }
+        return $user;
+    }
     /**
      * 查询部门/用户二维数组
      * @url  /api/v1/users
