@@ -44,7 +44,7 @@ class Mpplan
         $pdateE = $inputs['pdateE'];
         $searchtxt = $inputs['searchtxt'];
         $state = $inputs['state'];
-        $custid = $inputs['custsid'];
+        $custid = $inputs['custid'];
         $classname1 = $inputs['classname1'];
 
         if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
