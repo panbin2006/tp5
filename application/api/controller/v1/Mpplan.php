@@ -44,7 +44,8 @@ class Mpplan
         $pdateE = $inputs['pdateE'];
         $searchtxt = $inputs['searchtxt'];
         $state = $inputs['state'];
-
+        $custid = $inputs['custsid'];
+        $classname1 = $inputs['classname1'];
 
         if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
             $whereBetween[0] = $pdateS;
@@ -67,6 +68,13 @@ class Mpplan
 
         }
 
+        if($custid){ //判断是否上传客户代码
+            $where['CustID'] = ['=',$custid];
+        }
+
+        if($classname1){ //判断是否上传业务员
+            $where['ClassName1'] = $classname1;
+        }
 
         $pageMpplans = MpplanModel::getMostRecent($size, $page, $where, $whereBetween);
         $summary = MpplanModel::getSummary( $where, $whereBetween);
