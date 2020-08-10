@@ -82,17 +82,16 @@ class Order
         $this->paddOrder();
 
         //生成订货单编号
-        $planId = CodeService::getCode('Mpplancust',$this->coid,1,$this->pDate,'');
-        $this->order['PlanID'] = $planId;
-        $this->order['PlanName'] = $planId;
+        $orderid = CodeService::getCode('Mpplancust',$this->coid,1,$this->pDate,'');
+        $this->order['OrderID'] = $orderid;
 
         //生成计划生产线字段
-        $pline = $this->getPlines();
-        $this->order['Pline'] = $pline;
+//        $pline = $this->getPlines();
+//        $this->order['Pline'] = $pline;
 
         //读取系统默认值
-        $defaultFields = ['ShaRate1','ShaRate2','SZRate1','SZRate2','SNStyle','SZStyle','WJJStyle',''];
-        $this->order =  TscolumnsService::getDefault('MPPlanCust',$defaultFields,$this->order);
+        //$defaultFields = ['ShaRate1','ShaRate2','SZRate1','SZRate2','SNStyle','SZStyle','WJJStyle',''];
+        //$this->order =  TscolumnsService::getDefault('MPPlanCust',$defaultFields,$this->order);
         //保存订单
         $result = MpplancustModel::create($this->order);
 
@@ -109,8 +108,8 @@ class Order
         //订单要从合同读取的字段名数组
         $orderArr = ['ProjectID', 'CoID', 'ProjectName', 'ProjectShort', 'CustID', 'CustName', 'BuildId', 'BuildName', 'Address', 'Space',
 		'HTBH', 'LinkMan', 'QualityMode', 'StyleMode', 'QualityOrder', 'QualityOver', 'HideTag', 'ClassID1', 'ClassName1', 'ClassName5',
-		'PriceID', 'Rate', 'PriceDown', 'HideTagB', 'HideTagC', 'HideTagD', 'HideTagE', 'MoneyMode', 'Area', 'Remark1', 'Remark2', 'Remark3', 'Remark4', 'SaleTag', 'SaleCoID',
-		'SRemark1', 'SRemark2', 'SRemark3', 'SRemark4', 'FRemark1', 'FRemark2', 'FRemark3'];
+		'HideTagB', 'HideTagC', 'HideTagD', 'HideTagE', 'MoneyMode', 'Area', 'Remark1', 'Remark2', 'Remark3', 'Remark4',
+		'SRemark1', 'SRemark2', 'SRemark3', 'SRemark4', 'FRemark1', 'FRemark2', 'FRemark3','ClassID2','ClassName2','TransID','MoneyMode'];
         foreach ($orderArr as $field){
             if($field == 'LinkMan'){
                 $this->order[$field] = $this->mpactm['Linkman1'];

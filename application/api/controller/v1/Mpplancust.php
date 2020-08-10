@@ -110,10 +110,10 @@ class Mpplancust
      * $state string 过滤字段
      *
      **/
-    public function  getInfoByState($size=15, $page=1,$state=''){
+    public function  getInfoByOrderType($size=15, $page=1,$OrderType=''){
         (new Count())->goCheck($size);
         (new PageNumberMustBePositiveInt())->goCheck($page);
-        $pageMpplancusts = MpplancustModel::getInfoByExecState($size, $page, $state);
+        $pageMpplancusts = MpplancustModel::getInfoByExecState($size, $page, $OrderType);
 
         if($pageMpplancusts->isEmpty()){
             return [
@@ -140,8 +140,8 @@ class Mpplancust
      * @param $flag bool    审核标志
      *
      */
-    public  function  setSH($id, $flag){
-        $result = MpplancustModel::upShTag($id, $flag);
+    public  function  setSH($orderID, $flag){
+        $result = MpplancustModel::upShTag($orderID, $flag);
         return  $result;
     }
 
@@ -153,9 +153,9 @@ class Mpplancust
      *
      */
 
-    public  function  setState($id, $state){
+    public  function  setState($orderID, $state){
         (new PlanStatusEnum())->goCheck($state);
-        $result = MpplancustModel::upState($id, $state);
+        $result = MpplancustModel::upState($orderID, $state);
         return $result;
     }
 

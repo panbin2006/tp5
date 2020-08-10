@@ -20,11 +20,11 @@ class Mpplancust extends Model
     protected $updateTime = 'EditTime';
 
     public  function msaleodds(){
-        return  $this->hasMany('Msaleodd', 'PlanID', 'PlanID');
+        return  $this->hasMany('Msaleodd', 'PlanID', 'PlanName');
     }
 
     public static function getMostRecent($size,$page){
-        $mpplancusts = self::order('PlanID desc')
+        $mpplancusts = self::order('OrderID desc')
             ->paginate($size, false, ['page' => $page]);
         return $mpplancusts;
     }
@@ -37,28 +37,28 @@ class Mpplancust extends Model
         return $mpplancusts;
     }
 
-    public static function getInfoByExecState($size,$page,$state){
-        $mpplancusts = self::whereLike('ExecState', '%'.$state.'%')
+    public static function getInfoByOrderType($size,$page,$orderType){
+        $mpplancusts = self::where('OrderType', '=',$orderType)
             ->order('CreateTime desc')
             ->paginate($size, false, ['page' => $page]);
         return $mpplancusts;
     }
 
-    public static function getDetail($id){
+    public static function getDetail($orderID){
         $mpplancusts = self::with('msaleodds')
-            ->find($id);
+            ->find($orderID);
         return $mpplancusts;
     }
 
-    public  static function  upSHTag($id, $flag){
-        $result = self::where('PlanID', '=', $id)
+    public  static function  upSHTag($orderID, $flag){
+        $result = self::where('OrderID', '=', $orderID)
             ->update(['SHTag' => $flag]);
         return $result;
     }
 
-    public static function upState($id, $state){
-        $result = self::where('PlanID', '=', $id)
-            ->update(['ExecState' => $state]);
+    public static function upState($id, $orderType){
+        $result = self::where('Order', '=', $id)
+            ->update(['OrderType' => $orderType]);
         return $result;
     }
 }
