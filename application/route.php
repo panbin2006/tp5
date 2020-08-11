@@ -87,6 +87,7 @@ Route::get('api/:version/matsupplier/recent', 'api/:version.Matsupplier/getRecen
 
 
 Route::get('api/:version/matin/recent', 'api/:version.Matin/getRecent');
+Route::post('api/:version/matin/recentWhere', 'api/:version.Matin/getRecentWhere');
 
 
 Route::get('api/:version/mproductrecd/recent', 'api/:version.Mproductrecd/getSummary');
