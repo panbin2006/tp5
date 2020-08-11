@@ -29,6 +29,25 @@ class Mpplancust extends Model
         return $mpplancusts;
     }
 
+    public static function getMostRecentWhere($size, $page, $where, $whereBetween){
+        $mpplancusts = self::whereBetween('PDate',$whereBetween)
+            ->where($where)
+            ->order('OrderID desc')
+            ->paginate($size, false, ['page' => $page]);
+        return $mpplancusts;
+    }
+
+    public static function getSummaryWhere(  $where, $whereBetween){
+        $summary = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
+//            ->fetchSql(true)
+            ->field(['sum(QualityPlan)' => 'total_qualityPlan',
+                'count(1)' => 'total_count'])
+            ->find();
+        return $summary;
+    }
+
+
     public static function getInfoByName($size,$page,$name){
         $mpplancusts = self::where('ProjectName|CustName','like', '%'.$name.'%')
 //            ->whereOr('CustName', 'like','%'.$name.'%')

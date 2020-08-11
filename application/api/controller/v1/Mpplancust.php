@@ -19,6 +19,85 @@ class Mpplancust
 {
 
     /**
+     * 查询计划单分页数据
+     * @param int $size     单页记录数
+     * @param int $page     页码
+     * @param $pdateS       开始时间
+     * @param $pdateE       截止时间
+     * @param string $name  工程名称|客户名称
+     * @param int $state     执行状态
+     * @return array
+     * @throws \app\lib\exception\ParameterException
+     */
+    public static function getRecentWhere($size=15, $page=1)
+    {
+        (new Count())->goCheck($size);
+        (new PageNumberMustBePositiveInt())->goCheck($page);
+
+
+        //获取查询条件
+        $inputs = input('post.');
+        $where = [];
+        $whereGroup = []; //按生产线分组的where条件
+        $whereBetween = [];
+        $pdateS = $inputs['pdateS'];
+        $pdateE = $inputs['pdateE'];
+        $searchtxt = $inputs['searchtxt'];
+        $orderType = $inputs['orderType'];
+        $custid = $inputs['custid'];
+        $classname1 = $inputs['classname1'];
+
+        if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
+            $whereBetween[0] = $pdateS;
+            $whereBetween[1] = $pdateE;
+        }else{
+            $date_now = date('Y-m-d');
+            $whereBetween[0] = $date_now . ' 00:00:00';
+            $whereBetween[1] = $date_now . ' 23:59:59';
+        }
+        if($searchtxt){ //判断客户端上传的搜索字符串
+            $where['ProjectName|CustName|PlanName']= ['like','%'.$searchtxt.'%'];
+            $whereGroup['ProjectName|CustName|PlanName']= ['like','%'.$searchtxt.'%'];
+        }
+        if($orderType){
+            $where['OrderType'] =['=' , $orderType];
+        }
+
+        if($custid){ //判断是否上传客户代码
+            $where['CustID'] = ['=',$custid];
+        }
+
+        if($classname1){ //判断是否上传业务员
+            $where['ClassName1'] = $classname1;
+        }
+
+        $pageMpplancusts= MpplancustModel::getMostRecentWhere($size, $page, $where, $whereBetween);
+        $summary = MpplancustModel::getSummaryWhere( $where, $whereBetween);
+
+        if ($pageMpplancusts->isEmpty()) {
+            return [
+                'current_page' => $pageMpplancusts->currentPage(),
+                'hasPages' =>  $pageMpplancusts->hasPages(),
+                'total' => 0,
+                'total_qualityPlan' => 0,
+                'total_count' => 0,
+                'data' => []
+            ];
+        }
+
+        $data = $pageMpplancusts->getCollection()
+            ->toArray();
+        return [
+            'current_page' => $pageMpplancusts->currentPage(),
+            'total' => $pageMpplancusts->total(),
+            'total_qualityPlan' => $summary->total_qualityPlan,
+            'total_count' => $summary->total_count,
+            'hasPages' =>  $pageMpplancusts->hasPages(),
+            'data' => $data
+        ];
+    }
+
+    /**
      * 分页查询订货单
      * @url  /mpactm/recent
      * @http  GET
