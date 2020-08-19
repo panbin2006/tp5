@@ -72,6 +72,7 @@ class Mproductrecm
         if($pageMproductrecms->isEmpty()){
             return [
                 'current_page' => $pageMproductrecms->currentPage(),
+                'last_page' => 0,
                 'total_count' => $pageMproductrecms->total(),
                 'total_quality' => 0,
                 'data' => []
@@ -83,6 +84,7 @@ class Mproductrecm
 
         return [
             'current_page' => $pageMproductrecms->currentPage(),
+            'last_page' => $pageMproductrecms->lastPage(),
             'total_count' => $pageMproductrecms->total(),
             'total_quality' => $summary['total_quality'],
             'data' => $data

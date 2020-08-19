@@ -75,6 +75,7 @@ class Msaleodd
         if($pageMsaleodds->isEmpty()){
             return [
                 'current_page' => $pageMsaleodds->currentPage(),
+                'last_page' => 0,
                 'total_count' => $pageMsaleodds->total(),
                 'total_quality' => 0,
                 'total_qualityProd' => 0,
@@ -88,6 +89,7 @@ class Msaleodd
 //        return false;
         return [
             'current_page' => $pageMsaleodds->currentPage(),
+            'last_page' => $pageMsaleodds->lastPage(),
             'total_count' => $pageMsaleodds->total(),
             'total_quality' => $summary['total_quality'],
             'total_qualityProd' => $summary['total_qualityProd'],
