@@ -53,6 +53,7 @@ class Mproductrecm extends Model
 
         $mproducts = self::whereBetween('Pdate', $whereBetween)
             ->where($where)
+            ->order('Pdate desc')
             ->paginate($size,false, ['page' => $page]);
 
         return $mproducts;
