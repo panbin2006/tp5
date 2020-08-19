@@ -89,11 +89,13 @@ Route::get('api/:version/matsupplier/recent', 'api/:version.Matsupplier/getRecen
 Route::get('api/:version/matin/recent', 'api/:version.Matin/getRecent');
 Route::post('api/:version/matin/recentWhere', 'api/:version.Matin/getRecentWhere');
 
+//材料消耗
+Route::post('api/:version/mproductrecd/recent', 'api/:version.Mproductrecd/getSummary');
 
-Route::get('api/:version/mproductrecd/recent', 'api/:version.Mproductrecd/getSummary');
-
+//仓位材料盘点
 Route::get('api/:version/matcwm/recent', 'api/:version.Matcwm/getRecent');
 
+//仓位材料库存
 Route::post('api/:version/cw_stat/recent', 'api/:version.Tmpcwiostat/getRecent');
 
 

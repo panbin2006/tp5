@@ -36,6 +36,7 @@ class Tmpcwiostat extends Model
     public static function getMostRecent()
     {
         $tmpCWIOStats = self::where('CWName is not Null')
+            ->where('MatName is not Null')
             ->order('CWID asc')
             ->select();
 

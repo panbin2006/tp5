@@ -50,18 +50,32 @@ class Matin extends Model
 //            "EditTime",
 //    ];
 
-    public static function getSummaryWhere($where,$whereBetween){
+    public static function getSummarySupplierMat($where,$whereBetween){
         $summaryGroup = self::whereBetween('Pdate',$whereBetween)
             ->where($where)
             ->group('SupplierName,MatName')
+            ->order('SupplierName,MatName')
             ->field([
                 'SupplierName',
                 'MatName',
+                'count(1)' => 'total_carnum',
                 'sum(Quality)' => 'total_quality'])
             ->select();
         return $summaryGroup;
     }
 
+    public static function getSummaryMatname($where,$whereBetween){
+        $summaryGroup = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
+            ->group('MatName')
+            ->order('MatName')
+            ->field([
+                'MatName',
+                'count(1)' => 'total_carnum',
+                'sum(Quality)' => 'total_quality'])
+            ->select();
+        return $summaryGroup;
+    }
 
     public static function getMostRecentWhere($size, $page, $where, $whereBetween){
         $matins = self::whereBetween('DateOut',$whereBetween)

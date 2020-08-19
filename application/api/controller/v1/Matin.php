@@ -54,7 +54,8 @@ class Matin
 
 
         $pageMatins= MatinModel::getMostRecentWhere($size, $page, $where, $whereBetween);
-        $summary = MatinModel::getSummaryWhere( $where, $whereBetween);
+        $summary_supplierMat = MatinModel::getSummarySupplierMat( $where, $whereBetween);
+        $summary_matname = MatinModel::getSummaryMatname( $where, $whereBetween);
 
 
         if ($pageMatins->isEmpty()) {
@@ -62,7 +63,8 @@ class Matin
                 'current_page' => $pageMatins->currentPage(),
                 'hasPages' =>  $pageMatins->hasPages(),
                 'total' => 0,
-                'summary' => [],
+                'summary_supplierMat' => [],
+                'summary_matname' => [],
                 'data' => []
             ];
         }
@@ -72,7 +74,8 @@ class Matin
         return [
             'current_page' => $pageMatins->currentPage(),
             'total' => $pageMatins->total(),
-            'summary' => $summary,
+            'summary_supplierMat' => $summary_supplierMat,
+            'summary_matname' => $summary_matname,
             'hasPages' =>  $pageMatins->hasPages(),
             'data' => $data
         ];

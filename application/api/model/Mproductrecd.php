@@ -48,10 +48,13 @@ class Mproductrecd extends Model
 
     ];
 
-    public static function getMatOut($pdateS, $pdateE)
+    public static function getMatOut($where,$whereBetween)
     {
-        $matOut = self::whereBetween('Pdate', [$pdateS, $pdateE])
-            ->field(['CWID' => 'CWID',
+        $matOut = self::whereBetween('Pdate', $whereBetween)
+            ->where($where)
+            ->field([
+                'Pline' => 'Pline',
+                'CWID' => 'CWID',
                 'CWName' => 'CWName',
                 'MatID' => 'MatID',
                 'MatName' => 'MatName',
@@ -59,8 +62,8 @@ class Mproductrecd extends Model
                 'sum(VPF)' => 'quality_pf',
                 'sum(VERR)' => 'quality_err',
                 'sum(VSJ)' => 'quality_sj'])
-            ->group('CWID,CWName,MatID,MatName,MatType')
-            ->order('MatType desc')
+            ->group('Pline,CWID,CWName,MatID,MatName,MatType')
+            ->order('Pline,MatType desc')
             ->select();
         return $matOut;
     }

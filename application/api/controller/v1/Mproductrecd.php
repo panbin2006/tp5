@@ -20,9 +20,36 @@ class Mproductrecd
      * @return array
      * @throws MproductrecdException
      */
-    public  function getSummary($pdateS, $pdateE)
+    public  function getSummary()
     {
-        $matOut = MproductrecdModel::getMatOut($pdateS, $pdateE);
+        //获取查询条件
+        $inputs = input('post.');
+        $where = [];
+        $whereBetween = [];
+
+        $pdateS = $inputs['pdateS'];
+        $pdateE = $inputs['pdateE'];
+        $pline = $inputs['pline'];
+        $searchtxt = $inputs['searchtxt'];
+
+        if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
+            $whereBetween[0] = $pdateS;
+            $whereBetween[1] = $pdateE;
+        }else{
+            $date_now = date('Y-m-d');
+            $whereBetween[0] = $date_now . ' 00:00:00';
+            $whereBetween[1] = $date_now . ' 23:59:59';
+        }
+
+        if($pline){
+            $where['Pline'] = $pline;
+        }
+        if($searchtxt){ //判断客户端上传的搜索字符串
+            $where['MatName|CWName']= ['like','%'.$searchtxt.'%'];
+        }
+
+        $matOut = MproductrecdModel::getMatOut($where,$whereBetween);
+
         if ($matOut->isEmpty()) {
             throw new MproductrecdException();
         }
