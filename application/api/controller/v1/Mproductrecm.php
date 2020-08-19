@@ -27,13 +27,48 @@ class Mproductrecm
      * @return array
      * @throws \app\lib\exception\ParameterException
      */
-    public static function getRecent($size=15, $page=1, $pdateS, $pdateE, $name=''){
+    public static function getRecent($size=15, $page=1){
 
         (new Count())->goCheck($size);
         (new PageNumberMustBePositiveInt())->goCheck($page);
 
-        $pageMproductrecms = MproductrecmModel::getMostRecent($size, $page, $pdateS, $pdateE, $name);
-        $summary = MproductrecmModel::getSummary($pdateS, $pdateE, $name);
+        //获取查询条件
+        $inputs = input('post.');
+        $where = [];
+        $whereBetween = [];
+
+        $pdateS = $inputs['pdateS'];
+        $pdateE = $inputs['pdateE'];
+        $pline = $inputs['pline'];
+        $custid = $inputs['custid'];
+        $classname1 = $inputs['classname1'];
+        $searchtxt = $inputs['searchtxt'];
+
+        if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
+            $whereBetween[0] = $pdateS;
+            $whereBetween[1] = $pdateE;
+        }else{
+            $date_now = date('Y-m-d');
+            $whereBetween[0] = $date_now . ' 00:00:00';
+            $whereBetween[1] = $date_now . ' 23:59:59';
+        }
+
+        if($pline){
+            $where['Pline'] = $pline;
+        }
+        if($custid){ //判断是否上传客户代码
+            $where['CustID'] = ['=',$custid];
+        }
+
+        if($classname1){ //判断是否上传业务员
+            $where['ClassName1'] = $classname1;
+        }
+        if($searchtxt){ //判断客户端上传的搜索字符串
+            $where['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
+        }
+
+        $pageMproductrecms = MproductrecmModel::getMostRecent($size, $page, $where, $whereBetween);
+        $summary = MproductrecmModel::getSummary($where, $whereBetween);
         if($pageMproductrecms->isEmpty()){
             return [
                 'current_page' => $pageMproductrecms->currentPage(),

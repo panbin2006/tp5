@@ -49,19 +49,20 @@ class Mproductrecm extends Model
             "mproductrecds",
     ];
 
-    public static  function getMostRecent($size, $page, $pdateS, $pdateE, $name=''){
+    public static  function getMostRecent($size,$page, $where, $whereBetween){
 
-        $mproducts = self::whereBetween('Pdate',[$pdateS, $pdateE])
-            ->where('CustName|ProjectName', 'like', '%'.$name.'%')
+        $mproducts = self::whereBetween('Pdate', $whereBetween)
+            ->where($where)
             ->paginate($size,false, ['page' => $page]);
 
         return $mproducts;
     }
 
-    public static function getSummary($pdateS, $pdateE, $name){
-        $summary = self::whereBetween('Pdate',[$pdateS, $pdateE])
-            ->where('ProjectName|CustName', 'like', '%'.$name.'%')
-            ->field(['sum(Quality)' => 'total_quality'])
+    public static function getSummary($where, $whereBetween){
+        $summary = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
+            ->field([
+                'sum(Quality)' => 'total_quality'])
             ->find();
         return $summary;
     }

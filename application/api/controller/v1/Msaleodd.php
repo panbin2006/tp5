@@ -37,6 +37,9 @@ class Msaleodd
         $whereBetween = [];
         $pdateS = $inputs['pdateS'];
         $pdateE = $inputs['pdateE'];
+        $pline = $inputs['pline'];
+        $custid = $inputs['custid'];
+        $classname1 = $inputs['classname1'];
         $searchtxt = $inputs['searchtxt'];
 
         if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
@@ -47,6 +50,18 @@ class Msaleodd
             $whereBetween[0] = $date_now . ' 00:00:00';
             $whereBetween[1] = $date_now . ' 23:59:59';
         }
+
+        if($pline){
+            $where['Pline'] = $pline;
+        }
+        if($custid){ //判断是否上传客户代码
+            $where['CustID'] = ['=',$custid];
+        }
+
+        if($classname1){ //判断是否上传业务员
+            $where['ClassName1'] = $classname1;
+        }
+
         if($searchtxt){ //判断客户端上传的搜索字符串
             $where['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
         }
