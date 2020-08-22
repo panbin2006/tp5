@@ -17,36 +17,36 @@ class Mproductrecd extends Model
 
     protected $resultSetType = 'collection';
 
-    protected $visible = [
-        "ProductID",
-        "CoID",
-        "ItemID",
-        "Pline",
-        "PDate",
-        "Quality",
-        "MatID",
-        "MatName",
-        "MatType",
-        "CWID",
-        "CWName",
-        "CWType",
-        "VPF",
-        "VSJ",
-        "VErr",
-        "VPFS",
-        "VSJS",
-        "VErrS",
-        "ErrRate",
-        "RecTag",
-        "Remark",
-        "SaleID",
-        "EditMan",
-        "quality_pf",
-        "quality_err",
-        "quality_sj",
-        "err",
-
-    ];
+//    protected $visible = [
+//        "ProductID",
+//        "CoID",
+//        "ItemID",
+//        "Pline",
+//        "PDate",
+//        "Quality",
+//        "MatID",
+//        "MatName",
+//        "MatType",
+//        "CWID",
+//        "CWName",
+//        "CWType",
+//        "VPF",
+//        "VSJ",
+//        "VErr",
+//        "VPFS",
+//        "VSJS",
+//        "VErrS",
+//        "ErrRate",
+//        "RecTag",
+//        "Remark",
+//        "SaleID",
+//        "EditMan",
+//        "quality_pf",
+//        "quality_err",
+//        "quality_sj",
+//        "err",
+//
+//    ];
 
     public static function getMatOut($where,$whereBetween)
     {
@@ -68,6 +68,23 @@ class Mproductrecd extends Model
         return $matOut;
     }
 
+    /**
+     * 根据productid查询单盘料的消耗合计
+     * @param $id  生产记录单号
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function getSummary($id){
+        $summary = self::where('productid','=',$id)
+        ->field([
+           'SUM(VPF)' => 'total_vpf',
+            'SUM(VSJ)' => 'total_vsj',
+            'SUM(VErr)' => 'total_verr',
+        ])->select();
+        return $summary;
+    }
 
 
 }

@@ -102,7 +102,17 @@ class Mproductrecm
         if(!$mproductrecm){
             throw  new MproductrecmException();
         }
+        //查询材料消耗合计
+        $result = \app\api\model\Mproductrecd::getSummary($id);
 
+        //返回合计数据
+        $total_mproductds = $result[0];
+        //计算总误差率
+        $total_verrs = $total_mproductds['total_verr'] / $total_mproductds['total_vpf'] * 100;
+        //四舍五入，保留两位小数自动补0
+        $total_mproductds['total_verrs'] = sprintf("%.2f", round($total_verrs,2));
+
+        $mproductrecm['total_mproductds'] = $total_mproductds;
         return json($mproductrecm);
     }
 }
