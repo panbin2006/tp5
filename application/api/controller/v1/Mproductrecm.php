@@ -98,6 +98,7 @@ class Mproductrecm
      * @return Array
      */
     public static function getOne($id){
+        $total_verrs = 0;
         $mproductrecm = MproductrecmModel::getMproductrecmDetail($id);
         if(!$mproductrecm){
             throw  new MproductrecmException();
@@ -108,7 +109,10 @@ class Mproductrecm
         //返回合计数据
         $total_mproductds = $result[0];
         //计算总误差率
-        $total_verrs = $total_mproductds['total_verr'] / $total_mproductds['total_vpf'] * 100;
+        if($total_mproductds['total_vpf'] <> 0){
+            $total_verrs = $total_mproductds['total_verr'] / $total_mproductds['total_vpf'] * 100;
+        }
+
         //四舍五入，保留两位小数自动补0
         $total_mproductds['total_verrs'] = sprintf("%.2f", round($total_verrs,2));
 
