@@ -48,12 +48,14 @@ class Msaleodd extends Model
             "QualityTrans",
             "mproductrecms",
             "total_quality",
-            "total_qualityProd"
+            "total_qualityProd",
+            "carinfo"
     ];
 
     public static  function getMostRecent($size, $page,$where,$whereBetween ){
 
-       $msaleodds = self::whereBetween('Pdate',$whereBetween)
+       $msaleodds = self::with('carinfo')
+            ->whereBetween('Pdate',$whereBetween)
             ->where($where)
            ->order('Pdate desc')
            ->paginate($size,false, ['page' => $page]);
@@ -84,6 +86,11 @@ class Msaleodd extends Model
 
     public function mproductrecms(){
         return $this->hasMany('Mproductrecm', 'SaleID', 'KZID');
+    }
+
+//    车辆资料
+    public function carinfo(){
+        return $this->hasOne('Carinfo','CarID','CarID');
     }
 
     public static function getMsaleoddDetail($id){

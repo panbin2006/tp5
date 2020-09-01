@@ -72,13 +72,19 @@ class Syhqx
         return $user;
     }
     /**
-     * 查询部门/用户二维数组
+     * 查询部门/用户二维数组,不包含职位为业务员的用户
      * @url  /api/v1/users
      * @return  Array
      */
     public static function getUsers(){
+        $bmids = \app\api\model\Syhqx::distinct(true)->column('BMID');
+        $users = Scobm::with(['children'=>function($query) {
+            $query->whereNull('zhiwei','or')
+            ->where('zhiwei','neq','业务员');
+        }])
+            ->where('BMID' ,'in', array_keys($bmids))
+            ->select();
 
-        $users = Scobm::with('children')->select();
         return $users;
     }
 
