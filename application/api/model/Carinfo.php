@@ -50,4 +50,6 @@ class Carinfo extends Model
        $result = self::update($data, $where, $field);
        return $result;
     }
+
+
 }

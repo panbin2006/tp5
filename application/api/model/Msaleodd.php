@@ -54,8 +54,7 @@ class Msaleodd extends Model
 
     public static  function getMostRecent($size, $page,$where,$whereBetween ){
 
-       $msaleodds = self::with('carinfo')
-            ->whereBetween('Pdate',$whereBetween)
+       $msaleodds = self::whereBetween('Pdate',$whereBetween)
             ->where($where)
            ->order('Pdate desc')
            ->paginate($size,false, ['page' => $page]);

@@ -103,6 +103,7 @@ Route::get('api/:version/carinfo/recent', 'api/:version.Carinfo/getRecent');
 Route::post('api/:version/carinfo/save', 'api/:version.Carinfo/save');
 Route::post('api/:version/carinfo/statistics', 'api/:version.Carinfo/statistics');
 Route::post('api/:version/carinfo/group', 'api/:version.Carinfo/groupData');
+Route::get('api/:version/carinfo/:id', 'api/:version.Carinfo/getOne');
 
 Route::post('api/:version/coding', 'api/:version.Coding/getCode');
 
