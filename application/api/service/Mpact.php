@@ -22,8 +22,8 @@ class Mpact
         $newMpactm= self::mappingField($mpactm, $customer);
         //读取字段默认值
         $defaultFields = ['DaysWarn','DaysXY','EditTag','ExecState','GZTag','HideTag','HideTagB','HideTagC','HideTagD','HideTagE',
-            'JQTag','JSQJType','MoneyMode','MoneyYWYTC','NoteMan','PayMode','PriceBC','PriceIDOld','PriceKZ','PriceMode','QualityMode',
-            'Rate','SaleCoID','SaleTag','SHTag','ShuiLv','ShuiLvTag','Space','StyleMode','TimesXLA','Unit','YWYKTCRate','YWYKTCTag',
+            'JQTag','JSQJType','MoneyMode','MoneyYWYTC','PayMode','PriceBC','PriceIDOld','PriceKZ','PriceMode','QualityMode',
+            'Rate','SaleTag','SHTag','ShuiLv','ShuiLvTag','Space','StyleMode','TimesXLA','Unit','YWYKTCRate','YWYKTCTag',
             'YWYTCRate','YWYTCTag'];
         $newMpactm =  TscolumnsService::getDefault('MPactM',$defaultFields,$newMpactm);
         $newMpactm['PDate'] = $date;
