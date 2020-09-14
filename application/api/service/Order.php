@@ -65,12 +65,19 @@ class Order
         $this->mpactm = $mpactm;
         $this->coid = $mpactm['CoID'];
         $this->pDate = $order['PDate'];
+        $address = $mpactm['Address']; //接收用户标定的地址
+
         //工程代码
         $projectId = $this->mpactm['ProjectID'];
 
         //根据工程代码，读取完整的合同信息
         $this->mpactm =  MpactmModel::where('ProjectID', '=', $projectId)
             ->find();
+        if($address != $this->mpactm['Address']){ //判断客户端提交的地址与合同中返回的地址是否相同，如果不同；更新合同中的地址'
+
+            $this->mpactm['Address'] = $address;
+            $this->mpactm->save();
+        }
         $result = $this->save();
         return $result;
 
