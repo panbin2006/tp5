@@ -9,6 +9,7 @@
 namespace app\api\service;
 use app\api\model\Bpline;
 use app\api\model\Mpactm as MpactmModel;
+use app\api\model\Mpactm;
 use app\api\model\Mpplancust as MpplancustModel;
 use app\lib\exception\SuccessMessage;
 use app\api\service\Tscolumns as TscolumnsService;
@@ -76,7 +77,7 @@ class Order
         if($address != $this->mpactm['Address']){ //判断客户端提交的地址与合同中返回的地址是否相同，如果不同；更新合同中的地址'
 
             $this->mpactm['Address'] = $address;
-            $this->mpactm->save([
+            MpactmModel::save([
                 'Address' => $this->mpactm['Address'],
                'TrigTag' => $this->mpactm['TrigTag'] + 1
             ], ['ProjectID'=>$this->mpactm['ProjectID']]);
