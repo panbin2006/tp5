@@ -76,7 +76,10 @@ class Order
         if($address != $this->mpactm['Address']){ //判断客户端提交的地址与合同中返回的地址是否相同，如果不同；更新合同中的地址'
 
             $this->mpactm['Address'] = $address;
-            $this->mpactm->save(['Address' => $this->mpactm['Address']], ['ProjectID'=>$this->mpactm['ProjectID']]);
+            $this->mpactm->save([
+                'Address' => $this->mpactm['Address'],
+               'TrigTag' => $this->mpactm['TrigTag'] + 1
+            ], ['ProjectID'=>$this->mpactm['ProjectID']]);
         }
         $result = $this->save();
         return $result;
