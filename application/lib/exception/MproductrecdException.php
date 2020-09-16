@@ -13,7 +13,7 @@ class MproductrecdException extends BaseException
 {
     public  $code = 401;
 
-    public $message = '材料消耗不存在！';
+    public  $msg = '材料消耗不存在！';
 
     public $errorCode = 50001;
 }
