@@ -11,7 +11,8 @@
 
 use think\Route;
 
-
+//获取Token
+Route::post('api/:version/token/user', 'api/:version.Token/getToken');
 //Route::get('api/:version/user/:id','api/:version.Syhqx/read');
 //查询部门/用户二维数组，供用户登陆使用
 Route::get('api/:version/users', 'api/:version.Syhqx/getUsers');
