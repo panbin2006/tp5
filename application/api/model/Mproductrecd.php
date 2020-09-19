@@ -61,8 +61,7 @@ class Mproductrecd extends Model
                 'MatType' => 'MatType',
                 'sum(VPF)' => 'quality_pf',
                 'sum(VSJ)' => 'quality_sj',
-                'sum(VERR)' => 'quality_err',
-                'sum(ErrRate)' => 'quality_errRate'])
+                'sum(VERR)' => 'quality_err'])
             ->group('Pline,CWID,CWName,MatID,MatName,MatType')
             ->order('Pline,MatType desc')
             ->select();
