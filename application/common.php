@@ -41,4 +41,15 @@ function curl_get($url, &$httpCode = 0){
 }
 
 
+function getRandChar($length){
+    $str = null;
+    $strPol = "ABCDEFHIJLKMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+    $max = strlen($strPol) -1;
+    for ($i = 0; i < $length; $i++){
+        $str.= $strPol[rand(0, $max)];
+    }
+
+    return $str;
+}
+
 

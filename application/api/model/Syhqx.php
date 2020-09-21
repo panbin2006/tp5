@@ -23,6 +23,12 @@ class Syhqx extends Model
         return $user;
     }
 
+    public static  function getUserByOpenid($openid) {
+        $user = self::where('Remark1', '=', $openid)
+            ->find();
+        return $user;
+    }
+
     public static function  checkUser($params){
         $user = self::where('bmid', '=', $params['bmid'])
             ->where('yhid', '=', $params['yhid'])
