@@ -62,7 +62,7 @@ class UserToken extends Token
         if($user){
             $uid = $user->YHID;
         }else{
-            $user= SyhqxModel::getUserById($yhid);
+            $user = Syhqx::getUserByYhid($yhid);
             if($user){
                 $uid =  $this->saveUser($user, $openid);
             }else{
