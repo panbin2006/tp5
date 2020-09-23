@@ -11,6 +11,7 @@ namespace app\api\controller\v1;
 use app\api\model\Sygda as SygdaModel;
 use app\api\validate\Count;
 use app\api\validate\PageNumberMustBePositiveInt;
+use app\lib\exception\CarinfoExcption;
 use app\lib\exception\DriverException;
 use app\lib\exception\SuccessMessage;
 
@@ -39,6 +40,27 @@ class Sygda
             'data' => $data
         ];
 
+    }
+
+    public static function getDriverCar(){
+        $input = input('post.');
+        $sjid = $input['ygid'];
+        $car = '';
+        $sjidwCar = \app\api\model\Carinfo::getCarBySjidw($sjid); //根据当班司机查询车号
+        if($sjidwCar){
+            $car = $sjidwCar;
+        }else{
+            $sjidOneOrTwoCar = \app\api\model\Carinfo::getCarBySjidOneOrTwo($sjid); //根据司机1id或者司机2id查询车号
+            if($sjidOneOrTwoCar){
+                $car = $sjidOneOrTwoCar;
+            }else{
+                throw new CarinfoExcption([
+                    'msg' => '当前司机无对应当班车辆'
+                ]);
+            }
+        }
+
+        return $car;
     }
 
     public static function getDriver($id)

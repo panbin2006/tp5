@@ -16,7 +16,6 @@ class Token
 {
     public function getToken($code='',$yhid=''){
         (new TokenGet())->goCheck();
-        $user = \app\api\model\Syhqx::getUserByYhid($yhid);
         $ut = new UserToken($code);
         $token = $ut->get($yhid);
         return [

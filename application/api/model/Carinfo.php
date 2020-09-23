@@ -51,5 +51,15 @@ class Carinfo extends Model
        return $result;
     }
 
+    //根据当班司机代码查询车号
+    public static function getCarBySjidw($ygid){
+        $car = self::where('SJIDW','=', $ygid)->find();
+        return $car;
+    }
 
+    //根据司机1代码或者司机2代码查询车号
+    public static function getCarBySjidOneOrTwo($ygid){
+        $car = self::where('SJID1|SJID2','=',$ygid)->find();
+        return $car;
+    }
 }

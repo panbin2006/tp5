@@ -39,6 +39,7 @@ class Msaleodd
         $pdateE = $inputs['pdateE'];
         $pline = $inputs['pline'];
         $custid = $inputs['custid'];
+        $carid = $inputs['carid'];
         $classname1 = $inputs['classname1'];
         $searchtxt = $inputs['searchtxt'];
 
@@ -56,6 +57,9 @@ class Msaleodd
         }
         if($custid){ //判断是否上传客户代码
             $where['CustID'] = ['=',$custid];
+        }
+        if($custid){ //判断是否上传车号
+            $where['CarID'] = ['=',$carid];
         }
 
         if($classname1){ //判断是否上传业务员

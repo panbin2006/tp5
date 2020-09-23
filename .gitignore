@@ -4,3 +4,5 @@ composer.lock
 /thinkphp/*
 /application/database.php
 /application/extra/*
+/runtime/cache/*
+/runtime/log/*

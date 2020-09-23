@@ -27,6 +27,7 @@ Route::get('api/:version/driver', 'api/:version.Sygda/getRecent');
 Route::get('api/:version/driver/:id', 'api/:version.Sygda/getDriver');
 Route::post('api/:version/driver/login', 'api/:version.Sygda/login');
 Route::post('api/:version/driver/save', 'api/:version.Sygda/save');
+Route::post('api/:version/driver/driverCar', 'api/:version.Sygda/getDriverCar');
 
 Route::get('api/:version/mcustomer/recent', 'api/:version.Mcustomer/getRecent');
 Route::get('api/:version/mcustomer/:id', 'api/:version.Mcustomer/getOne');
