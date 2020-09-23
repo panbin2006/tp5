@@ -18,7 +18,7 @@ use app\lib\exception\SuccessMessage;
 class Carinfo
 {
     public static  function getOne($id){
-        $car = CarinfoModel::find($id);
+        $car = CarinfoModel::with('currentDriver,firstDriver,secondDriver')->find($id);
         return $car;
     }
     /**查询车辆资料分页数据

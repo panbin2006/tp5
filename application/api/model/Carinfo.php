@@ -13,29 +13,73 @@ use think\Model;
 
 class Carinfo extends Model
 {
-//    public $pk =["CarID", "CoID"];
+//    public $pk ='"CarID", "CoID"';
 
-    public $visible = [
-        "CarID",
-        "CoID",
-        "ICID",
-        "ChePai",
-        "SJID1",
-        "SJXM1",
-        "SJID2",
-        "SJXM2",
-        "SJIDW",
-        "SJXMW",
-        "Content",
-        "CarType",
-        "Price",
-        "BCTag",
-        "TypeTag",
-        "Tare",
-        "ZhuangTai",
-        "TrigTag",
-        "ExecState",
+    public $hidden= [
+        'Content',
+        'BuyDate',
+        'CarTrademark',
+        'BuyDate',
+        'TypeTag',
+        'GZMan',
+        'GZTag',
+        'GZTagA',
+        'GZTime',
+        'YangLU',
+        'YingYun',
+        'BaoXian',
+        'Date1',
+        'Date2',
+        'Pline',
+        'Tare',
+        'ZhuangTai',
+        'Remark1',
+        'Remark2',
+        'Remark3',
+        'Remark4',
+        'TrigTag',
+        'ExecState',
+        'PriceTrans',
+        'UnitT',
+        'PlanID',
+        'ProjectID',
+        'SaleID',
+        'WGrossBZ',
+        'CarYSID',
+        'CarZGID',
+        'SBID',
+        'NoticeStr',
+        'SendTag',
+        'SendNum',
+        'SendMode',
+        'DateDaoda',
+        'DateXieL',
+        'DateBack0',
+        'DateBack1',
+        'DateGo1',
+        'ContentMin',
+        'ContentMax',
+        'SBColor',
+        'SBClass',
+        'CarPaiColor',
+        'CarClass',
+        'CarBZorWZ',
+        'CarType2',
+        'CarType3',
+        'CarType4'
     ];
+
+    public function currentDriver(){
+        return $this->hasOne('Sygda', 'YGID', 'SJIDW');
+    }
+
+    public function firstDriver(){
+        return $this->hasOne('Sygda', 'YGID', 'SJIDW');
+    }
+
+    public function secondDriver(){
+        return $this->hasOne('Sygda', 'YGID', 'SJIDW');
+    }
 
     public static function getMostRecent($size, $page, $zhuangtai )
     {
@@ -45,7 +89,7 @@ class Carinfo extends Model
         return $carInfos;
     }
 
-    public static function edit($data = [], $where = [], $field = null)
+    public static function edit($data = '', $where = '', $field = null)
     {
        $result = self::update($data, $where, $field);
        return $result;
