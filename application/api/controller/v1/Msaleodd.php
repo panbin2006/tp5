@@ -58,7 +58,7 @@ class Msaleodd
         if($custid){ //判断是否上传客户代码
             $where['CustID'] = ['=',$custid];
         }
-        if($custid){ //判断是否上传车号
+        if($carid){ //判断是否上传车号
             $where['CarID'] = ['=',$carid];
         }
 
