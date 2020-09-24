@@ -74,11 +74,11 @@ class Carinfo extends Model
     }
 
     public function firstDriver(){
-        return $this->hasOne('Sygda', 'YGID', 'SJIDW');
+        return $this->hasOne('Sygda', 'YGID', 'SJID1');
     }
 
     public function secondDriver(){
-        return $this->hasOne('Sygda', 'YGID', 'SJIDW');
+        return $this->hasOne('Sygda', 'YGID', 'SJID2');
     }
 
     public static function getMostRecent($size, $page, $zhuangtai )
