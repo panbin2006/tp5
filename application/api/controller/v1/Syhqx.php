@@ -18,6 +18,26 @@ use think\response\Json;
 
 class Syhqx
 {
+    public static function edit(){
+        $params = input('post.');
+        $user = SyhqxModel::where([
+            'yhid' => $params['yhid'],
+            'pwd' => $params['password']
+        ])->find();
+
+        if(!$user){
+            throw new UserException(['msg'=> '旧密码不正确']);
+        }
+
+//        $user['TrigTag'] = $user->TrigTag +1;
+        $result = $user->isUpdate(true)->save([
+            'TrigTag' => $user->TrigTag +1,
+            'pwd' => $params['newPassword']
+
+        ]);
+        return $result;
+    }
+
     public  static  function  getAll(){
         $users = SyhqxModel::all();
         if(!$users){
