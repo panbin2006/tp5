@@ -14,9 +14,10 @@ use think\Request;
 
 class Syhqx extends Model
 {
-//    protected  $visible = ['Iden_id', 'YHID','YHName', 'CoID', 'Pwd', 'BMID', 'BMName', 'PriceTag', 'PlanTag', 'LabTag', 'CoIDTag','Users'];
-    protected  $visible = [ 'YHID','YHName'];
-
+    protected $pk = ['YHID','CoID'];
+    protected $hidden = ['BMID','ROW_NUMBER','Iden_id','PriceTag','PlanTag','LabTag','CoIDTag','YHIDT','SHMan','SHTag','SHTagA',
+        'SHTime','GZMan','GZTag','GZTagA','GZTime','HideTag','HideEditTag','Tag1','Tag2','Tag3','HideTagB','HideTagC','HideTagD',
+        'HideTagE','HideEditTagB','HideEditTagC','HideEditTagD','HideEditTagE','TrigTag','ZhiChen','UserInNum','PhbViewBZ','PhbViewSG'];
     public static function getUserById($id) {
         $user = self::where('Iden_id', '=', $id)
             ->find();

@@ -13,6 +13,7 @@ use app\api\model\Syhqx as SyhqxModel;
 use app\api\validate\UserValidate;
 use app\api\service\User as UserService;
 use app\lib\exception\UserException;
+use think\Db;
 use think\Request;
 use think\response\Json;
 
@@ -21,22 +22,22 @@ class Syhqx
     public static function edit(){
         $params = input('post.');
         $user = SyhqxModel::where([
-            'yhid' => $params['yhid'],
-            'pwd' => $params['password']
+            'YHID' => $params['yhid'],
+            'Pwd' => $params['password'],
+            'CoID' => $params['coid']
         ])->find();
 
         if(!$user){
-            throw new UserException(['msg'=> '旧密码不正确']);
+            return json(new UserException(['msg'=> '旧密码不正确']), 404);
         }
 
-//        $user['TrigTag'] = $user->TrigTag +1;
-        $result = $user->isUpdate(true)->save([
-            'TrigTag' => $user->TrigTag +1,
-            'pwd' => $params['newPassword']
-
+        $user->save([
+            'TrigTag' => !$user['TrigTag'],
+            'Pwd' => $params['newPassword']
         ]);
-        return $result;
+        return json(new SuccessMessage(), 201);
     }
+
 
     public  static  function  getAll(){
         $users = SyhqxModel::all();
@@ -99,8 +100,10 @@ class Syhqx
     public static function getUsers(){
         $bmids = \app\api\model\Syhqx::distinct(true)->column('BMID');
         $users = Scobm::with(['children'=>function($query) {
-            $query->whereNull('zhiwei','or')
-            ->where('zhiwei','neq','业务员');
+            $query
+                ->field('YHID,YHName,BMID') //报错：类的属性不存在:app\api\model\Syhqx->BMID,关联预加载的时候必须带上关联外键的主键BMID
+                ->whereNull('zhiwei','or')
+                ->where('zhiwei','neq','业务员');
         }])
             ->where('BMID' ,'in', array_keys($bmids))
             ->select();

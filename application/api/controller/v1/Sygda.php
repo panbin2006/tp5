@@ -9,11 +9,13 @@
 namespace app\api\controller\v1;
 
 use app\api\model\Sygda as SygdaModel;
+use app\api\service\Code;
 use app\api\validate\Count;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\lib\exception\CarinfoExcption;
 use app\lib\exception\DriverException;
 use app\lib\exception\SuccessMessage;
+use app\lib\exception\SygdaException;
 
 class Sygda
 {
@@ -106,5 +108,24 @@ class Sygda
 
 
         return json(new SuccessMessage(['msg' => $result]), 201);
+    }
+
+    public static function edit(){
+        $params = input('post.');
+        $sygda = SygdaModel::where([
+            'YGID' => $params['yhid'],
+            'Remark1' => $params['password'],
+            'CoID' => $params['coid']
+            ])->find();
+        if(!$sygda){
+            return json(new SygdaException(['msg' => '旧密码不正确']),404);
+        }
+
+        $sygda->save([
+            'TrigTag' => !$sygda['TrigTag'],
+            'Remark1' => $params['newPassword']
+        ]);
+
+        return json(new SuccessMessage(), 201);
     }
 }

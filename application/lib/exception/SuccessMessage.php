@@ -13,7 +13,7 @@ class SuccessMessage extends BaseException
 {
     public $code = 201;
 
-    public $message = 'ok';
+    public $msg = 'ok';
 
     public $errorCode = 0;
 }

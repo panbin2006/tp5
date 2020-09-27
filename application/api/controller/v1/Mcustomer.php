@@ -122,4 +122,23 @@ class Mcustomer
 
         return json(new SuccessMessage(['msg' => $result]), 201);
     }
+
+    public static function edit(){
+        $params = input('post.');
+        $cust = McustomerModel::where([
+            'CustID' => $params['yhid'],
+            'KHpwd' => $params['password'],
+            'CoID' => $params['coid']
+        ])->find();
+
+        if(!$cust){
+            return json(new McustomerException(['msg'=> '旧密码不正确']), 404);
+        }
+
+        $cust->save([
+            'TrigTag' => !$cust['TrigTag'],
+            'KHpwd' => $params['newPassword']
+        ]);
+        return json(new SuccessMessage(), 201);
+    }
 }
