@@ -18,7 +18,19 @@ use app\lib\exception\SuccessMessage;
 class Carinfo
 {
     public static  function getOne($id){
-        $car = CarinfoModel::with('currentDriver,firstDriver,secondDriver')->find($id);
+
+        $car = CarinfoModel::with([
+            'currentDriver'=>function($query){
+                $query->field('YGID,YGName,CarID,Tel');
+            },
+            'firstDriver'=>function($query){
+                $query->field('YGID,YGName,CarID,Tel');
+            },
+            'secondDriver'=>function($query){
+                $query->field('YGID,YGName,CarID,Tel');
+            }
+            ])->field('CarID,SJIDW,SJID1,SJID2,SJXMW,SJXM1,SJXM2,CoID,ICID,ChePai,CarType,BCTag')->find($id);
+
         return $car;
     }
     /**查询车辆资料分页数据
