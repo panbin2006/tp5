@@ -101,8 +101,8 @@ class Order
 //        $this->order['Pline'] = $pline;
 
         //读取系统默认值
-        //$defaultFields = ['ShaRate1','ShaRate2','SZRate1','SZRate2','SNStyle','SZStyle','WJJStyle',''];
-        //$this->order =  TscolumnsService::getDefault('MPPlanCust',$defaultFields,$this->order);
+        $defaultFields = ['QualitySingle'];
+        $this->order =  TscolumnsService::getDefault('MPPlanCust',$defaultFields,$this->order);
         //保存订单
         $result = MpplancustModel::create($this->order);
 
