@@ -81,6 +81,10 @@ class Carinfo extends Model
         return $this->hasOne('Sygda', 'YGID', 'SJID2');
     }
 
+    public  static function getByDriverID($driverId){
+        $car = self::where('SJID1|SJID2|SJIDW','=',$driverId)->find();
+        return $car;
+    }
     public static function getMostRecent($size, $page, $zhuangtai )
     {
         $carInfos = self::where('ZhuangTai' , 'like','%' . $zhuangtai.'%')

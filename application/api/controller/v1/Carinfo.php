@@ -17,6 +17,11 @@ use app\lib\exception\SuccessMessage;
 
 class Carinfo
 {
+    public static function getByDriverID($driverId){
+        $car = CarinfoModel::getByDriverID($driverId);
+        return $car;
+    }
+
     public static  function getOne($id){
 
         $car = CarinfoModel::with([

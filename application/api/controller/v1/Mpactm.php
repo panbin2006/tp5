@@ -118,7 +118,6 @@ class Mpactm
         (new Count())->goCheck($size);
         (new PageNumberMustBePositiveInt())->goCheck($page);
         $pageMpacts = MpactmModel::getMpactsByName($size, $page, $name);
-        return $pageMpacts;
         if($pageMpacts->isEmpty()){
             return [
                 'current_page' => $pageMpacts->currentPage(),

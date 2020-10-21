@@ -17,4 +17,5 @@ class MpactStatusEnum
 
     const COMPLETE = '正常完毕';
 
+
 }

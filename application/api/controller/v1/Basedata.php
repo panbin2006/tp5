@@ -14,6 +14,7 @@ use app\api\model\Bcoclass1;
 use app\api\model\Bcoclass2;
 use app\api\model\Bcoclass5;
 use app\api\model\Bbtld;
+use app\api\model\Bexecstate;
 use app\api\model\Mbetoninfo;
 use app\api\model\Bbtrans;
 //获取基础表数据，坍落度、施工方式、区域、业务员、结款类型等
@@ -79,6 +80,11 @@ class Basedata
 
     private static function getScobm(){
         $result = Bbtrans::all();
+        return $result;
+    }
+
+    private static function getBexecstate(){
+        $result = Bexecstate::all();
         return $result;
     }
 }
