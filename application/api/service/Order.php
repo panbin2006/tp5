@@ -39,6 +39,9 @@ class Order
         //接收客户端上传的合同与订单信息
         $this->order = $order;
         $this->mpactm = $mpactm;
+
+        //订单标注为新工地
+        $this->order['SRemark3'] = 'new';
         //客户名称
         $custNmae = $mpactm['CustName'];
         $this->coid = $mpactm['CoID'];
@@ -116,11 +119,11 @@ class Order
 
     //把合同信息加到订单中
     private function paddOrder(){
-        //订单要从合同读取的字段名数组
+        //订单要从合同读取的字段名数组,SRemark3用来保存新工地标志“new”,不保存到合同
         $orderArr = ['ProjectID', 'CoID', 'ProjectName', 'ProjectShort', 'CustID', 'CustName', 'BuildId', 'BuildName', 'Address', 'Space',
 		'HTBH', 'LinkMan', 'QualityMode', 'StyleMode', 'QualityOrder', 'QualityOver', 'HideTag', 'ClassID1', 'ClassName1', 'ClassName5',
 		'HideTagB', 'HideTagC', 'HideTagD', 'HideTagE', 'MoneyMode', 'Area', 'Remark1', 'Remark2', 'Remark3', 'Remark4',
-		'SRemark1', 'SRemark2', 'SRemark3', 'SRemark4', 'FRemark1', 'FRemark2', 'FRemark3','ClassID2','ClassName2','TransID','MoneyMode'];
+		'SRemark1', 'SRemark2', 'SRemark4', 'FRemark1', 'FRemark2', 'FRemark3','ClassID2','ClassName2','TransID','MoneyMode'];
         foreach ($orderArr as $field){
             if($field == 'LinkMan'){
                 $this->order[$field] = $this->mpactm['Linkman1'];
