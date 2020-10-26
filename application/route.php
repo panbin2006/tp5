@@ -43,7 +43,7 @@ Route::post('api/:version/mcustomer/edit', 'api/:version.Mcustomer/edit');
 Route::get('api/:version/mpactm/recent', 'api/:version.Mpactm/getRecent');
 Route::get('api/:version/mpactm/by_name', 'api/:version.Mpactm/getMpactmsByName');
 Route::get('api/:version/mpactm/by_state', 'api/:version.Mpactm/getMpactmsByState');
-Route::get('api/:version/mpactm/:id', 'api/:version.Mpactm/getOne',[], ['id' => '\d+']);
+Route::get('api/:version/mpactm/:id', 'api/:version.Mpactm/getOne');
 Route::post('api/:version/mpactm/recentwhere', 'api/:version.Mpactm/getRecentWhere');
 Route::post('api/:version/mpactm/sh', 'api/:version.Mpactm/setSH');
 Route::post('api/:version/mpactm/state', 'api/:version.Mpactm/setState');
