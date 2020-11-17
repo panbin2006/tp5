@@ -169,8 +169,11 @@ class Mpactm
      *
      */
     public  function  setSH($id, $flag){
-        $result = MpactmModel::upShTag($id, $flag);
-        return  $result;
+        $mpactm = MpactmModel::with('mpactds')->find($id);
+        $mpactm->TrigTag = '2';
+        $mpactm->SHTag = $flag;
+        $mpactm->save();
+        return  $mpactm;
     }
 
 

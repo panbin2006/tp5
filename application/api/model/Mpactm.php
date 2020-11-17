@@ -74,7 +74,8 @@ class Mpactm extends Model
 
     public  static function  upSHTag($id, $flag){
         $result = self::where('ProjectID', '=', $id)
-            ->update(['SHTag' => $flag]);
+
+            ->update(['TrigTag'=>'2','SHTag' => $flag]);
         return $result;
     }
 
