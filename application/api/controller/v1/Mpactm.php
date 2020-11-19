@@ -186,7 +186,10 @@ class Mpactm
 
     public  function  setState($id, $state){
         (new MpactStatus())->goCheck($state);
-        $result = MpactmModel::upState($id, $state);
-        return $result;
+        $mpactm = MpactmModel::with('mpactds')->find($id);
+        $mpactm->TrigTag = '2';
+        $mpactm->ExecState = $state;
+        $mpactm->save();
+        return  $mpactm;
     }
 }
