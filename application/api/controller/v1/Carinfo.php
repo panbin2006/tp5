@@ -17,11 +17,66 @@ use app\lib\exception\SuccessMessage;
 
 class Carinfo
 {
+
+    
+    /**
+     * 司机端扫码换车
+     * url:api/v1/carinfo/changecar
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    public static function changeCar(){
+        $params = input('post.');
+
+        $currentCarid = $params['currentCarid'];
+        $newCarid = $params['newCarid'];
+        $driverID = $params['driverID'];
+        $driverName = $params['driverName'];
+        if($currentCarid){
+            $currentCar = CarinfoModel::get($currentCarid);
+            $currentCar['SJIDW'] = '';
+            $currentCar['SJXMW'] = '';
+            $currentCar['TrigTag'] = $currentCar['TrigTag'] + 1;
+            $currentCar->save();
+        }
+        if($newCarid){
+            $newCar = CarinfoModel::get($newCarid);
+            $newCar['SJIDW'] = $driverID;
+            $newCar['SJXMW'] = $driverName;
+            $newCar['TrigTag'] = $newCar['TrigTag'] + 1;
+            $updNewCarTag = $newCar->save();
+        }
+
+        if(!$updNewCarTag){
+            return [
+                'code' => 404,
+                'data' => ''
+            ];
+        }
+
+        return [
+            'code' => 200,
+            'data' => $newCar
+        ] ;
+    }
+    /**
+     * 根据司机代码查询车辆
+     * @param $id
+     * @return array|false|\PDOStatement|string|\think\Model
+     */
     public static function getByDriverID($id){
         $car = CarinfoModel::getByDriverID($id);
         return $car;
     }
 
+    /**
+     * 查询车辆资料
+     * @param $id
+     * @return array|false|\PDOStatement|string|\think\Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
     public static  function getOne($id){
 
         $car = CarinfoModel::with([
