@@ -43,6 +43,8 @@ Route::post('api/:version/mcustomer/save', 'api/:version.Mcustomer/save');
 Route::post('api/:version/mcustomer/edit', 'api/:version.Mcustomer/edit');
 
 
+Route::post('api/:version/mbuilder/login', 'api/:version.Mbuilder/login');
+
 Route::get('api/:version/mpactm/recent', 'api/:version.Mpactm/getRecent');
 Route::get('api/:version/mpactm/by_name', 'api/:version.Mpactm/getMpactmsByName');
 Route::get('api/:version/mpactm/by_state', 'api/:version.Mpactm/getMpactmsByState');

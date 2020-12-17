@@ -45,6 +45,7 @@ class Mpplancust
         $searchtxt = $inputs['searchtxt'];
         $orderType = $inputs['orderType'];
         $custid = $inputs['custid'];
+        $buildid = $inputs['buildid'];
         $classname1 = $inputs['classname1'];
 
         if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
@@ -67,6 +68,9 @@ class Mpplancust
             $where['CustID'] = ['=',$custid];
         }
 
+        if($buildid){ //判断是否上传施工单位代码
+            $where['BuildID'] = ['=',$buildid];
+        }
         if($classname1){ //判断是否上传业务员
             $where['ClassName1'] = $classname1;
         }

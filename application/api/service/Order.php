@@ -124,10 +124,13 @@ class Order
 		'HTBH', 'LinkMan', 'QualityMode', 'StyleMode', 'QualityOrder', 'QualityOver', 'HideTag', 'ClassID1', 'ClassName1', 'ClassName5',
 		'HideTagB', 'HideTagC', 'HideTagD', 'HideTagE', 'MoneyMode', 'Area', 'Remark1', 'Remark2', 'Remark3', 'Remark4',
 		'SRemark1', 'SRemark2', 'SRemark4', 'FRemark1', 'FRemark2', 'FRemark3','ClassID2','ClassName2','TransID','MoneyMode'];
-        foreach ($orderArr as $field){
+        foreach ($orderArr as $field){ //订货单表中施工单位为LinkMan,工程合同表中施工单位为Linkman1
             if($field == 'LinkMan'){
                 $this->order[$field] = $this->mpactm['Linkman1'];
-            }else{
+            }elseif($field == 'BuildId'){ //订货单表中施工单位为BuildID,工程合同表中施工单位为BuildId,
+                $this->order['BuildID'] =  $this->mpactm['BuildId'];
+            }
+            else{
                 $this->order[$field] = $this->mpactm[$field];
             }
         }

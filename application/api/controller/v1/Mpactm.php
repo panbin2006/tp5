@@ -60,12 +60,16 @@ class Mpactm
         $c_name= $conditions['searchtxt']; //工程名称或者客户名称
         $c_classname1 = $conditions['classname1']; //业务员
         $c_custname = $conditions['custname']; //客户名称
+        $c_buildname = $conditions['buildname']; //客户名称
 
         if($c_classname1){
             $where['ClassName1'] = $c_classname1;
         }
         if($c_custname){
             $where['CustName'] = $c_custname;
+        }
+        if($c_buildname){
+            $where['BuildName'] = $c_buildname;
         }
         if($c_name){
             $where['ProjectName|CustName']= ['like','%'.$c_name.'%'];
