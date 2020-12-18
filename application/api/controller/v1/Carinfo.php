@@ -14,6 +14,7 @@ use app\api\service\QrcodeCreate;
 use app\api\validate\Count;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\lib\enum\CarZhuangTai;
+use app\lib\exception\CarinfoExcption;
 use app\lib\exception\SuccessMessage;
 use app\api\service\QrcodeCreate as QrcodeService;
 class Carinfo
@@ -42,7 +43,7 @@ class Carinfo
 
     public static  function getQrcodes(){
         $cars = CarinfoModel::column('CarID');
-        $cars = array_values($cars);
+        $cars = array_keys($cars);
         if($cars){
             QrcodeCreate::Qrcodes($cars, '车号：');
         }
@@ -63,7 +64,8 @@ class Carinfo
         $newCarid = $params['newCarid'];
         $driverID = $params['driverID'];
         $driverName = $params['driverName'];
-        if($currentCarid){
+
+        if(!$currentCarid&&$currentCarid<>'无车号'){
             $currentCar = CarinfoModel::get($currentCarid);
             $currentCar['SJIDW'] = '';
             $currentCar['SJXMW'] = '';
@@ -72,6 +74,9 @@ class Carinfo
         }
         if($newCarid){
             $newCar = CarinfoModel::get($newCarid);
+            if(!$newCar){
+                throw new CarinfoExcption();
+            }
             $newCar['SJIDW'] = $driverID;
             $newCar['SJXMW'] = $driverName;
             $newCar['TrigTag'] = $newCar['TrigTag'] + 1;
@@ -80,14 +85,14 @@ class Carinfo
 
         if(!$updNewCarTag){
             return [
-                'code' => 404,
-                'data' => ''
+                'msg' => '车号更新失败',
+                'error_code' => 401
             ];
         }
 
         return [
-            'code' => 200,
-            'data' => $newCar
+            'msg' => '车号更新成功',
+            'error_code' => 200
         ] ;
     }
     /**
