@@ -10,15 +10,46 @@ namespace app\api\controller\v1;
 
 use app\api\model\Carinfo as CarinfoModel;
 use app\api\model\CarStatistics as CarStatisticsModel;
+use app\api\service\QrcodeCreate;
 use app\api\validate\Count;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\lib\enum\CarZhuangTai;
 use app\lib\exception\SuccessMessage;
-
+use app\api\service\QrcodeCreate as QrcodeService;
 class Carinfo
 {
+    /**
+     * 根据车号生成二维码图片
+     * @url  api/v1/carinfo/qrcode/:id
+     * @param string $id  车号
+     * @throws \Endroid\QrCode\Exception\InvalidPathException
+     * @throws \Endroid\QrCode\Exception\InvalidWriterException
+     * @throws \think\exception\DbException
+     */
+    public static function getQrcode($id = ''){
+        $car = CarinfoModel::get($id);
+        if($car){
+            QrcodeService::createQrcode($id, '车号：');
+        }
+    }
 
-    
+    /**
+     * 生成所有车号的二维码图片
+     * @url  api/v1/carinfo/qrcodes
+     * @return CarinfoModel[]|false
+     * @throws \think\exception\DbException
+     */
+
+    public static  function getQrcodes(){
+        $cars = CarinfoModel::column('CarID');
+        $cars = array_values($cars);
+        if($cars){
+            QrcodeCreate::Qrcodes($cars, '车号：');
+        }
+        return $cars;
+    }
+
+
     /**
      * 司机端扫码换车
      * url:api/v1/carinfo/changecar

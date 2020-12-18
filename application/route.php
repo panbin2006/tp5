@@ -114,8 +114,12 @@ Route::post('api/:version/carinfo/save', 'api/:version.Carinfo/save');
 Route::post('api/:version/carinfo/statistics', 'api/:version.Carinfo/statistics');
 Route::post('api/:version/carinfo/group', 'api/:version.Carinfo/groupData');
 Route::post('api/:version/carinfo/changecar', 'api/:version.Carinfo/changeCar');
+//生成所有车号的二维码图片
+Route::post('api/:version/carinfo/qrcodes', 'api/:version.Carinfo/getQrcodes');
 Route::get('api/:version/carinfo/:id', 'api/:version.Carinfo/getOne');
 Route::get('api/:version/carinfo/car/:id', 'api/:version.Carinfo/getByDriverID');
+//根据车号生成二维码图片
+Route::get('api/:version/carinfo/qrcode/:id', 'api/:version.Carinfo/getQrcode');
 
 Route::post('api/:version/coding', 'api/:version.Coding/getCode');
 
