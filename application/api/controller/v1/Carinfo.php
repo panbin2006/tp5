@@ -67,10 +67,12 @@ class Carinfo
 
         if(!$currentCarid&&$currentCarid<>'无车号'){
             $currentCar = CarinfoModel::get($currentCarid);
-            $currentCar['SJIDW'] = '';
-            $currentCar['SJXMW'] = '';
-            $currentCar['TrigTag'] = $currentCar['TrigTag'] + 1;
-            $currentCar->save();
+            if($currentCar['SJIDW'] == $driverID) { //判断当前车号的当班司机id是不是提交的司机id，如果是，把该车的当班司机清空
+                $currentCar['SJIDW'] = '';
+                $currentCar['SJXMW'] = '';
+                $currentCar['TrigTag'] = $currentCar['TrigTag'] + 1;
+                $currentCar->save();
+            }
         }
         if($newCarid){
             $newCar = CarinfoModel::get($newCarid);
