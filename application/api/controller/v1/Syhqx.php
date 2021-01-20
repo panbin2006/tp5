@@ -102,12 +102,16 @@ class Syhqx
         $bmids = \app\api\model\Syhqx::distinct(true)->column('BMID');
         $users = Scobm::with(['children'=>function($query) {
             $query
-                ->field('YHID,YHName,BMID') //报错：类的属性不存在:app\api\model\Syhqx->BMID,关联预加载的时候必须带上关联外键的主键BMID
-                ->whereNull('zhiwei','or')
-                ->where('zhiwei','neq','业务员');
+                ->field('YHID,YHName,BMID')//报错：类的属性不存在:app\api\model\Syhqx->BMID,关联预加载的时候必须带上关联外键的主键BMID
+                ->where('zhiwei','neq','业务员') //where语句要在whereNull之前，不然children查不出来
+                ->whereNull('zhiwei','or');
         }])
             ->where('BMID' ,'in', array_keys($bmids))
+//            ->fetchSql(true)
             ->select();
+//        $users = Scobm::with(['children'])
+//            ->where('BMID' ,'in', array_keys($bmids))
+//            ->select();
 
         return $users;
     }

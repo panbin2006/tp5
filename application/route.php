@@ -74,7 +74,7 @@ Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent'
 
 
 
-Route::get('api/:version/msaleday/recent', 'api/:version.Msaleday/getRecent');
+Route::post('api/:version/msaleday/recent', 'api/:version.Msaleday/getRecent');
 
 Route::post('api/:version/mpplan/recent', 'api/:version.Mpplan/getRecent');
 Route::get('api/:version/mpplan/:id', 'api/:version.Mpplan/getOne');

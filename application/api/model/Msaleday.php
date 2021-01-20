@@ -47,9 +47,9 @@ class Msaleday extends Model
     ];
 
 
-    public static function getMostRecent($size, $page, $pdateS, $pdateE, $name){
-        $msaledays = self::whereBetween('Pdate',[$pdateS,$pdateE])
-            ->where('ProjectName|CustName', 'like', '%'.$name.'%')
+    public static function getMostRecent($size, $page, $where,$whereBetween) {
+        $msaledays = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
             ->order('PlanID desc')
             ->paginate($size, false, ['page' => $page]);
 
@@ -57,10 +57,10 @@ class Msaleday extends Model
 
     }
 
-    public static function getSummary($size, $page, $pdateS, $pdateE, $name){
-        $msaledays = self::whereBetween('Pdate',[$pdateS,$pdateE])
-            ->where('ProjectName|CustName', 'like', '%'.$name.'%')
-            ->field(['sum(Quality)'=> 'total_quality', 'sum(TransNum)' => 'total_transNum'])
+    public static function getSummary($where,$whereBetween){
+        $msaledays = self::whereBetween('Pdate',$whereBetween)
+            ->where($where)
+            ->field(['sum(Quality)'=> 'total_quality', 'sum(QualityProd)'=> 'total_qualityProd', 'sum(TransNum)' => 'total_transNum'])
             ->find();
         return $msaledays;
     }
