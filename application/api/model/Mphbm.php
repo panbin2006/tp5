@@ -20,15 +20,21 @@ class Mphbm extends Model
 
     public static  function  getMostRecent($size, $page, $where){
         $mphbms =  self::where($where)
-            ->with(['Mphbds'=>function ($quality){
-                $quality->field(['PhbID','CoID','ItemID','MatID','MatName','MatType','VPF','Style','VPFBase','VPFBase'])
-                    ->order('ItemID asc');
-            }])
             ->field(['PhbID','Grade','CoID','tld','BTrans','Weight','NoteMan','CreateTime','EditMan','EditTime','EditTag',
                     'SNStyle','WJJStyle','JBSJ','PDate','SJB','PhbType','BZRZ','PhbGroup'])
             ->order('Grade asc')
-//            ->fetchSql(true)
             ->paginate($size, false, ['page' => $page]);
         return $mphbms;
+    }
+
+    public static function  getOne($phbid){
+        $mphbm = self::get(['PhbID' => $phbid],['Mphbds'=>function ($quality){
+                    $quality->field(['PhbID','CoID','ItemID','MatID','MatName','MatType','VPF','Style','VPFBase','VPFBase'])
+                        ->field(['PhbID'])
+                        ->order('ItemID asc');
+        }]);
+
+
+        return $mphbm;
     }
 }

@@ -68,6 +68,10 @@ class Mphbm
      */
     public static function getOne($id)
     {
+        $mphbm = MphbmModel::getOne($id);
+        if($mphbm){
+           return $mphbm;
+        }
 
     }
 

@@ -87,9 +87,11 @@ Route::post('api/:version/mpplan/state', 'api/:version.Mpplan/setState');
 
 //生产配方
 Route::post('api/:version/mphbprod/recent', 'api/:version.Mphbprod/getRecent');
+Route::post('api/:version/mphbprod/single', 'api/:version.Mphbprod/getOne');
 
 //标准配方
 Route::post('api/:version/mphbm/recent', 'api/:version.Mphbm/getRecent');
+Route::get('api/:version/mphbm/:id', 'api/:version.Mphbm/getOne');
 
 //发货单
 Route::post('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');

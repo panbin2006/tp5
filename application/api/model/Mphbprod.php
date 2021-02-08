@@ -15,8 +15,6 @@ class Mphbprod extends Model
 {
     protected  $hidden = [
             "iden_id",
-            "EditMan",
-            "EditTime",
             "EditTag",
             "SHMan",
             "SHTag",
@@ -90,9 +88,16 @@ class Mphbprod extends Model
 
     public static function getMostRecent($size, $page, $where){
         $mphbprods =  self::where($where)
+            ->field(['PhbID','PLine','PhbName','Grade','tld','BTrans','CreateTime','Weight'])
             ->order('Grade asc')
 //            ->fetchSql(true)
             ->paginate($size, false, ['page' => $page]);
+        return $mphbprods;
+    }
+
+
+    public static function getOne($pline, $phbid){
+        $mphbprods =  self::get(['PLine' => $pline, 'PhbID' => $phbid]);
         return $mphbprods;
     }
 }

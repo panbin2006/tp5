@@ -12,6 +12,8 @@ namespace app\api\controller\v1;
 use app\api\validate\Count;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\api\model\Mphbprod as MphbprodModel;
+use app\api\service\Mphbprod as MphbprodService;
+use app\lib\exception\MphbprodException;
 
 class Mphbprod
 {
@@ -39,7 +41,9 @@ class Mphbprod
 
         $pline = $inputs['pline'];
         if($pline){ //判断客户端上传的生产线号
-            $where['PLine']= ['=',$pline];
+            if($pline<>'全部'){
+                $where['PLine']= ['=',$pline];
+            }
         }
 
 
@@ -70,9 +74,11 @@ class Mphbprod
      * @return \think\response\Json
      * @throws MpplanException
      */
-    public static function getOne($id)
+    public static function getOne($pline, $phbid)
     {
 
+        $phbprod = MphbprodService::getMphprod($pline, $phbid);
+        return $phbprod;
     }
 
 
