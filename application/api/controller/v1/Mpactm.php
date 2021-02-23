@@ -21,6 +21,29 @@ class Mpactm
 {
 
     /**
+     ** @url  /mpactm/betoninfo
+     * @http  post
+     * $projectID  str 工程代码
+     * $betonType  str 产品类型： 强度 grade, 特殊要求  TSName, tld 坍落度， 施工方式  BTrans
+     * $where array 查询条件数组
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+    public static  function getBetoninfoByType(){
+        $params = input('post.');
+        $projectID = $params['projectid'];
+        $betonType = $params['betonType'];
+        $where = [];
+        if($projectID){
+            $where['projectid'] = $projectID;
+        }
+        if($betonType){
+            $where[$betonType] = ['<>',''];
+        }
+        $list = MpactmModel::getListByBetonType($where);
+        return $list;
+    }
+
+    /**
      * 分页查询工程合同
      * @url  /mpactm/recent
      * @http  GET

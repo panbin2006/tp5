@@ -35,4 +35,21 @@ class Mbetoninfo
 
    }
 
+
+    /**
+     * @url  /mbetoninfo/typelist
+     * @http POST
+     * @betonType   str 产品类型： 强度 grade, 特殊要求  TSName, tld 坍落度， 施工方式  BTrans
+     * 根据产品类别(强度、特殊要求、施工方式、坍落度)查询
+     * @return false|\PDOStatement|string|\think\Collection
+     */
+   public static  function getListByBetonType(){
+       $params = input('post.');
+       $betonType = $params['betonType'];
+       $list = MbetoninfoModel::getListByBetonType($betonType);
+       return $list;
+   }
+
+
+
 }

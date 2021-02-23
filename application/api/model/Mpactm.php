@@ -92,4 +92,12 @@ class Mpactm extends Model
 
         return $mpact;
     }
+
+    public static function getListByBetonType($where){
+        $betoninfo = Mpactd::where($where)
+//            ->fetchSql(true)
+            ->select();
+        return $betoninfo;
+    }
+
 }

@@ -31,4 +31,17 @@ class Mbetoninfo extends  Model
             ->paginate($size, ['page' => $page]);
         return $mbetoninfos;
     }
+
+    public static  function getListByBetonType($betonType)
+    {
+        $list = self::where($betonType,'<>','')
+            ->select();
+        return $list;
+    }
+
+    public static function getGrade(){
+        $gradeList = self::where('Grade','<>', '')
+            ->select();
+        return $gradeList;
+    }
 }

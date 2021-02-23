@@ -55,6 +55,7 @@ Route::get('api/:version/mpactm/:id', 'api/:version.Mpactm/getOne');
 Route::post('api/:version/mpactm/recentwhere', 'api/:version.Mpactm/getRecentWhere');
 Route::post('api/:version/mpactm/sh', 'api/:version.Mpactm/setSH');
 Route::post('api/:version/mpactm/state', 'api/:version.Mpactm/setState');
+Route::post('api/:version/mpactm/betoninfo', 'api/:version.Mpactm/getBetoninfoByType');
 
 //订货单
 Route::get('api/:version/mpplancust/recent', 'api/:version.Mpplancust/getRecent');
@@ -72,8 +73,10 @@ Route::post('api/:version/mpplancust/create', 'api/:version.Mpplancust/createOrd
 
 
 
-//混凝土产品
+//混凝土产品分页查询
 Route::get('api/:version/mbetoninfo/recent', 'api/:version.Mbetoninfo/getRecent');
+//根据类别获取产品列表：强度、特殊要求、坍落度、施工方式
+Route::post('api/:version/mbetoninfo/typelist', 'api/:version.Mbetoninfo/getListByBetonType');
 
 
 //销售每日对账单
