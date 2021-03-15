@@ -9,7 +9,8 @@
 namespace app\api\service;
 
 use app\api\model\Matcwm as MatcwmModel;
-use app\api\model\Tmpcwiostat as TmpcwiostatModel;
+use app\api\model\Tmpcwiostat2 as Tmpcwiostat2Model;
+use app\api\model\Tmpcwiostat2;
 use think\Db;
 
 class Cwiostat
@@ -43,9 +44,9 @@ class Cwiostat
             //这里特别注意，执行存储过程有返回值的有Db::query,没有返回值的用Db::execute,
             //不然会报错：SQLSTATE[IMSSP]: The active result for the query contains no fields.
             Db::execute($this->sql);
-
+            Db::execute("exec sp_MatCWIOStatT 'CWIOStat'");
             // 提交事务
-            $tmpcwiostat = TmpcwiostatModel:: getMostRecent();
+            $tmpcwiostat = Tmpcwiostat2Model:: getMostRecent();
             Db::commit();
             return $tmpcwiostat;
 

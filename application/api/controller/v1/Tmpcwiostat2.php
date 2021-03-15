@@ -14,12 +14,12 @@ use app\lib\exception\MatcwmException;
 use think\Exception;
 use think\Validate;
 
-class Tmpcwiostat
+class Tmpcwiostat2
 {
     public function getRecent()
     {
         $params = input('post.');
-        $cwiostatService =  new CwiostatService($params['params']);
+        $cwiostatService =  new CwiostatService($params);
         //从盘点表查询最后一次盘点时间
         $bDate = $cwiostatService->getBdate();
 
