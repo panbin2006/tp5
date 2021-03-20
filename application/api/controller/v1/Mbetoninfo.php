@@ -46,7 +46,7 @@ class Mbetoninfo
    public static  function getListByBetonType(){
        $params = input('post.');
        $betonType = $params['betonType'];
-       $list = MbetoninfoModel::getListByBetonType($betonType);
+       $list = MbetoninfoModel::getListByBetonType($betonType)->append(['checked']);
        return $list;
    }
 

@@ -57,6 +57,11 @@ Route::post('api/:version/mpactm/sh', 'api/:version.Mpactm/setSH');
 Route::post('api/:version/mpactm/state', 'api/:version.Mpactm/setState');
 Route::post('api/:version/mpactm/betoninfo', 'api/:version.Mpactm/getBetoninfoByType');
 
+//合同明细
+Route::get('api/:version/mpactd/greads/:id', 'api/:version.Mpactd/getGreadListByProjectid');
+Route::get('api/:version/mpactd/tsnames/:id', 'api/:version.Mpactd/getTsNameListByProjectid');
+
+
 //订货单
 Route::get('api/:version/mpplancust/recent', 'api/:version.Mpplancust/getRecent');
 Route::get('api/:version/mpplancust/by_name', 'api/:version.Mpplancust/getInfoByName');

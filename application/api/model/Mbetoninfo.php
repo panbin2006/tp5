@@ -24,8 +24,14 @@ class Mbetoninfo extends  Model
             "RZ",
             "FLRZ",
             "NoteMan",
-            "ExecState"
+            "ExecState",
+            "checked"
     ];
+
+    //增加checked字段返回给前端，前面checkbox选择状态，默认为false
+    public static function  getCheckedAttr(){
+        return  false;
+    }
     public  static  function  getMostRecent($size, $page){
         $mbetoninfos = self::order('Grade desc')
             ->paginate($size, ['page' => $page]);
