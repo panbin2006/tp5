@@ -77,6 +77,21 @@ class Mphbprod
     public static function getOne($pline, $phbid)
     {
 
+//        return explode(',','1,2');
+//         $kzname = '9.10';
+//        //配方查询的生产线号
+//        $pf_pline = '1';
+//        //仓位设置中的生产线号
+//        $cw_Pline= '1,2';
+//        //配方生产线在仓位生产线号数组中的索引
+//        $index = 0;
+//        if(!($cw_Pline==$pf_pline)){
+//            $cw_Pline_arr = explode(',',$cw_Pline);
+//            $index = array_search($pf_pline,$cw_Pline_arr);
+//            $kzname = explode('.',$cw_Pline)[$index];
+//        }
+//        return 'YL'.$kzname;
+
         $phbprod = MphbprodService::getMphprod($pline, $phbid);
         return $phbprod;
     }

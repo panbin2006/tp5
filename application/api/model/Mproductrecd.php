@@ -79,6 +79,8 @@ class Mproductrecd extends Model
     public static function getSummary($id){
         $summary = self::where('productid','=',$id)
         ->field([
+            'SUM(VPFS)' => 'total_vpfs',
+            'SUM(VSJS)' => 'total_vsjs',
            'SUM(VPF)' => 'total_vpf',
             'SUM(VSJ)' => 'total_vsj',
             'SUM(VErr)' => 'total_verr',

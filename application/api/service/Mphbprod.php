@@ -23,6 +23,7 @@ class Mphbprod
         if($mcwsz->isEmpty()){
             throw  new McwszException();
         }
+
 //        return $mcwsz;
         //查询配方
         $mphbprod = MphbprodModel::getOne($pline, $phbid);

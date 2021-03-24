@@ -37,7 +37,7 @@ class Tmpcwiostat2 extends Model
     {
         $tmpCWIOStats = self::where('CWName is not Null')
             ->where('MatName is not Null')
-            ->order('CWID asc')
+            ->order('CWType asc')
             ->select();
 
         return $tmpCWIOStats;
