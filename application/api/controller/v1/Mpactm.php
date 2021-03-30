@@ -102,6 +102,7 @@ class Mpactm
         if ($pageMpactms->isEmpty()){
             return [
                 'current_page' => $pageMpactms->currentPage(),
+                'total' => 0,
                 'last_page' => 0,
                 'data' => []
             ];
@@ -110,6 +111,7 @@ class Mpactm
             ->toArray();
         return [
             'current_page' => $pageMpactms->currentPage(),
+            'total' => $pageMpactms->total(),
             'last_page' => $pageMpactms->lastPage(),
             'data' => $data
         ];
