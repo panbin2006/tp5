@@ -25,6 +25,7 @@ Route::post('api/:version/user/edit', 'api/:version.Syhqx/edit');
 
 //用户权限
 Route::post('api/:version/scope/single', 'api/:version.Syhqxd/getSingleScope');
+Route::post('api/:version/scope/Multiple', 'api/:version.Syhqxd/getMultipleScope');
 
 //员工档案---搅拌车司机
 Route::get('api/:version/driver', 'api/:version.Sygda/getRecent');

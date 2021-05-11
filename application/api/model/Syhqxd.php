@@ -13,6 +13,8 @@ use think\Model;
 
 class Syhqxd extends Model
 {
-
+ protected $visible = [
+     'ModuleID','PRead','PAdd','PEdit','PDel','PPrint','PSH','PGZ'
+ ];
 
 }
