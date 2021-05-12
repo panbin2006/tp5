@@ -36,7 +36,7 @@ class Sygda extends Model
 	'SHMan' ,
 	'ZZID',
 	'SBID',
-	'TelHome',
+//	'TelHome',
 	'AddrHome',
 	'AddrNow',
 	'AddrHK',

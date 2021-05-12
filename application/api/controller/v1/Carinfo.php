@@ -119,13 +119,13 @@ class Carinfo
 
         $car = CarinfoModel::with([
             'currentDriver'=>function($query){
-                $query->field('YGID,YGName,CarID,Tel');
+                $query->field('YGID,YGName,CarID,Tel,TelHome');
             },
             'firstDriver'=>function($query){
-                $query->field('YGID,YGName,CarID,Tel');
+                $query->field('YGID,YGName,CarID,Tel,TelHome');
             },
             'secondDriver'=>function($query){
-                $query->field('YGID,YGName,CarID,Tel');
+                $query->field('YGID,YGName,CarID,Tel,TelHome');
             }
             ])->field('CarID,SJIDW,SJID1,SJID2,SJXMW,SJXM1,SJXM2,CoID,ICID,ChePai,CarType,BCTag')->find($id);
 
