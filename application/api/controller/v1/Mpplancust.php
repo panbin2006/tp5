@@ -47,6 +47,11 @@ class Mpplancust
         $custid = $inputs['custid'];
         $buildid = $inputs['buildid'];
         $classname1 = $inputs['classname1'];
+        $importTag = $inputs['importtag'];
+
+        if($importTag<>9){ //判断客户端上传导入状态是否存在，0：未导入；1：已导入； 9：全部。
+            $where['ImportTag'] = $importTag;
+        }
 
         if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
             $whereBetween[0] = $pdateS;

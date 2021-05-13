@@ -84,7 +84,11 @@ class Mpactm
         $c_classname1 = $conditions['classname1']; //业务员
         $c_custname = $conditions['custname']; //客户名称
         $c_buildname = $conditions['buildname']; //客户名称
+        $c_execState = $conditions['ExecState']; //执行状态
 
+        if($c_execState<>'全部'){
+            $where['ExecState'] = $c_execState;
+        }
         if($c_classname1){
             $where['ClassName1'] = $c_classname1;
         }

@@ -88,6 +88,7 @@ class Basedata
 
     private static function getBexecstate(){
         $result = Bexecstate::all();
+        $result->unshift(['ExecState'=>'全部']);
         return $result;
     }
 
