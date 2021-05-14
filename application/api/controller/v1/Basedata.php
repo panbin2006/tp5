@@ -100,6 +100,8 @@ class Basedata
     private static function getBPline(){
         $result = Bpline::field(['Pline'])
         ->select();
+        $result->append(['PlineName'])
+        ->unshift(['Pline'=>'0','PlineName'=>'全部']);
         return $result;
     }
 }

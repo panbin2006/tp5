@@ -53,7 +53,7 @@ class Msaleodd
             $whereBetween[1] = $date_now . ' 23:59:59';
         }
 
-        if($pline){
+        if($pline<>0){
             $where['Pline'] = $pline;
         }
         if($custid){ //判断是否上传客户代码
