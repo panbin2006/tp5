@@ -15,6 +15,7 @@ use app\api\model\Bcoclass2;
 use app\api\model\Bcoclass5;
 use app\api\model\Bbtld;
 use app\api\model\Bexecstate;
+use app\api\model\Bplanstate;
 use app\api\model\Bpline;
 use app\api\model\Mbetoninfo;
 use app\api\model\Bbtrans;
@@ -91,7 +92,11 @@ class Basedata
         $result->unshift(['ExecState'=>'全部']);
         return $result;
     }
-
+    private static function getBplanstate(){
+        $result = Bplanstate::all();
+        $result->unshift(['ExecState'=>'9','StateDesc'=>'全部']);
+        return $result;
+    }
     private static function getBPline(){
         $result = Bpline::field(['Pline'])
         ->select();

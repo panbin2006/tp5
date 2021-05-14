@@ -60,13 +60,9 @@ class Mpplan
             $where['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
             $whereGroup['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
         }
-        if($state){
-            //判断客户端上传的执行状态参数是否存在
-            (new MpplanStatus())->goCheck($state);
-            //执行状态为9，查询全部计划单（状态值小于9的计划）
-            $stateOP = $state == 9 ? '<': '=';
-            $where['ExecState'] = [$stateOP,$state];
 
+        if($state<>9){ //判断客户端上传导入状态是否存在， 9：全部。
+            $where['ExecState'] = $state;
         }
 
         if($custid){ //判断是否上传客户代码
