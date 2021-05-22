@@ -12,6 +12,7 @@ use app\api\validate\Count;
 use app\api\model\Mpplancust as MpplancustModel;
 use app\api\validate\PageNumberMustBePositiveInt;
 use app\lib\enum\PlanStatusEnum as PlanStatusEnum;
+use app\lib\exception\MpplancustException;
 use app\lib\exception\SuccessMessage;
 use app\api\service\Order as OrderService;
 
@@ -149,11 +150,12 @@ class Mpplancust
      * @throws MpactmException
      */
     public  function  getOne($id){
-        $mpatm = MpplancustModel::getMpactmDetail($id);
-        if(!$mpatm){
-            throw new MpactmException();
+//        return $id;
+        $mpplancust = MpplancustModel::get(['OrderID'=>$id]);
+        if(!$mpplancust){
+            throw new MpplancustException();
         }
-        return json($mpatm);
+        return json($mpplancust);
     }
 
     /**
@@ -248,7 +250,7 @@ class Mpplancust
     }
 
     /**
-     * 新增/修改订单
+     * 新增/复制新增订单
      * @return \think\response\Json
      */
     public static function edit(){
@@ -268,6 +270,18 @@ class Mpplancust
         return $result;
     }
 
+    //修改订单
+    public static function modify(){
+        $inputs  = input('post.');
+        $orderid = $inputs['orderid'];
+        $order = $inputs['order'];
 
+        $mpplancust = MpplancustModel::get(['OrderID'=>$orderid]);
+        if(!$mpplancust){
+            throw new MpplancustException();
+        }
+        $result = $mpplancust->update($order,['OrderID'=>$orderid]);
 
+        return $result;
+    }
 }

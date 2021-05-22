@@ -64,14 +64,16 @@ Route::get('api/:version/mpactd/tsnames/:id', 'api/:version.Mpactd/getTsNameList
 
 
 //订货单
-Route::get('api/:version/mpplancust/recent', 'api/:version.Mpplancust/getRecent');
-Route::get('api/:version/mpplancust/by_name', 'api/:version.Mpplancust/getInfoByName');
-Route::get('api/:version/mpplancust/by_state', 'api/:version.Mpplancust/getInfoByOrderType');
-Route::get('api/:version/mpplancust/:id', 'api/:version.Mpplancust/getOne',[], ['id' => '\d+']);
+//Route::get('api/:version/mpplancust/recent', 'api/:version.Mpplancust/getRecent');
+//Route::get('api/:version/mpplancust/by_name', 'api/:version.Mpplancust/getInfoByName');
+//Route::get('api/:version/mpplancust/by_state', 'api/:version.Mpplancust/getInfoByOrderType');
+//Route::get('api/:version/mpplancust/:id', 'api/:version.Mpplancust/getOne',[], ['id' => '\d+']);
+Route::get('api/:version/mpplancust/:id', 'api/:version.Mpplancust/getOne',[]);
 Route::post('api/:version/mpplancust/recentWhere', 'api/:version.Mpplancust/getRecentWhere');
 Route::post('api/:version/mpplancust/sh', 'api/:version.Mpplancust/setSH');
 Route::post('api/:version/mpplancust/state', 'api/:version.Mpplancust/setState');
 Route::post('api/:version/mpplancust/edit', 'api/:version.Mpplancust/edit');
+Route::post('api/:version/mpplancust/modify', 'api/:version.Mpplancust/modify');
 //通过orderService新增订单
 Route::post('api/:version/mpplancust/create', 'api/:version.Mpplancust/createOrder');
 
