@@ -34,6 +34,23 @@ class Order
     //计划日期
     protected  $pDate;
 
+    //复制新增订单
+    public function copyNew($copyOrder){
+        $this->order = $copyOrder;
+        $this->pDate = $copyOrder['PDate'];
+        //生成订货单编号
+        $orderid = CodeService::getCode('Mpplancust',$copyOrder['CoID'],1,$copyOrder['PDate'],'');
+        $this->order['OrderID'] = $orderid;
+
+        //保存订单
+        $result = MpplancustModel::create($this->order);
+
+        if($result){
+            return json(new SuccessMessage(['msg' => $result]), 201);
+        }else{
+            return json(new SuccessMessage(['msg'=> []]), 40000);
+        }
+    }
     //新合同下单
     public function newMpact_place($mpactm,$order){
         //接收客户端上传的合同与订单信息

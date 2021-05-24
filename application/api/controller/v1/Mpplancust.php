@@ -150,7 +150,6 @@ class Mpplancust
      * @throws MpactmException
      */
     public  function  getOne($id){
-//        return $id;
         $mpplancust = MpplancustModel::get(['OrderID'=>$id]);
         if(!$mpplancust){
             throw new MpplancustException();
@@ -250,7 +249,7 @@ class Mpplancust
     }
 
     /**
-     * 新增/复制新增订单
+     * 新增订单
      * @return \think\response\Json
      */
     public static function edit(){
@@ -267,6 +266,19 @@ class Mpplancust
             $result = $orderService->newMpact_place($mpact, $order);
         }
 
+        return $result;
+    }
+
+    /**
+     * 复制新增订单
+     * @return \think\response\Json
+     */
+    public static function copyNew(){
+        $inputs  = input('post.');
+        $copyOrder = $inputs['order'];
+
+        $orderService = new OrderService();
+        $result =  $orderService->copyNew($copyOrder);
         return $result;
     }
 

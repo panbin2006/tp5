@@ -74,6 +74,7 @@ Route::post('api/:version/mpplancust/sh', 'api/:version.Mpplancust/setSH');
 Route::post('api/:version/mpplancust/state', 'api/:version.Mpplancust/setState');
 Route::post('api/:version/mpplancust/edit', 'api/:version.Mpplancust/edit');
 Route::post('api/:version/mpplancust/modify', 'api/:version.Mpplancust/modify');
+Route::post('api/:version/mpplancust/copy', 'api/:version.Mpplancust/copyNew');
 //通过orderService新增订单
 Route::post('api/:version/mpplancust/create', 'api/:version.Mpplancust/createOrder');
 
