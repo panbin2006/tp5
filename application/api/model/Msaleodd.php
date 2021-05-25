@@ -116,6 +116,24 @@ class Msaleodd extends Model
             "PostState"
     ];
 
+    public static  function getMostRecentByPlanid($size, $page,$where){
+
+        $msaleodds = self::where($where)
+            ->field(['Pdate','CarID','CarNum','Quality','QualityGive'])
+            ->order('Pdate desc')
+            ->paginate($size,false, ['page' => $page]);
+
+        return $msaleodds;
+    }
+
+    public static function getSummaryByPlanid($where){
+        $summary = self::where($where)
+            ->field(['sum(Quality)' => 'total_quality',
+                'sum(QualityProd)' => 'total_qualityProd'])
+            ->find();
+        return $summary;
+    }
+
     public static  function getMostRecent($size, $page,$where,$whereBetween ){
 
        $msaleodds = self::whereBetween('Pdate',$whereBetween)

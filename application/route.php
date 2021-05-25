@@ -107,7 +107,8 @@ Route::get('api/:version/mphbm/:id', 'api/:version.Mphbm/getOne');
 
 //发货单
 Route::post('api/:version/msaleodd/recent', 'api/:version.Msaleodd/getRecent');
-Route::get('api/:version/msaleodd/:id', 'api/:version.Msaleodd/getOne');
+Route::get('api/:version/msaleodd/recent/:id', 'api/:version.Msaleodd/getRecentByPlanid',[]);
+Route::get('api/:version/msaleodd/:id', 'api/:version.Msaleodd/getOne',[]);
 
 //生产记录清单--主表
 Route::post('api/:version/mproductrecm/recent', 'api/:version.Mproductrecm/getRecent');
