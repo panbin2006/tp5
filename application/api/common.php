@@ -40,3 +40,43 @@ function formatData($matOutArr, $groupVal, $sumItems){
 
     return array_values($summaryArr);
 }
+
+/**
+ * @MatStoreIOState  原始料位库存列表
+ * 料位库存分组
+ * 粉仓与外加剂按生产线分为：1，2……线、 共享仓
+ * 堆仓：仓位类型骨料与其它
+ */
+
+function  formatMatStoreIOState($MatStoreIOState){
+    //整理好的料位库存列表
+    $matStoreList =[];
+    //各生产线非共享仓（粉仓与外加剂）
+    $MatStore_Lines = [];
+
+    //共享仓（粉仓与外加剂）
+    $MatStore_Share = [];
+
+    //堆仓（骨料、其它）
+    $MatStore_Heap = [];
+    foreach ($MatStoreIOState as  $key => $val){
+//       echo $key.$val->StoreID;
+        if($val->StoreType=='骨仓'||$val->StoreType=='其它'){ //判断料位类型是不是骨仓、其它
+            array_push($MatStore_Heap,$val);
+        }elseif (strpos($val->PLine, ',')){
+            array_push($MatStore_Share, $val);
+        }else{
+             $MatStore_Lines[$val->PLine][] = $val;
+        }
+
+
+    }
+
+    $matStoreList['store_heap'] =  $MatStore_Heap;
+    $matStoreList['store_share'] =  $MatStore_Share;
+    $matStoreList['store_line'] =  $MatStore_Lines;
+//    return $MatStore_Heap;
+//    return $MatStore_Share;
+//    return $MatStore_Lines;
+    return $matStoreList;
+}
