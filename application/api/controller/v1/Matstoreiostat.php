@@ -20,7 +20,7 @@ class Matstoreiostat
     {
         $params = input('post.');
 
-        $matStoreIostatService =  new MatstoreiostatService($params['params']);
+        $matStoreIostatService =  new MatstoreiostatService($params);
         //从盘点表查询最后一次盘点时间
         $bDate = $matStoreIostatService->getBdate();
 
@@ -28,27 +28,14 @@ class Matstoreiostat
             throw new MatcwmException();
         }
         $Tmpcwiostat = $matStoreIostatService->getMatstoreiostat();
-//        new Validate();
         if ($Tmpcwiostat->isEmpty()) {
             throw new Exception();
         }
 
-        //collection转数组
-        $TmpcwiostatArr= $Tmpcwiostat->toArray();
-
-
-
-
         //按仓位代码汇总
         $groupData= formatMatStoreIOState($Tmpcwiostat);
 
-                return $groupData;
+         return $groupData;
 
-//        return [
-//            'bdate' => $bDate,
-//            'groupByPline' => $Tmpcwiostat,
-//            'cwSummary' => $cwSummary,
-//            'matNameSummary' => $matNameSummary
-//        ];
     }
 }

@@ -66,17 +66,15 @@ function  formatMatStoreIOState($MatStoreIOState){
         }elseif (strpos($val->PLine, ',')){
             array_push($MatStore_Share, $val);
         }else{
-             $MatStore_Lines[$val->PLine][] = $val;
+             $MatStore_Lines[$val->PLine]['plineName'] = $val->PLine;
+            $MatStore_Lines[$val->PLine]['plineList'][] = $val;
         }
 
 
     }
 
-    $matStoreList['store_heap'] =  $MatStore_Heap;
-    $matStoreList['store_share'] =  $MatStore_Share;
     $matStoreList['store_line'] =  $MatStore_Lines;
-//    return $MatStore_Heap;
-//    return $MatStore_Share;
-//    return $MatStore_Lines;
+    $matStoreList['store_share'] =  $MatStore_Share;
+    $matStoreList['store_heap'] =  $MatStore_Heap;
     return $matStoreList;
 }
