@@ -41,6 +41,7 @@ class Mbetoninfo extends  Model
     public static  function getListByBetonType($betonType)
     {
         $list = self::where($betonType,'<>','')
+            ->order('Grade,TSName asc')
             ->select();
         return $list;
     }
