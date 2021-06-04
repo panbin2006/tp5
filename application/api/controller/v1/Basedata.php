@@ -88,9 +88,14 @@ class Basedata
     }
 
     private static function getBexecstate(){
-        $result = Bexecstate::all();
-        $result->unshift(['ExecState'=>'全部']);
-        return $result;
+        $arr = []; //要返回的数组
+        $result = Bexecstate::field(['ExecState'])
+            ->select();
+        foreach ($result as $value){
+            array_push($arr,$value['ExecState']);
+        }
+        array_unshift($arr, '全部');
+        return $arr;
     }
     private static function getBplanstate(){
         $result = Bplanstate::all();
