@@ -11,6 +11,7 @@ namespace app\api\service;
 use app\api\model\Matstorem as MatstoremModel;
 use app\api\model\Tmpcwiostat2 as Tmpcwiostat2Model;
 use app\api\model\Tmpcwiostat2;
+use app\lib\exception\MatcwmException;
 use think\Db;
 
 class Matstoreiostat
@@ -34,7 +35,7 @@ class Matstoreiostat
      */
     public function getMatstoreiostat( )
     {
-
+        //拼接sql语句
         $this->getParamsStr();
 
         Db::startTrans();
@@ -77,10 +78,19 @@ class Matstoreiostat
     public function getParamsStr()
     {
 
+        //判断参数列表中是否存在库存查询截止时间Edate,如果没有，取当前时间
+        if (!array_key_exists('Edate', $this->params)) {
+            $Edate = ['Edate' =>  date('Y-m-d H:i:s',time())];
+            $this->params = array_merge($Edate, $this->params);
+        }
+
+        //判断参数列表中是否存在最后一次盘点时间字段Bdate
         if (!array_key_exists('Bdate', $this->params)) {
             $Bdate = ['Bdate' => $this->getBdate()];
             $this->params = array_merge($Bdate, $this->params);
         }
+
+
 
         $produce = "exec sp_MatStoreStat  '";
         $paramsStr = implode("','", $this->params) . "'";

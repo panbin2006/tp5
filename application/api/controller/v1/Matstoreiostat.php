@@ -21,12 +21,7 @@ class Matstoreiostat
         $params = input('post.');
 
         $matStoreIostatService =  new MatstoreiostatService($params);
-        //从盘点表查询最后一次盘点时间
-        $bDate = $matStoreIostatService->getBdate();
 
-        if(!$bDate){ //如果没有盘点记录，抛异常
-            throw new MatcwmException();
-        }
         $Tmpcwiostat = $matStoreIostatService->getMatstoreiostat();
         if ($Tmpcwiostat->isEmpty()) {
             throw new Exception();

@@ -52,7 +52,7 @@ class Tmpcwiostat2 extends Model
         $tmpCWIOStats = self::where('StoreID is not Null')
             ->where('MatName is not Null')
             ->field(['PLine','StoreID','StoreName','StoreType','MatID','MatName','NetIn','NetOutSJ',
-                'StoreMax','NetkgR','StoreWarn','StoreRate'])
+                'StoreMax','NetkgR','StoreWarn','StoreRate',"Bdate","Edate"])
             ->order('PLine,StoreID asc')
             ->select();
 
