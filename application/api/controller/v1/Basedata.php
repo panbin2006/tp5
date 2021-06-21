@@ -88,6 +88,11 @@ class Basedata
     }
 
     private static function getBexecstate(){
+        $result = Bexecstate::all();
+        return $result;
+    }
+
+    private static function getBexecstateArr(){
         $arr = []; //要返回的数组
         $result = Bexecstate::field(['ExecState'])
             ->select();
