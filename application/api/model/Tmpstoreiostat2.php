@@ -11,7 +11,7 @@ namespace app\api\model;
 
 use think\Model;
 
-class Tmpcwiostat2 extends Model
+class Tmpstoreiostat2 extends Model
 {
 //    public $visible = [
 //        "CoID",
@@ -48,15 +48,15 @@ class Tmpcwiostat2 extends Model
 
     public static function getMatStoreiostatRecent()
     {
-//        $tmpCWIOStats = self::all();
+        //$tmpCWIOStats = self::all();
         $tmpCWIOStats = self::where('StoreID is not Null')
             ->where('MatName is not Null')
             ->field(['PLine','StoreID','StoreName','StoreType','MatID','MatName','NetIn','NetOutSJ',
                 'StoreMax','NetkgR','StoreWarn','StoreRate',"Bdate","Edate"])
             ->order('PLine,StoreID asc')
+//            ->fetchSql(true)
             ->select();
 
         return $tmpCWIOStats;
     }
-
 }

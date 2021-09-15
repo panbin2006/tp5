@@ -141,6 +141,7 @@ Route::post('api/:version/cw_stat/recent', 'api/:version.Tmpcwiostat/getRecent')
 
 //料位库存
 Route::post('api/:version/lw_stat/recent', 'api/:version.Matstoreiostat/getRecent');
+Route::post('api/:version/lw_stat_now/recent', 'api/:version.Matstorestatnow/getRecent');
 
 //车辆资料
 Route::get('api/:version/carinfo/recent', 'api/:version.Carinfo/getRecent');
