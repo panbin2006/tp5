@@ -112,6 +112,8 @@ Route::get('api/:version/msaleodd/:id', 'api/:version.Msaleodd/getOne',[]);
 
 //生产记录清单--主表
 Route::post('api/:version/mproductrecm/recent', 'api/:version.Mproductrecm/getRecent');
+//生产统计（按生产记录）
+Route::post('api/:version/mproductrecm/mprodstatday', 'api/:version.Mproductrecm/getMProdStatDay');
 Route::get('api/:version/mproductrecm/:id', 'api/:version.Mproductrecm/getOne');
 
 //车辆排队--停车场分流模式

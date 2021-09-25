@@ -9,6 +9,7 @@
 namespace app\api\model;
 
 
+use think\Db;
 use think\Model;
 
 class Mproductrecm extends Model
@@ -50,6 +51,36 @@ class Mproductrecm extends Model
 //            "total_mproductds"
 //    ];
 
+    public static function getMProdStatDayList($size,$page, $where, $whereBetween){
+
+
+        $mprodStatDayList =  self::whereBetween('PDate',$whereBetween)
+            ->field('sum(isnull(Quality,0)) as Quality,convert(char(10),PDate ,121) as  PDate,ProjectName,CustName,Part,BTrans,PlanID,Grade,TSName,CoID,ProjectID,SaleCOID,SaleTag')
+            ->where($where)
+            ->group('convert(char(10),PDate ,121),ProjectName,CustName,Part,BTrans,PlanID,Grade,TSName,CoID,ProjectID,SaleCOID,SaleTag')
+            ->order('convert(char(10),PDate ,121),ProjectName,CustName,Part,BTrans,PlanID,Grade,TSName,CoID,ProjectID,SaleCOID,SaleTag')
+            ->buildSql();
+
+
+
+        $mprodStatDayList = Db::table($mprodStatDayList)
+            ->alias('d2')
+            ->fetchSql(true)
+            ->paginate($size, false, ['page' => $page]);
+
+        //多次为 'T1' 指定了列 'ROW_NUMBER'错误，删除多余的代码
+        $itemsSql = str_replace(', ROW_NUMBER() OVER ( ORDER BY rand()) AS ROW_NUMBER',' ',$mprodStatDayList->items()[0]);
+        //查询分页数据
+        $items = Db::query($itemsSql);
+        //查询分组记录数
+        $total = Db::query($mprodStatDayList->total());
+
+        return [
+            'total_count' => $total[0]['tp_count'],
+            'data' => $items
+        ];
+
+    }
     public static  function getMostRecent($size,$page, $where, $whereBetween){
 
         $mproducts = self::whereBetween('Pdate', $whereBetween)
