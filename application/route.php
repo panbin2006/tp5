@@ -119,8 +119,17 @@ Route::get('api/:version/mproductrecm/:id', 'api/:version.Mproductrecm/getOne');
 //车辆排队--停车场分流模式
 Route::get('api/:version/carledviewzb/ledview', 'api/:version.Carledviewzb/ledview');
 
-//车辆排除--标准模式
+//车辆排队--标准模式
 Route::get('api/:version/carpaiduim/ledview', 'api/:version.Carpaiduim/ledview');
+
+//车辆运输统计（按车辆）
+Route::post('api/:version/tmpcarstat/car', 'api/:version.Tmpcarstat/getRecentByCar');
+
+//车辆运输统计（按司机）
+Route::post('api/:version/tmpcarstat/driver', 'api/:version.Tmpcarstat/getRecentByDriver');
+
+//车辆运输统计（按司机）
+Route::post('api/:version/tmpcarstat/car2driver', 'api/:version.Tmpcarstat/getRecentByCarAndDriver');
 
 //材料资料
 Route::get('api/:version/matinfo/recent', 'api/:version.Matinfo/getRecent');
