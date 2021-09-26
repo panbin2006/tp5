@@ -74,9 +74,12 @@ class Mproductrecm extends Model
         $items = Db::query($itemsSql);
         //查询分组记录数
         $total = Db::query($mprodStatDayList->total());
-
+        $total_count =  $total[0]['tp_count'];
+        $last_page = ceil($total_count / $size);
         return [
-            'total_count' => $total[0]['tp_count'],
+            'current_page' => $page,
+            'last_page' => $last_page,
+            'total_count' => $total_count,
             'data' => $items
         ];
 
