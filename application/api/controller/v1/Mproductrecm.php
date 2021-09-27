@@ -54,8 +54,6 @@ class Mproductrecm
         }
 
         $pageMprodStatDay = MproductrecmModel::getMProdStatDayList($size, $page, $where, $whereBetween);
-        $summary = MproductrecmModel::getSummary($where, $whereBetween);
-        $pageMprodStatDay['total_quality'] =  $summary['total_quality'];
         return $pageMprodStatDay;
 
 

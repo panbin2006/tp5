@@ -16,6 +16,51 @@ use app\lib\exception\MsaleoddException;
 class Msaleodd
 {
     /**
+     * 生产统计（按送货单）
+     * @param int $size
+     * @param int $page
+     */
+    public static  function getMSaleStatMonth($size=15, $page=1)
+    {
+        (new Count())->goCheck($size);
+        (new PageNumberMustBePositiveInt())->goCheck($page);
+        //获取查询条件
+        $inputs = input('post.');
+        $where = [];
+        $whereBetween = [];
+
+        $pdateS = $inputs['pdateS'];
+        $pdateE = $inputs['pdateE'];
+        $custid = $inputs['custid'];
+        $classname1 = $inputs['classname1'];
+        $searchtxt = $inputs['searchtxt'];
+
+        if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
+            $whereBetween[0] = $pdateS;
+            $whereBetween[1] = $pdateE;
+        }else{
+            $date_now = date('Y-m-d');
+            $whereBetween[0] = $date_now . ' 00:00:00';
+            $whereBetween[1] = $date_now . ' 23:59:59';
+        }
+
+        if($custid){ //判断是否上传客户代码
+            $where['CustID'] = ['=',$custid];
+        }
+
+        if($classname1){ //判断是否上传业务员
+            $where['ClassName1'] = $classname1;
+        }
+        if($searchtxt){ //判断客户端上传的搜索字符串
+            $where['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
+        }
+
+        $pageMSaleStatMonth = MsaleoddModel::getMSaleStatMonthList($size, $page, $where, $whereBetween);
+
+        return $pageMSaleStatMonth;
+    }
+
+    /**
      * 查询送货单分页数据
      * @url  /msaleodd/recent
      * @param int $size  单页记录数

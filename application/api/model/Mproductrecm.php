@@ -76,10 +76,14 @@ class Mproductrecm extends Model
         $total = Db::query($mprodStatDayList->total());
         $total_count =  $total[0]['tp_count'];
         $last_page = ceil($total_count / $size);
+
+        $summary = self::getSummary($where, $whereBetween);
+
         return [
             'current_page' => $page,
             'last_page' => $last_page,
             'total_count' => $total_count,
+            'total_quality'=> $summary['total_quality'],
             'data' => $items
         ];
 
