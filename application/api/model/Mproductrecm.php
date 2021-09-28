@@ -16,40 +16,6 @@ class Mproductrecm extends Model
 {
     protected $pk = 'ProductID';
 
-//    protected $visible = [
-//            "ProductID",
-//            "CoID",
-//            "PDate",
-//            "PLine",
-//            "KZID",
-//            "PiCi",
-//            "Quality",
-//            "SaleID",
-//            "PlanID",
-//            "ProjectID",
-//            "ProjectName",
-//            "CustID",
-//            "CustName",
-//            "BuildID",
-//            "BuildName",
-//            "Address",
-//            "Grade",
-//            "TSID",
-//            "TSName",
-//            "tld",
-//            "Part",
-//            "BTrans",
-//            "CarID",
-//            "PhbIDS",
-//            "PhbIDP",
-//            "ShaRate1",
-//            "ShaRate2",
-//            "SZRate1",
-//            "SZRate2",
-//            "NoteMan",
-//            "mproductrecds",
-//            "total_mproductds"
-//    ];
 
     public static function getMProdStatDayList($size,$page, $where, $whereBetween){
 
@@ -60,8 +26,6 @@ class Mproductrecm extends Model
             ->group('convert(char(10),PDate ,121),ProjectName,CustName,Part,BTrans,PlanID,Grade,TSName,CoID,ProjectID,SaleCOID,SaleTag')
             ->order('convert(char(10),PDate ,121),ProjectName,CustName,Part,BTrans,PlanID,Grade,TSName,CoID,ProjectID,SaleCOID,SaleTag')
             ->buildSql();
-
-
 
         $mprodStatDayList = Db::table($mprodStatDayList)
             ->alias('d2')
