@@ -22,6 +22,8 @@ class UserToken extends Token
     protected $wxAppID;
     protected $wxAppSecret;
     protected $wxLoginUrl;
+    private $wxResult;
+    private $yhid;
 
     function __construct($code)
     {
@@ -32,24 +34,32 @@ class UserToken extends Token
             $this->wxAppID, $this->wxAppSecret, $this->code);
     }
 
-    public function get($yhid){
+    public function getOpenId()
+    {
         $result = curl_get($this->wxLoginUrl);
-        $wxResult = json_decode($result, true);
-        if(empty($wxResult)){
+        $this->wxResult = json_decode($result, true);
+        return $this->wxResult;
+    }
+
+    public function get($yhid){
+
+        $this->getOpenId();
+        $this->yhid = $yhid;
+        if(empty($this->wxResult)){
 
             throw  new Exception('获取session_key与openID时异常，微信内部错误');
 
         }else{
-            $loginFail = array_key_exists('errcode', $wxResult);
+            $loginFail = array_key_exists('errcode', $this->wxResult);
             if($loginFail){
-                $this->processLoginError($wxResult);
+                $this->processLoginError($this->wxResult);
             }else{
-                return $this->grantToken($wxResult,$yhid);
+                return $this->grantToken($this->wxResult,$this->yhid);
             }
         }
     }
 
-    private function grantToken($wxResult, $yhid){
+    private function grantToken(){
         //拿到openid
         //数据库里看一下，这个openid是不是已经存在
         //如果存在 则不处理， 如果不存再根据yhid查询用户，并把openid保存到对应用户
@@ -57,19 +67,19 @@ class UserToken extends Token
         //把令牌返回到客户端去
         //key:令牌
         //value:wxResult,yhid,scope
-        $openid = $wxResult['openid'];
+        $openid = $this->wxResult['openid'];
         $user = SyhqxModel::getuserByOpenid($openid);
         if($user){
             $uid = $user->YHID;
         }else{
-            $user = Syhqx::getUserByYhid($yhid);
+            $user = Syhqx::getUserByYhid($this->yhid);
             if($user){
                 $uid =  $this->saveUser($user, $openid);
             }else{
                 throw new UserException();
             }
         }
-        $cashedValue = $this->prepareCashedValue($wxResult, $uid);
+        $cashedValue = $this->prepareCashedValue($uid);
         $token = $this->saveToCach($cashedValue);
         return $token;
     }
@@ -92,8 +102,8 @@ class UserToken extends Token
     }
 
     //准备缓存数据
-    private function prepareCashedValue($wxResult, $uid){
-        $cashedValue = $wxResult;
+    private function prepareCashedValue ($uid){
+        $cashedValue = $this->wxResult;
         $cashedValue['uid'] = $uid;
         $cashedValue['scope'] = 16;
         return $cashedValue;
@@ -107,10 +117,10 @@ class UserToken extends Token
     }
 
     //处理微信登录异常
-    private  function processLoginError($wxResult){
+    private  function processLoginError(){
         throw new WeChatException([
-            'msg' => $wxResult['errmsg'],
-            'errorCode' => $wxResult['errcode']
+            'msg' => $this->wxResult['errmsg'],
+            'errorCode' => $this->wxResult['errcode']
         ]);
     }
 }

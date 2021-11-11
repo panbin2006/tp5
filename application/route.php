@@ -183,6 +183,9 @@ Route::get('api/:version/bbtrans/recent', 'api/:version.Bbtrans/getRecent');
 //基础数据读取，区域、业务员、结款类型等
 Route::post('api/:version/basedata/recent', 'api/:version.Basedata/getBasedata');
 
+//获取微信openId
+Route::post('api/:version/wx/openid', 'api/:version.Wx/getOpenId');
+
 
 
 
