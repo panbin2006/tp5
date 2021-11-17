@@ -127,4 +127,18 @@ class Syhqx
            ->select();
        return $salemans;
     }
+
+    /**
+     * 根据用户名查询用户信息
+     *
+     */
+    public static  function getUserByName($name='')
+    {
+        $user = SyhqxModel::getUserByName($name);
+        if (!$user) {
+            throw  new UserException();
+        }
+
+        return json($user);
+    }
 }
