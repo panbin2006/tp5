@@ -23,6 +23,7 @@ Route::get('api/:version/userinfo/:name', 'api/:version.Syhqx/getUserByName');
 Route::post('api/:version/user/login', 'api/:version.Syhqx/check');
 Route::post('api/:version/user/login_saleman', 'api/:version.Syhqx/checkSaleman');
 Route::post('api/:version/user/edit', 'api/:version.Syhqx/edit');
+Route::post('api/:version/user/wxphone', 'api/:version.Syhqx/savePhoneNum');
 
 //用户权限
 Route::post('api/:version/scope/single', 'api/:version.Syhqxd/getSingleScope');

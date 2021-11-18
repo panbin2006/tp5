@@ -39,6 +39,23 @@ class Syhqx
         return json(new SuccessMessage(), 201);
     }
 
+    //保存微信绑定的手机号到用户表
+    public static function savePhoneNum(){
+        $params = input('post.');
+        $user = SyhqxModel::where([
+            'YHID' => $params['yhid'],
+        ])->find();
+
+        if(!$user){
+            return json(new UserException(['msg'=> '没有找到【'.$params['yhid'].'】用户' ]), 404);
+        }
+
+        $user->save([
+            'TrigTag' => !$user['TrigTag'],
+            'Remark1' => $params['wxPhoneNumber']
+        ]);
+        return json(new SuccessMessage(), 201);
+    }
 
     public  static  function  getAll(){
         $users = SyhqxModel::all();
