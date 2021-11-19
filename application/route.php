@@ -19,11 +19,11 @@ Route::get('api/:version/users', 'api/:version.Syhqx/getUsers');
 Route::get('api/:version/salemans', 'api/:version.Syhqx/getSalemans');
 Route::get('api/:version/user', 'api/:version.Syhqx/getAll');
 Route::get('api/:version/user/:id', 'api/:version.Syhqx/getUserById');
-Route::get('api/:version/userinfo/:name', 'api/:version.Syhqx/getUserByName');
 Route::post('api/:version/user/login', 'api/:version.Syhqx/check');
 Route::post('api/:version/user/login_saleman', 'api/:version.Syhqx/checkSaleman');
 Route::post('api/:version/user/edit', 'api/:version.Syhqx/edit');
-Route::post('api/:version/user/wxphone', 'api/:version.Syhqx/savePhoneNum');
+Route::post('api/:version/user/save_phone', 'api/:version.Syhqx/savePhoneNum');
+Route::post('api/:version/user/check_phone', 'api/:version.Syhqx/checkPhoneNum');
 
 //用户权限
 Route::post('api/:version/scope/single', 'api/:version.Syhqxd/getSingleScope');

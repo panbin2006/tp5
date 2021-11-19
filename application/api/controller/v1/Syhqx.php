@@ -20,6 +20,61 @@ use think\response\Json;
 
 class Syhqx
 {
+    //验证微信绑定的手机号
+    public static function checkPhoneNum()
+    {
+        $params = input('post.');
+        $yhid = $params['yhid'];
+        $wxPhoneNumber = $params['wxPhoneNumber'];
+        $user = SyhqxModel::where([
+            'YHID' => $yhid,
+        ])->find();
+
+        if(!$user){
+            return json(new UserException(['msg'=> '没有找到【'.$yhid.'】用户' ]), 2000);
+        }
+        return self::comparePhoneNumber($wxPhoneNumber,$user->Remark1);
+    }
+    //保存微信绑定的手机号到用户表
+    public static function savePhoneNum(){
+        $params = input('post.');
+        $yhid = $params['yhid'];
+        $wxPhoneNumber = $params['wxPhoneNumber'];
+        $user = SyhqxModel::where([
+            'YHID' => $yhid,
+        ])->find();
+
+        if(!$user){
+            return json(new UserException(['msg'=> '没有找到【'.$yhid.'】用户' ]), 2000);
+        }
+
+        if($user->Remark1){
+            return self::comparePhoneNumber($wxPhoneNumber,$user->Remark1);
+        }
+        else
+        {
+            $user->save([
+                'TrigTag' => !$user['TrigTag'],
+                'Remark1' => $wxPhoneNumber
+            ]);
+            return json(new SuccessMessage(['msg'=>'保存成功！']), 201);
+
+        }
+    }
+
+    //对比电话号码
+    private static function  comparePhoneNumber($wxPhoneNumber,$userPhoneNumber)
+    {
+        if($wxPhoneNumber==$userPhoneNumber)
+        {
+            return json(new SuccessMessage(['msg'=>'匹配成功！']), 201);
+        }
+        else
+        {
+            return json(new UserException(['msg'=>'微信用户绑定的号码不匹配']), 2002);
+        }
+    }
+
     public static function edit(){
         $params = input('post.');
         $user = SyhqxModel::where([
@@ -39,23 +94,7 @@ class Syhqx
         return json(new SuccessMessage(), 201);
     }
 
-    //保存微信绑定的手机号到用户表
-    public static function savePhoneNum(){
-        $params = input('post.');
-        $user = SyhqxModel::where([
-            'YHID' => $params['yhid'],
-        ])->find();
 
-        if(!$user){
-            return json(new UserException(['msg'=> '没有找到【'.$params['yhid'].'】用户' ]), 404);
-        }
-
-        $user->save([
-            'TrigTag' => !$user['TrigTag'],
-            'Remark1' => $params['wxPhoneNumber']
-        ]);
-        return json(new SuccessMessage(), 201);
-    }
 
     public  static  function  getAll(){
         $users = SyhqxModel::all();
@@ -143,19 +182,5 @@ class Syhqx
        $salemans = SyhqxModel::Where('ZhiWei','=',$zhiwei)
            ->select();
        return $salemans;
-    }
-
-    /**
-     * 根据用户名查询用户信息
-     *
-     */
-    public static  function getUserByName($name='')
-    {
-        $user = SyhqxModel::getUserByName($name);
-        if (!$user) {
-            throw  new UserException();
-        }
-
-        return json($user);
     }
 }
