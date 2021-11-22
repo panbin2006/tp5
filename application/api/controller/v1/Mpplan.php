@@ -110,17 +110,18 @@ class Mpplan
     }
 
     /**
-     * 根据计划单号查询发货单列表
+     * 根据计划单号查询计划单
      * @param $id       计划单号
      * @return \think\response\Json
      * @throws MpplanException
      */
     public static function getOne($id)
     {
-        $mpplan = MpplanModel::getMpplanDetail($id);
+        $mpplan = MpplanModel::get(['PlanID'=>$id]);
         if (!$mpplan) {
             throw new MpplanException();
         }
+
         return json($mpplan);
     }
 
