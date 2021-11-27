@@ -47,7 +47,10 @@ class Mpplan
         $custid = $inputs['custid'];
         $buildid= $inputs['buildid'];
         $classname1 = $inputs['classname1'];
-
+        $shtag=$inputs['shtag'];
+        if($shtag<>2){///判断客户端上传审核状态是否存在， 2：全部。
+            $where['SHTag'] = $shtag;
+        }
         if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
             $whereBetween[0] = $pdateS;
             $whereBetween[1] = $pdateE;
@@ -61,7 +64,7 @@ class Mpplan
             $whereGroup['ProjectName|CustName|PlanID']= ['like','%'.$searchtxt.'%'];
         }
 
-        if($state<>9){ //判断客户端上传导入状态是否存在， 9：全部。
+        if($state<>9){ //判断客户端上传计划单状态是否存在， 9：全部。
             $where['ExecState'] = $state;
         }
 
@@ -126,13 +129,10 @@ class Mpplan
     }
 
 
-    public static function setSH($id, $flag){
+    public static function setSH($id, $flag,$userName){
 
-        $mpplan = \app\api\model\Mpplan::get('190501001');
-        $mpplan->DaysXY = '888';
-        $mpplan->Remark2= 'pan';
-        return $mpplan->save();
-
+        $result = MpplanModel::upSHTag($id,$flag,$userName);
+        return  $result;
     }
 
 }

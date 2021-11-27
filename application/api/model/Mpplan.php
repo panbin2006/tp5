@@ -84,12 +84,13 @@ class Mpplan extends Model
     }
 
 
-    public static function upSHTag($id,$flag){
-
-        $mplan = self::where('PlanID','=', '190501001')
-            ->fetchSql(true)
-            ->update(['Remark2'=> 'dykj']);
-        return $mplan;
-
+    public static function upSHTag($id,$flag,$userName){
+        $mpplan = self::where(['PlanID' => $id])->find();
+        $mpplan->TrigTag = '2';
+        $mpplan->SHMan = $userName;
+        $mpplan->SHTime = date('Y-m-d H:i:s');
+        $mpplan->SHTag = $flag;
+        $mpplan->save();
+        return $mpplan;
     }
 }
