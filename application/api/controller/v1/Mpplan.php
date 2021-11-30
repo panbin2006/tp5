@@ -47,9 +47,9 @@ class Mpplan
         $custid = $inputs['custid'];
         $buildid= $inputs['buildid'];
         $classname1 = $inputs['classname1'];
-        $shtag=$inputs['shtag'];
-        if($shtag<>2){///判断客户端上传审核状态是否存在， 2：全部。
-            $where['SHTag'] = $shtag;
+        $tag2=$inputs['tag2'];
+        if($tag2<>2){///判断客户端上传审核状态是否存在， 2：全部。
+            $where['Tag2'] = $tag2;
         }
         if($pdateS&&$pdateE){//判断客户端上传时间段参数是否存在
             $whereBetween[0] = $pdateS;
@@ -129,6 +129,7 @@ class Mpplan
     }
 
 
+    //财务审核/反审核
     public static function setSH($id, $flag,$userName){
 
         $result = MpplanModel::upSHTag($id,$flag,$userName);

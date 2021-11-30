@@ -65,6 +65,29 @@ class Mpplan extends Model
         $mpplans = self::whereBetween('Pdate',$whereBetween)
             ->where($where)
             ->order('PlanID asc')
+            ->field(["PlanID",
+                "CoID",
+                "Pline",
+                "PDate",
+                "ProjectID",
+                "ProjectName",
+                "CustID",
+                "CustName",
+                "Address",
+                "Grade",
+                "TSName",
+                "tld",
+                "Part",
+                "BTrans",
+                "QualityPlan",
+                "QualityGive",
+                "QualityWS",
+                "CarNum",
+                "SHTag",
+                "Tag2",
+                "ExecState",
+                "Remark1",
+                "Remark2",])
 //            ->fetchSql(true)
             ->paginate($size, false, ['page' => $page]);
         return $mpplans;
@@ -89,7 +112,7 @@ class Mpplan extends Model
         $mpplan->TrigTag = '2';
         $mpplan->SHMan = $userName;
         $mpplan->SHTime = date('Y-m-d H:i:s');
-        $mpplan->SHTag = $flag;
+        $mpplan->Tag2 = $flag;
         $mpplan->save();
         return $mpplan;
     }
