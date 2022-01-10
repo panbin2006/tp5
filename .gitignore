@@ -3,6 +3,7 @@ composer.lock
 *.log
 /thinkphp/*
 /application/database.php
+/application/config.php
 /application/extra/*
 /runtime/cache/*
 /runtime/log/*

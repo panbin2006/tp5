@@ -188,6 +188,34 @@ Route::post('api/:version/basedata/recent', 'api/:version.Basedata/getBasedata')
 //获取微信openId
 Route::post('api/:version/wx/openid', 'api/:version.Wx/getOpenId');
 
+// +----------------------------------------------------------------------
+// | gps接口
+// +----------------------------------------------------------------------
+
+//index页
+Route::get('gps/:version/index/index', 'gps/:version.Index/index');
+
+//车辆信息
+Route::get('gps/:version/uvehicle/recent', 'gps/:version.UVehicles/getRecent');
+
+
+//排队车辆
+Route::get('gps/:version/uvehicle/queue', 'gps/:version.UVehicles/getQueueVehicles');
+
+//回程车辆
+Route::get('gps/:version/uvehicle/return', 'gps/:version.UVehicles/getReturnVehicles');
+
+//任务单_分页查询
+Route::get('gps/:version/umissions/recent', 'gps/:version.Umissions/getRecent');
+
+//任务单_分页查询
+Route::get('gps/:version/umissions/runing', 'gps/:version.Umissions/getRuningMissions');
+
+//车辆里程记录分页查询
+Route::get('gps/:version/c_vehicle_gps/recent', 'gps/:version.CVehicleGps/getRecent');
+
+
+
 
 
 
