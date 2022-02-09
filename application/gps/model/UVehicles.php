@@ -10,6 +10,7 @@ namespace app\gps\model;
 
 
 use think\Db;
+use think\db\Query;
 use think\Model;
 use app\gps\model\UTasks;
 //车辆表
@@ -18,6 +19,29 @@ class UVehicles extends Model
 
     protected  $connection = 'db_gps';
     protected  $table='u_vehicles';
+
+    protected  $pk = 'car_code';
+
+    public   function  lastTask()
+    {
+        return self::hasMany('UTasks','vehicle_code','id');
+    }
+
+    public static function  getLastTasks()
+    {
+        $tasks = self::where('Work_Status','=','1')
+            ->field('id,car_code,Work_Status,isInFactoryFlag')
+            ->where('isInFactoryFlag','=','0')
+        ->with(['lastTask'=>function ($query){
+            $query->field('task_id,vehicle_code')
+                ->order('task_id','desc');
+//                ->limit(1);
+        }])
+//            ->fetchSql(true)
+            ->select();
+
+        return $tasks;
+    }
 
     public static  function  getMostRecent($size, $page)
     {

@@ -36,8 +36,25 @@ class Umissions
      * 获取正供计划单
      */
 
-    public  static  function  getRuningMissions()
+    public  static  function  getRunningMissions()
     {
+        //用Db查询
+       // $RunningMissions = UmissionsModel::getRunningMissions();
 
+        //用模型方法
+        $RunningMissions = UmissionsModel::getRunningMissionsByModel();
+        if($RunningMissions){
+            return $RunningMissions;
+        }
+    }
+
+    /*
+     * 查询单个计划单
+     */
+    public static  function getMission()
+    {
+//        return 'getMission';
+        $mission = UmissionsModel::getMission();
+        return $mission;
     }
 }

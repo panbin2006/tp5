@@ -15,6 +15,15 @@ use app\gps\model\UVehicles as UVehiclesModel;
 //车辆资料
 class UVehicles
 {
+    /**
+     *
+     * 获取车辆的最后一条发货单
+     */
+    public static  function getLastTasks()
+    {
+        $tasks = UVehiclesModel::getLastTasks();
+        return $tasks;
+    }
 
     public  static function index()
     {

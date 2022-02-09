@@ -205,11 +205,19 @@ Route::get('gps/:version/uvehicle/queue', 'gps/:version.UVehicles/getQueueVehicl
 //回程车辆
 Route::get('gps/:version/uvehicle/return', 'gps/:version.UVehicles/getReturnVehicles');
 
+//获取车辆的最后一条发货单
+Route::get('gps/:version/uvehicle/last_tasks', 'gps/:version.UVehicles/getLastTasks');
+
+
 //任务单_分页查询
 Route::get('gps/:version/umissions/recent', 'gps/:version.Umissions/getRecent');
 
-//任务单_分页查询
-Route::get('gps/:version/umissions/runing', 'gps/:version.Umissions/getRuningMissions');
+//任务单_正供
+Route::get('gps/:version/umissions/running', 'gps/:version.Umissions/getRunningMissions');
+
+//任务单—单个任务
+Route::get('gps/:version/umissions/single', 'gps/:version.Umissions/getMission');
+
 
 //车辆里程记录分页查询
 Route::get('gps/:version/c_vehicle_gps/recent', 'gps/:version.CVehicleGps/getRecent');
