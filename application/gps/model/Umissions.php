@@ -28,7 +28,7 @@ class Umissions extends Model
     public   function enginSite(){
 
         return self::belongsTo('UEngineSites','compact_code','compact_code')
-            ->field('compact_code,engine_name,engine_addr,service_unit,longitude,latitude,CustomerName,EngineAveDistance');
+            ->bind('engine_name,engine_addr,service_unit,longitude,latitude,CustomerName,EngineAveDistance');
     }
 
     public   function tasks(){
@@ -73,20 +73,8 @@ on t.vehicle_code = t2.vehicle_code and t.task_id = t2.MaxID
 where t.vehicle_code in (SELECT car_code FROM u_vehicles WHERE Work_Status=1 AND isInFactoryFlag=0 ))';
 
         //使用原生查询默认连接database.php中配置的默认数据库，需要手动连接数据库
-        $missions = Db::connect([
-            // 数据库类型
-            'type'            => 'sqlsrv',
-            // 服务器地址
-            'hostname'        => 'localhost',
-            // 数据库名
-            'database'        => 'NEWECOMSSS_hd',
-            // 用户名
-            'username'        => 'DYjbzsoft',
-            // 密码
-            'password'        => 'DY@jbzsoft&810506',
-            // 开启调试模式
-            'debug'    => true,
-        ])->query($sql);
+        $connStr = config('yitengConn');
+        $missions = Db::connect($connStr)->query($sql);
         return $missions;
     }
 
@@ -102,20 +90,8 @@ on t.vehicle_code = t2.vehicle_code and t.task_id = t2.MaxID
 where t.vehicle_code in (SELECT car_code FROM u_vehicles WHERE Work_Status=1 AND isInFactoryFlag=0 ))';
 
         //使用原生查询默认连接database.php中配置的默认数据库，需要手动连接数据库
-        $missions = Db::connect([
-            // 数据库类型
-            'type'            => 'sqlsrv',
-            // 服务器地址
-            'hostname'        => 'localhost',
-            // 数据库名
-            'database'        => 'NEWECOMSSS_hd',
-            // 用户名
-            'username'        => 'DYjbzsoft',
-            // 密码
-            'password'        => 'DY@jbzsoft&810506',
-            // 开启调试模式
-            'debug'    => true,
-        ])->query($sql);
+        $connStr = config('yitengConn');
+        $missions = Db::connect($connStr)->query($sql);
 
         $mis_codes = [];
         foreach ($missions as $key => $value){

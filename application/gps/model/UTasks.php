@@ -33,4 +33,10 @@ class  UTasks extends Model
         return $this->hasOne('UTasks', 'task_id','task_id')
             ->selfRelation();
     }
+
+    public   function mission(){
+
+        return self::belongsTo('Umissions','mis_code','mis_code')
+            ->bind('AveDistance');
+    }
 }

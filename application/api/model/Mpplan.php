@@ -87,7 +87,8 @@ class Mpplan extends Model
                 "Tag2",
                 "ExecState",
                 "Remark1",
-                "Remark2",])
+                "Remark2",
+                "ClassName1",])
 //            ->fetchSql(true)
             ->paginate($size, false, ['page' => $page]);
         return $mpplans;

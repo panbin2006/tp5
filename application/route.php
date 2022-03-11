@@ -125,6 +125,7 @@ Route::get('api/:version/carledviewzb/ledview', 'api/:version.Carledviewzb/ledvi
 
 //车辆排队--标准模式
 Route::get('api/:version/carpaiduim/ledview', 'api/:version.Carpaiduim/ledview');
+Route::get('api/:version/carpaiduim/update', 'api/:version.Carpaiduim/update');
 
 //车辆运输统计（按车辆）
 Route::post('api/:version/tmpcarstat/car', 'api/:version.Tmpcarstat/getRecentByCar');
