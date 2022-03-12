@@ -25,7 +25,7 @@ class Carpaiduim
     //手机端司机打卡进厂，更新排队信息
     public static function update(){
         try{
-           Db::execute("exec sp_InputCarPaiDui  ''");
+           Db::execute("exec sp_InputCarPaiDui");
         }catch (\Exception $e){
             return json(new SuccessMessage(['msg'=> 'error','errorCode'=>'1']), 202);
         }
