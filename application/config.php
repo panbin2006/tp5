@@ -247,7 +247,7 @@ return [
         // 服务器地址
         'hostname'        => 'localhost',
         // 数据库名
-        'database'        => 'NEWECOMSSS_hd',
+        'database'        => 'NEWECOMSSS',
         // 用户名
         'username'        => 'DYjbzsoft',
         // 密码

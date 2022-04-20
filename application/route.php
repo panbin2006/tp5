@@ -206,6 +206,8 @@ Route::get('gps/:version/uvehicle/queue', 'gps/:version.UVehicles/getQueueVehicl
 //回程车辆
 Route::get('gps/:version/uvehicle/return', 'gps/:version.UVehicles/getReturnVehicles');
 
+
+
 //获取车辆的最后一条发货单
 Route::get('gps/:version/uvehicle/last_tasks', 'gps/:version.UVehicles/getLastTasks');
 
@@ -222,6 +224,12 @@ Route::get('gps/:version/umissions/single', 'gps/:version.Umissions/getMission')
 
 //车辆里程记录分页查询
 Route::get('gps/:version/c_vehicle_gps/recent', 'gps/:version.CVehicleGps/getRecent');
+
+//查询搅拌站信息（包含电子围栏）
+Route::get('gps/:version/c_factory_site/list', 'gps/:version.CFactorySite/getList');
+
+//获取所有车辆的定位信息
+Route::get('gps/:version/vehicles/points', 'gps/:version.VehiclesGPS/getVehiclesGPS');
 
 
 
