@@ -111,6 +111,9 @@ class Msaleodd
 
         if($carid){ //判断是否上传车号
             $where['CarID'] = ['=',$carid];
+            date_default_timezone_set('Asia/Shanghai'); //设置时区
+            //司机延迟15分钟显示
+            $whereBetween[1] =  date('Y-m-d H:i:s', strtotime('-15 minute'));
         }
 
         if($classname1){ //判断是否上传业务员
