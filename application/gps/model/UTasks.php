@@ -16,13 +16,18 @@ class  UTasks extends Model
 
     protected  $connection = 'db_gps';
     protected  $table='u_tasks';
+    protected  $append=['AveDistance'];
 
+    public  function getAveDistanceAttr(){
+        return $this->mission->AveDistance;
+    }
 
     public static  function  getMostRecent($size, $page)
     {
         $u_tasks = self::paginate($size,false, ['page' => $page]);
         return $u_tasks;
     }
+
 
 
     /**

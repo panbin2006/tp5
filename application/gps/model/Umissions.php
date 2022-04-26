@@ -49,7 +49,22 @@ class Umissions extends Model
         return $mission;
     }
 
+    /*
+     * 查询正供计划方案一：计划状态
+     */
     public static  function getRunningMissionsByModel()
+    {
+        $mission = self::with('enginSite')
+            ->field('mis_code,compact_code,engine_component,require_amount,tt_aa,tt_bb,AveOutTime,AveWaitUnLoadTime,AveUnLoadTime,AveDistance')
+            ->where('state_id','=','1')
+            ->select();
+        return $mission;
+    }
+
+    /*
+     * 查询正供计划方案二：通过待命车辆反查正供计划
+     */
+    public static  function getRunningMissionsByModel2()
     {
         $misCodes = self::getRunningMissionCodes();
 
@@ -60,6 +75,9 @@ class Umissions extends Model
         return $mission;
     }
 
+    /*
+    * 查询正供计划方案三：通过sql原生查询
+    */
     public  static  function getRunningMissions()
     {
         $sql='select ' .' e.compact_code,e.engine_name,m.mis_code,m.engine_component,m.tt_aa,m.tt_bb,
@@ -78,6 +96,9 @@ where t.vehicle_code in (SELECT car_code FROM u_vehicles WHERE Work_Status=1 AND
         return $missions;
     }
 
+    /*
+    * 查询正供计划的单号
+    */
     public  static  function getRunningMissionCodes()
     {
         $sql='select ' .' mis_code from u_missions as m  

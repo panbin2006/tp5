@@ -22,26 +22,120 @@ class UVehicles extends Model
 
     protected  $pk = 'car_code';
 
-    public   function  lastTask()
+    protected $append = ['isreturn','percentage','aveDistance','toMileage','returnMileage','mileage',
+        'outFactorySiteMileage','inEngineSiteMileage'
+    ];
+
+    //去程公里数
+    public function getToMileageAttr()
     {
-        return self::hasMany('UTasks','vehicle_code','id');
+        $toMileage = 0;
+        if($this->outFactorySiteMileage>0){
+            $toMileage = bcsub($this->mileage , $this->outFactorySiteMileage,2);
+            //$toMileage = $this->mileage -  $this->outFactorySiteMileage;
+        }
+        return $toMileage;
     }
 
-    public static function  getLastTasks()
+    ////返程公里数
+    public function getReturnMileageAttr()
     {
-        $tasks = self::where('Work_Status','=','1')
-            ->field('id,car_code,Work_Status,isInFactoryFlag')
-            ->where('isInFactoryFlag','=','0')
-        ->with(['lastTask'=>function ($query){
-            $query->field('task_id,vehicle_code')
-                ->order('task_id','desc');
-//                ->limit(1);
+        $returnMileage = 0;
+        if( $this->inEngineSiteMileage>0){
+            $returnMileage = bcsub($this->mileage, $this->inEngineSiteMileage, 2);
+            //$returnMileage = $this->mileage - $this->inEngineSiteMileage;
+        }
+        return  $returnMileage;
+    }
+
+    //当前车辆去程或回程的运行进度
+    public function getPercentageAttr(){
+        //车辆运行状态： 0:装料未出场  1:去程   2:回程   3:排队车辆    4:到达工地
+        $percentage = 0;
+        $aveDistance = $this->aveDistance;                     //工地运距
+        $toMileage  = $this->toMileage;                      //去程公里数
+        $returnMileage = $this->returnMileage;              //返程公里数
+
+
+        if(($this->isreturn == 1) && $aveDistance<>0 ){//去程
+            $percentage = bcdiv($toMileage, $aveDistance,2);
+           // $percentage =  $toMileage/ $aveDistance;
+        }
+
+        if(($this->isreturn == 2) && $aveDistance<>0 ){//返程
+            $percentage = bcdiv( bcsub($aveDistance , $returnMileage,2) ,$aveDistance,2);
+            //$percentage = ($aveDistance - $returnMileage) / $aveDistance;
+        }
+
+        return   $percentage;
+    }
+
+    //进入工地时车辆里程
+    public function getInEngineSiteMileageAttr(){
+        $InEngineSiteMileage = $this->task->InEngineSiteMileage;
+        return is_null($InEngineSiteMileage) ? 0 : $InEngineSiteMileage;
+    }
+
+    //出厂时车辆里程
+    public function getOutFactorySiteMileageAttr(){
+        $outFactorySiteMileage = $this->task->OutFactorySiteMileage;
+        return is_null($outFactorySiteMileage) ? 0 : $outFactorySiteMileage;
+    }
+
+    //车辆运行状态： 0:装料未出场  1:去程   2:回程   3:排队车辆    4:到达工地
+    public function getIsReturnAttr(){
+        return $this->task->isreturn;
+    }
+
+    //运输距离
+    public function getAveDistanceAttr(){
+        $aveDistance = $this->task->AveDistance;
+        return is_null($aveDistance) ? 0 : $aveDistance;
+    }
+
+    //当前公里数
+    public function getMileageAttr()
+    {
+        $mileage = $this->xslc['Mileage'];
+        return is_null($mileage) ? 0 : $mileage;
+    }
+
+
+    //查询待命车辆
+    public static function  getWorkingVehicles(){
+
+        $Vehicles = self::with(['xslc'=>function($query){
+            $query->field(['ID','VehicleCode','Mileage','ModifyTime']);
+        },'task'=>function($query){
+            $query->field(['task_id', 'task_code', 'task_oldcode', 'mis_code', 'vehicle_code', 'cur_load', 'trans_index',
+            'acpt_counts', 'trans_dtime', 'driver_name', 'task_tag', 'isreturn', 'out_factory_dtime', 'in_factory_dtime', 
+                'site_in_dtime', 'unburden_dtime', 'unburden_end_dtime', 'site_out_dtime', 'lc', 'lc2', 'totalLc', 
+                'OutFactorySiteMileage', 'InEngineSiteMileage', 'AppendTime', 'ModifyTime', 'Inure', 'Effect', 'UnLoadCount',
+            'CompleteSupplyTime', 'IsGenTempSite', 'iBak', 'DataSyncTime']);
         }])
-//            ->fetchSql(true)
-            ->select();
+            ->field(['id', 'vehicle_id', 'car_code', 'task_carnum', 'license_number', 'CarNumberColor', 'CarNo', 'VehicleTypeID',
+        'VehicleTeamID', 'FactoryID', 'Work_Status', 'isInFactoryFlag', 'out_dtime', 'in_dtime', 'iTag', 'DeviceType', 'Note',
+        'AppendTime', 'ModifyTime', 'Inure', 'Effect', 'UpdateWorkStatusTime', 'ProtocolVersion'])
+        ->where('Work_Status','=','1')
+        ->select();
 
-        return $tasks;
+
+        return $Vehicles;
     }
+
+
+    //车辆当前运输任务
+    public   function  task()
+    {
+        return self::hasOne('UTasks','vehicle_code','car_code');
+    }
+
+
+    //车辆行驶里程
+   public  function  xslc(){
+        return self::hasOne('CVehicleGps','VehicleCode','car_code');
+   }
+
 
     public static  function  getMostRecent($size, $page)
     {

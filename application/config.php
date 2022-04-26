@@ -249,9 +249,9 @@ return [
         // 数据库名
         'database'        => 'NEWECOMSSS_hd',
         // 用户名
-        'username'        => 'DYjbzsoft',
+        'username'        => 'sa',
         // 密码
-        'password'        => 'DY@jbzsoft&810506',
+        'password'        => 'sa123',
         // 端口
         'hostport'        => '',
         // 连接dsn

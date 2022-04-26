@@ -17,6 +17,16 @@ class UVehicles
 {
     /**
      *
+     * 查询待命车辆
+     */
+    public  static function getWorkingVehicles(){
+        $vehicles = UVehiclesModel::getWorkingVehicles();
+        return $vehicles;
+    }
+
+
+    /**
+     *
      * 获取车辆的最后一条发货单
      */
     public static  function getLastTasks()
