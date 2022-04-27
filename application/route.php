@@ -198,6 +198,7 @@ Route::get('gps/:version/index/index', 'gps/:version.Index/index');
 
 //车辆信息
 Route::get('gps/:version/uvehicle/recent', 'gps/:version.UVehicles/getRecent');
+Route::get('gps/:version/uvehicle/work_status_group', 'gps/:version.UVehicles/workStatusGroup');
 
 //待命车辆
 Route::get('gps/:version/uvehicle/working', 'gps/:version.UVehicles/getWorkingVehicles');

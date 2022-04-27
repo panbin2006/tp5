@@ -10,11 +10,21 @@ namespace app\gps\controller\yiteng;
 
 use app\api\validate\Count;
 use app\api\validate\PageNumberMustBePositiveInt;
+use app\gps\model\CVehicleWorkStatus as CVehicleWorkStatusModel;
 use app\gps\model\UVehicles as UVehiclesModel;
 
 //车辆资料
 class UVehicles
 {
+    /**
+     * 按工作状态分组查询
+     */
+    public static function workStatusGroup(){
+        $VehiclesGroup = CVehicleWorkStatusModel::getVehiclesByWorkStatus();
+        return $VehiclesGroup;
+    }
+
+
     /**
      *
      * 查询待命车辆

@@ -26,6 +26,15 @@ class UVehicles extends Model
         'outFactorySiteMileage','inEngineSiteMileage'
     ];
 
+    /*
+     * 按工作状态分组查询
+     */
+    public static function getWorkStatusGroup(){
+        $VehiclesGroup = self::group('Work_Status')
+            ->select();
+        return $VehiclesGroup;
+    }
+
     //去程公里数
     public function getToMileageAttr()
     {
@@ -37,7 +46,9 @@ class UVehicles extends Model
         return $toMileage;
     }
 
-    ////返程公里数
+
+
+    //返程公里数
     public function getReturnMileageAttr()
     {
         $returnMileage = 0;
@@ -59,12 +70,10 @@ class UVehicles extends Model
 
         if(($this->isreturn == 1) && $aveDistance<>0 ){//去程
             $percentage = bcdiv($toMileage, $aveDistance,2);
-           // $percentage =  $toMileage/ $aveDistance;
         }
 
         if(($this->isreturn == 2) && $aveDistance<>0 ){//返程
             $percentage = bcdiv( bcsub($aveDistance , $returnMileage,2) ,$aveDistance,2);
-            //$percentage = ($aveDistance - $returnMileage) / $aveDistance;
         }
 
         return   $percentage;
@@ -72,24 +81,24 @@ class UVehicles extends Model
 
     //进入工地时车辆里程
     public function getInEngineSiteMileageAttr(){
-        $InEngineSiteMileage = $this->task->InEngineSiteMileage;
+        $InEngineSiteMileage = $this->task['InEngineSiteMileage'];
         return is_null($InEngineSiteMileage) ? 0 : $InEngineSiteMileage;
     }
 
     //出厂时车辆里程
     public function getOutFactorySiteMileageAttr(){
-        $outFactorySiteMileage = $this->task->OutFactorySiteMileage;
+        $outFactorySiteMileage = $this->task['OutFactorySiteMileage'];
         return is_null($outFactorySiteMileage) ? 0 : $outFactorySiteMileage;
     }
 
     //车辆运行状态： 0:装料未出场  1:去程   2:回程   3:排队车辆    4:到达工地
     public function getIsReturnAttr(){
-        return $this->task->isreturn;
+        return $this->task['isreturn'];
     }
 
     //运输距离
     public function getAveDistanceAttr(){
-        $aveDistance = $this->task->AveDistance;
+        $aveDistance = $this->task['AveDistance'];
         return is_null($aveDistance) ? 0 : $aveDistance;
     }
 
