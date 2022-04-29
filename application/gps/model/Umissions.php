@@ -18,6 +18,15 @@ class Umissions extends Model
     protected  $connection = 'db_gps';
     protected  $table='u_missions';
     protected  $pk = 'mis_code';
+    protected $append= ['transIndex','acptCounts'];
+
+    public function getTransIndexAttr(){
+        return $this->lastTask->trans_index;
+    }
+
+    public function getAcptCountsAttr(){
+        return $this->lastTask->acpt_counts;
+    }
 
     public static  function  getMostRecent($size, $page)
     {
@@ -31,16 +40,12 @@ class Umissions extends Model
             ->bind('engine_name,engine_addr,service_unit,longitude,latitude,CustomerName,EngineAveDistance');
     }
 
-    public   function tasks(){
-
-        return self::hasMany('UTasks','mis_code','mis_code')
-            ->field('mis_code,task_code,isreturn,vehicle_code,lc,lc2,totalLc')
-            ->where('isreturn','<>','3');
+    public function lastTask(){
+        return self::hasOne('UTasks','mis_code','mis_code')->order(' task_id desc');
     }
 
-    public function  vehicles()
-    {
-        return self::hasManyThrough('UVehicles','UTasks','mis_code','vehicle_code');
+    public function tasks(){
+        return self::hasMany('UTasks','mis_code','mis_code');
     }
 
     public static  function getMission()
@@ -54,7 +59,7 @@ class Umissions extends Model
      */
     public static  function getRunningMissionsByModel()
     {
-        $mission = self::with('enginSite')
+        $mission = self::with(['enginSite','tasks'])
             ->field('mis_code,compact_code,engine_component,require_amount,tt_aa,tt_bb,AveOutTime,AveWaitUnLoadTime,AveUnLoadTime,AveDistance')
             ->where('state_id','=','1')
             ->select();
