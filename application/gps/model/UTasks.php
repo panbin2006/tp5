@@ -22,6 +22,8 @@ class  UTasks extends Model
         return $this->mission->AveDistance;
     }
 
+
+
     public static  function  getMostRecent($size, $page)
     {
         $u_tasks = self::paginate($size,false, ['page' => $page]);
@@ -39,9 +41,17 @@ class  UTasks extends Model
             ->selfRelation();
     }
 
+
+    public function vehicle(){
+        return $this->belongsTo('UVehicles','vehicle_code','car_code')
+            ->field(['car_code']);
+    }
+
     public   function mission(){
 
         return self::belongsTo('Umissions','mis_code','mis_code')
             ->bind('AveDistance');
     }
+
+
 }

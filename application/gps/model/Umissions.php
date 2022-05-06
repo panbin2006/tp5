@@ -20,34 +20,53 @@ class Umissions extends Model
     protected  $pk = 'mis_code';
     protected $append= ['transIndex','acptCounts'];
 
+    public function getAve_out_timeAttr(){
+        return  $this->Ave_out_time='null' ? 0 : $this->Ave_out_time;
+    }
+
+    //增加“累计车次”属性
     public function getTransIndexAttr(){
         return $this->lastTask->trans_index;
     }
 
+    //增加“累计方量”属性
     public function getAcptCountsAttr(){
         return $this->lastTask->acpt_counts;
     }
 
-    public static  function  getMostRecent($size, $page)
-    {
-        $umissions = self::paginate($size,false, ['page' => $page]);
-        return $umissions;
+    //远程关联查询车辆信息
+    public function vehicle(){
+        return self::hasManyThrough('UVehicles','UTasks','mis_code','vehicle_code','car_code');
     }
 
+    //关联查询工程信息
     public   function enginSite(){
 
         return self::belongsTo('UEngineSites','compact_code','compact_code')
             ->bind('engine_name,engine_addr,service_unit,longitude,latitude,CustomerName,EngineAveDistance');
     }
 
+    //查询当前计划最后一张送货单
     public function lastTask(){
         return self::hasOne('UTasks','mis_code','mis_code')->order(' task_id desc');
     }
 
+    //关联查询正在运输的发货
     public function tasks(){
-        return self::hasMany('UTasks','mis_code','mis_code');
+        return self::hasMany('UTasks','mis_code','mis_code')
+            ->with(['vehicle'])
+            ->field(['isreturn','mis_code','vehicle_code','OutFactorySiteMileage','InEngineSiteMileage'])
+            ->where('isreturn','<>','3');
     }
 
+    //分页查询
+    public static  function  getMostRecent($size, $page)
+    {
+        $umissions = self::paginate($size,false, ['page' => $page]);
+        return $umissions;
+    }
+
+    //查询单个计划
     public static  function getMission()
     {
         $mission = self::with('enginSite')->where('mis_code','=','A220111047')->select();
@@ -59,11 +78,17 @@ class Umissions extends Model
      */
     public static  function getRunningMissionsByModel()
     {
-        $mission = self::with(['enginSite','tasks'])
-            ->field('mis_code,compact_code,engine_component,require_amount,tt_aa,tt_bb,AveOutTime,AveWaitUnLoadTime,AveUnLoadTime,AveDistance')
+        $missions = self::with(['enginSite'])
+                 ->field('mis_code,compact_code,engine_component,require_amount,tt_aa,tt_bb,AveOutTime,AveWaitUnLoadTime,AveUnLoadTime,AveDistance')
             ->where('state_id','=','1')
             ->select();
-        return $mission;
+        foreach ($missions as $mission){
+            $tasks = $mission->tasks;
+            foreach ($tasks as $task){
+                $task->vehicle;
+            }
+        }
+        return $missions;
     }
 
     /*

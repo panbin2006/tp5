@@ -203,6 +203,7 @@ Route::get('gps/:version/uvehicle/work_status_group', 'gps/:version.UVehicles/wo
 //待命车辆
 Route::get('gps/:version/uvehicle/working', 'gps/:version.UVehicles/getWorkingVehicles');
 
+
 //排队车辆
 Route::get('gps/:version/uvehicle/queue', 'gps/:version.UVehicles/getQueueVehicles');
 
