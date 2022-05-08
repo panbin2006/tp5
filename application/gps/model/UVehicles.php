@@ -23,8 +23,14 @@ class UVehicles extends Model
     protected  $pk = 'car_code';
 
     protected $append = ['isreturn','percentage','aveDistance','toMileage','returnMileage','mileage',
-        'outFactorySiteMileage','inEngineSiteMileage'
+        'outFactorySiteMileage','inEngineSiteMileage','mis_code'
     ];
+
+    //去程公里数
+    public function getMisCodeAttr()
+    {
+       return $this->task->mis_code;
+    }
 
     /*
      * 按工作状态分组查询
@@ -131,6 +137,7 @@ class UVehicles extends Model
 
         return $Vehicles;
     }
+
 
 
     //车辆当前运输任务

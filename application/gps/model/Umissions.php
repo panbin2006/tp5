@@ -82,12 +82,7 @@ class Umissions extends Model
                  ->field('mis_code,compact_code,engine_component,require_amount,tt_aa,tt_bb,AveOutTime,AveWaitUnLoadTime,AveUnLoadTime,AveDistance')
             ->where('state_id','=','1')
             ->select();
-        foreach ($missions as $mission){
-            $tasks = $mission->tasks;
-            foreach ($tasks as $task){
-                $task->vehicle;
-            }
-        }
+
         return $missions;
     }
 
