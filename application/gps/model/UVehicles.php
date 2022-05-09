@@ -17,14 +17,61 @@ use app\gps\model\UTasks;
 class UVehicles extends Model
 {
 
+
     protected  $connection = 'db_gps';
     protected  $table='u_vehicles';
 
     protected  $pk = 'car_code';
 
     protected $append = ['isreturn','percentage','aveDistance','toMileage','returnMileage','mileage',
-        'outFactorySiteMileage','inEngineSiteMileage','mis_code'
+        'outFactorySiteMileage','inEngineSiteMileage','mis_code','printMin' ,'outFactoryMin','unBurdenMin','unBurdenWaitMin'
     ];
+
+
+    //出单时间
+    public function getPrintMinAttr(){
+        date_default_timezone_set('Asia/Shanghai'); //设置时区
+        $now = date("Y-m-d h:i:s"); //当前时间
+        $AppendTime = $this->task->AppendTime;
+        $minute=floor((strtotime($now)-strtotime($AppendTime))/60);
+        return $minute;
+    }
+
+    //出厂时间
+    public function getOutFactoryMinAttr(){
+        $outFactoryTime= $this->task->out_factory_dtime;
+        $minute=0;
+        if($outFactoryTime!=='1900-01-01 00:00:00.000'){
+            date_default_timezone_set('Asia/Shanghai'); //设置时区
+            $now = date("Y-m-d h:i:s"); //当前时间
+            $minute=floor((strtotime($now)-strtotime($outFactoryTime))/60);
+        }
+        return $minute;
+    }
+
+
+    //卸料时间
+    public function getUnBurdenMinAttr(){
+        $unburden_dtime= $this->task->unburden_dtime;
+        $minute=0;
+        if($unburden_dtime!=='1900-01-01 00:00:00.000'){
+            date_default_timezone_set('Asia/Shanghai'); //设置时区
+            $now = date("Y-m-d h:i:s"); //当前时间
+            $minute=floor((strtotime($now)-strtotime($unburden_dtime))/60);
+        }
+        return $minute;
+    }
+    //待卸时间
+
+    public function getUnBurdenWaitMinAttr(){
+        $site_in_dtime = $this->task->site_in_dtime; //到工地时间
+        $unburden_dtime = $this->task->unburden_dtime; //卸料时间
+        $minute=0;
+        if($site_in_dtime!=='1900-01-01 00:00:00.000'&& $unburden_dtime!=='1900-01-01 00:00:00.000'){
+            $minute=floor((strtotime($unburden_dtime)-strtotime($site_in_dtime))/60);
+        }
+        return $minute;
+    }
 
     //去程公里数
     public function getMisCodeAttr()
@@ -123,8 +170,8 @@ class UVehicles extends Model
             $query->field(['ID','VehicleCode','Mileage','ModifyTime']);
         },'task'=>function($query){
             $query->field(['task_id', 'task_code', 'task_oldcode', 'mis_code', 'vehicle_code', 'cur_load', 'trans_index',
-            'acpt_counts', 'trans_dtime', 'driver_name', 'task_tag', 'isreturn', 'out_factory_dtime', 'in_factory_dtime', 
-                'site_in_dtime', 'unburden_dtime', 'unburden_end_dtime', 'site_out_dtime', 'lc', 'lc2', 'totalLc', 
+            'acpt_counts', 'trans_dtime', 'driver_name', 'task_tag', 'isreturn', 'out_factory_dtime', 'in_factory_dtime',
+                'site_in_dtime', 'unburden_dtime', 'unburden_end_dtime', 'site_out_dtime', 'lc', 'lc2', 'totalLc',
                 'OutFactorySiteMileage', 'InEngineSiteMileage', 'AppendTime', 'ModifyTime', 'Inure', 'Effect', 'UnLoadCount',
             'CompleteSupplyTime', 'IsGenTempSite', 'iBak', 'DataSyncTime']);
         }])

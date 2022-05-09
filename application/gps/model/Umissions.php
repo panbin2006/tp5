@@ -20,8 +20,24 @@ class Umissions extends Model
     protected  $pk = 'mis_code';
     protected $append= ['transIndex','acptCounts'];
 
-    public function getAve_out_timeAttr(){
-        return  $this->Ave_out_time='null' ? 0 : $this->Ave_out_time;
+    public function getAveOutTimeAttr($AveOutTime){
+        $AveOutTime = is_null($AveOutTime) ? 0 : $AveOutTime;
+        return (int)$AveOutTime;
+    }
+
+    public function getAveWaitUnLoadTimeAttr($AveWaitUnLoadTime){  //AveWaitUnLoadTime,AveUnLoadTime,
+        $AveWaitUnLoadTime = is_null($AveWaitUnLoadTime) ? 0 : $AveWaitUnLoadTime;
+        return (int)$AveWaitUnLoadTime;
+    }
+
+    public function getAveUnLoadTimeAttr($AveUnLoadTime){
+        $AveUnLoadTime = is_null($AveUnLoadTime) ? 0 : $AveUnLoadTime;
+        return (int)$AveUnLoadTime;
+    }
+
+    public function getAveDistanceAttr($AveDistance){
+        $AveDistance = is_null($AveDistance) ? 0 : $AveDistance;
+        return (int)$AveDistance;
     }
 
     //增加“累计车次”属性
