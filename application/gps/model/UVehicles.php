@@ -24,9 +24,38 @@ class UVehicles extends Model
     protected  $pk = 'car_code';
 
     protected $append = ['isreturn','percentage','aveDistance','toMileage','returnMileage','mileage',
-        'outFactorySiteMileage','inEngineSiteMileage','mis_code','printMin' ,'outFactoryMin','unBurdenMin','unBurdenWaitMin'
+        'outFactorySiteMileage','inEngineSiteMileage','mis_code','printMin' ,'outFactoryMin','unBurdenMin',
+        'unBurdenWaitMin','inFactoryMin','percentageBackCarList'
     ];
 
+
+    //车辆在回场辆列表中离公司的距离百分比
+    public function getPercentageBackCarListAttr(){
+        //车辆运行状态： 0:装料未出场  1:去程   2:回程   3:排队车辆    4:到达工地
+        $percentage = 0;
+        $listDistance = 20; //车辆列表中显示的距离20km
+        $returnMileage = $this->returnMileage;              //返程公里数
+
+        if(($this->isreturn == 2) && $returnMileage<20 ){//返程
+            $percentage = bcdiv(bcsub($listDistance,$returnMileage),$listDistance,2);
+        }
+
+        return   $percentage;
+    }
+
+    //排队车辆回厂时间
+    public function getInFactoryMinAttr(){
+        $isreturn = $this->task->isreturn;
+        $minute = 0;
+        if($isreturn==='3'){
+            date_default_timezone_set('Asia/Shanghai'); //设置时区
+            $now = date("Y-m-d h:i:s"); //当前时间
+            $in_factory_dtime= $this->task->in_factory_dtime;
+            $minute=floor((strtotime($now)-strtotime($in_factory_dtime))/60);
+        }
+
+        return $minute;
+    }
 
     //出单时间
     public function getPrintMinAttr(){
