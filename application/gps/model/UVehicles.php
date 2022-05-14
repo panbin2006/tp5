@@ -31,6 +31,9 @@ class UVehicles extends Model
 
     //车辆在回场辆列表中离公司的距离百分比
     public function getPercentageBackCarListAttr(){
+        if($this->task){
+            return 0;
+        }
         //车辆运行状态： 0:装料未出场  1:去程   2:回程   3:排队车辆    4:到达工地
         $percentage = 0;
         $listDistance = 20; //车辆列表中显示的距离20km
@@ -45,35 +48,41 @@ class UVehicles extends Model
 
     //排队车辆回厂时间
     public function getInFactoryMinAttr(){
-        $isreturn = $this->task->isreturn;
         $minute = 0;
-        if($isreturn==='3'){
-            date_default_timezone_set('Asia/Shanghai'); //设置时区
-            $now = date("Y-m-d h:i:s"); //当前时间
-            $in_factory_dtime= $this->task->in_factory_dtime;
-            $minute=floor((strtotime($now)-strtotime($in_factory_dtime))/60);
+        if($this->task){
+            $isreturn = $this->task->isreturn;
+            if($isreturn==='3'){
+                date_default_timezone_set('Asia/Shanghai'); //设置时区
+                $now = date("Y-m-d h:i:s"); //当前时间
+                $in_factory_dtime= $this->task->in_factory_dtime;
+                $minute=floor((strtotime($now)-strtotime($in_factory_dtime))/60);
+            }
         }
-
         return $minute;
     }
 
     //出单时间
     public function getPrintMinAttr(){
-        date_default_timezone_set('Asia/Shanghai'); //设置时区
-        $now = date("Y-m-d h:i:s"); //当前时间
-        $AppendTime = $this->task->AppendTime;
-        $minute=floor((strtotime($now)-strtotime($AppendTime))/60);
+        $minute = 0;
+        if($this->task){
+            date_default_timezone_set('Asia/Shanghai'); //设置时区
+            $now = date("Y-m-d h:i:s"); //当前时间
+            $AppendTime = $this->task->AppendTime;
+            $minute=floor((strtotime($now)-strtotime($AppendTime))/60);
+        }
         return $minute;
     }
 
     //出厂时间
     public function getOutFactoryMinAttr(){
-        $outFactoryTime= $this->task->out_factory_dtime;
         $minute=0;
-        if($outFactoryTime!=='1900-01-01 00:00:00.000'){
-            date_default_timezone_set('Asia/Shanghai'); //设置时区
-            $now = date("Y-m-d h:i:s"); //当前时间
-            $minute=floor((strtotime($now)-strtotime($outFactoryTime))/60);
+        if($this->task){
+            $outFactoryTime= $this->task->out_factory_dtime;
+            if($outFactoryTime!=='1900-01-01 00:00:00.000'){
+                date_default_timezone_set('Asia/Shanghai'); //设置时区
+                $now = date("Y-m-d h:i:s"); //当前时间
+                $minute=floor((strtotime($now)-strtotime($outFactoryTime))/60);
+            }
         }
         return $minute;
     }
@@ -81,31 +90,40 @@ class UVehicles extends Model
 
     //卸料时间
     public function getUnBurdenMinAttr(){
-        $unburden_dtime= $this->task->unburden_dtime;
         $minute=0;
-        if($unburden_dtime!=='1900-01-01 00:00:00.000'){
-            date_default_timezone_set('Asia/Shanghai'); //设置时区
-            $now = date("Y-m-d h:i:s"); //当前时间
-            $minute=floor((strtotime($now)-strtotime($unburden_dtime))/60);
+        if($this->task){
+            $unburden_dtime= $this->task->unburden_dtime;
+            if($unburden_dtime!=='1900-01-01 00:00:00.000'){
+                date_default_timezone_set('Asia/Shanghai'); //设置时区
+                $now = date("Y-m-d h:i:s"); //当前时间
+                $minute=floor((strtotime($now)-strtotime($unburden_dtime))/60);
+            }
         }
         return $minute;
     }
     //待卸时间
 
     public function getUnBurdenWaitMinAttr(){
-        $site_in_dtime = $this->task->site_in_dtime; //到工地时间
-        $unburden_dtime = $this->task->unburden_dtime; //卸料时间
         $minute=0;
-        if($site_in_dtime!=='1900-01-01 00:00:00.000'&& $unburden_dtime!=='1900-01-01 00:00:00.000'){
-            $minute=floor((strtotime($unburden_dtime)-strtotime($site_in_dtime))/60);
+        if($this->task){
+            $site_in_dtime = $this->task->site_in_dtime; //到工地时间
+            $unburden_dtime = $this->task->unburden_dtime; //卸料时间
+            if($site_in_dtime!=='1900-01-01 00:00:00.000'&& $unburden_dtime!=='1900-01-01 00:00:00.000'){
+                $minute=floor((strtotime($unburden_dtime)-strtotime($site_in_dtime))/60);
+            }
         }
         return $minute;
     }
 
-    //去程公里数
+    //计划单号
     public function getMisCodeAttr()
     {
-       return $this->task->mis_code;
+        $mis_code = null;
+
+        if($this->task){
+            $mis_code =  $this->task->mis_code;
+        }
+       return $mis_code;
     }
 
     /*
@@ -219,7 +237,7 @@ class UVehicles extends Model
     //车辆当前运输任务
     public   function  task()
     {
-        return self::hasOne('UTasks','vehicle_code','car_code');
+        return self::hasOne('UTasks','vehicle_code','task_carnum');
     }
 
 

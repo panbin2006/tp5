@@ -245,13 +245,15 @@ return [
         // 数据库类型
         'type'            => 'sqlsrv',
         // 服务器地址
-        'hostname'        => 'localhost',
+//        'hostname'        => 'localhost',
+        'hostname'        => 'jz02.in.8866.org,34956',
         // 数据库名
-        'database'        => 'NEWECOMSSS_hd',
+//        'database'        => 'NEWECOMSSS_hd',
+        'database'        => 'NEWECOMSSS',
         // 用户名
-        'username'        => 'sa',
+        'username'        => 'DYjbzsoft',
         // 密码
-        'password'        => 'sa123',
+        'password'        => 'DY@jbzsoft&810506',
         // 端口
         'hostport'        => '',
         // 连接dsn
