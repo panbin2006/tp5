@@ -215,6 +215,9 @@ Route::get('gps/:version/uvehicle/return', 'gps/:version.UVehicles/getReturnVehi
 //获取车辆的最后一条发货单
 Route::get('gps/:version/uvehicle/last_tasks', 'gps/:version.UVehicles/getLastTasks');
 
+//查询正在运输中的送货单
+Route::get('gps/:version/utasks/transing','gps/:version.UTasks/getTransTasks');
+
 
 //任务单_分页查询
 Route::get('gps/:version/umissions/recent', 'gps/:version.Umissions/getRecent');

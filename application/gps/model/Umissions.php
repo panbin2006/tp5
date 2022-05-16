@@ -97,7 +97,7 @@ class Umissions extends Model
         $missions = self::with(['enginSite'])
                  ->field('mis_code,compact_code,engine_component,require_amount,tt_aa,tt_bb,AveOutTime,AveWaitUnLoadTime,AveUnLoadTime,AveDistance')
             ->where('state_id','=','1')
-            ->where('ModifyStatusTime','>','2022-05-14')
+            ->where('ModifyStatusTime','>','2022-05-16')
             ->select();
 
         return $missions;

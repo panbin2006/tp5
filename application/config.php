@@ -246,7 +246,8 @@ return [
         'type'            => 'sqlsrv',
         // 服务器地址
 //        'hostname'        => 'localhost',
-        'hostname'        => 'jz02.in.8866.org,34956',
+//        'hostname'        => 'jz02.in.8866.org,34956',
+        'hostname'        => 'ngrok.szdytec.com,8899',
         // 数据库名
 //        'database'        => 'NEWECOMSSS_hd',
         'database'        => 'NEWECOMSSS',

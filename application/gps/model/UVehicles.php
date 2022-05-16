@@ -53,7 +53,7 @@ class UVehicles extends Model
             $isreturn = $this->task->isreturn;
             if($isreturn==='3'){
                 date_default_timezone_set('Asia/Shanghai'); //设置时区
-                $now = date("Y-m-d h:i:s"); //当前时间
+                $now = date("Y-m-d H:i:s"); //当前时间
                 $in_factory_dtime= $this->task->in_factory_dtime;
                 $minute=floor((strtotime($now)-strtotime($in_factory_dtime))/60);
             }
@@ -66,7 +66,7 @@ class UVehicles extends Model
         $minute = 0;
         if($this->task){
             date_default_timezone_set('Asia/Shanghai'); //设置时区
-            $now = date("Y-m-d h:i:s"); //当前时间
+            $now = date("Y-m-d H:i:s"); //当前时间
             $AppendTime = $this->task->AppendTime;
             $minute=floor((strtotime($now)-strtotime($AppendTime))/60);
         }
@@ -80,10 +80,12 @@ class UVehicles extends Model
             $outFactoryTime= $this->task->out_factory_dtime;
             if($outFactoryTime!=='1900-01-01 00:00:00.000'){
                 date_default_timezone_set('Asia/Shanghai'); //设置时区
-                $now = date("Y-m-d h:i:s"); //当前时间
+                $now = date("Y-m-d H:i:s"); //当前时间
                 $minute=floor((strtotime($now)-strtotime($outFactoryTime))/60);
+//                return  "now:<>" . strtotime($now)  ."outTime:" . strtotime($outFactoryTime);
             }
         }
+
         return $minute;
     }
 
@@ -95,7 +97,7 @@ class UVehicles extends Model
             $unburden_dtime= $this->task->unburden_dtime;
             if($unburden_dtime!=='1900-01-01 00:00:00.000'){
                 date_default_timezone_set('Asia/Shanghai'); //设置时区
-                $now = date("Y-m-d h:i:s"); //当前时间
+                $now = date("Y-m-d H:i:s"); //当前时间
                 $minute=floor((strtotime($now)-strtotime($unburden_dtime))/60);
             }
         }
@@ -213,19 +215,21 @@ class UVehicles extends Model
     //查询待命车辆
     public static function  getWorkingVehicles(){
 
+        // 'Inure', 'Effect', 'UnLoadCount',, 'IsGenTempSite', 'iBak', 'DataSyncTime','ModifyTime',
         $Vehicles = self::with(['xslc'=>function($query){
             $query->field(['ID','VehicleCode','Mileage','ModifyTime']);
         },'task'=>function($query){
             $query->field(['task_id', 'task_code', 'task_oldcode', 'mis_code', 'vehicle_code', 'cur_load', 'trans_index',
             'acpt_counts', 'trans_dtime', 'driver_name', 'task_tag', 'isreturn', 'out_factory_dtime', 'in_factory_dtime',
                 'site_in_dtime', 'unburden_dtime', 'unburden_end_dtime', 'site_out_dtime', 'lc', 'lc2', 'totalLc',
-                'OutFactorySiteMileage', 'InEngineSiteMileage', 'AppendTime', 'ModifyTime', 'Inure', 'Effect', 'UnLoadCount',
-            'CompleteSupplyTime', 'IsGenTempSite', 'iBak', 'DataSyncTime']);
+                'OutFactorySiteMileage', 'InEngineSiteMileage', 'AppendTime', 'CompleteSupplyTime']);
         }])
             ->field(['id', 'vehicle_id', 'car_code', 'task_carnum', 'license_number', 'CarNumberColor', 'CarNo', 'VehicleTypeID',
         'VehicleTeamID', 'FactoryID', 'Work_Status', 'isInFactoryFlag', 'out_dtime', 'in_dtime', 'iTag', 'DeviceType', 'Note',
         'AppendTime', 'ModifyTime', 'Inure', 'Effect', 'UpdateWorkStatusTime', 'ProtocolVersion'])
         ->where('Work_Status','=','1')
+            ->where('out_dtime','>','2022-05-16')
+            ->order('in_dtime')
         ->select();
 
 
@@ -237,7 +241,10 @@ class UVehicles extends Model
     //车辆当前运输任务
     public   function  task()
     {
-        return self::hasOne('UTasks','vehicle_code','task_carnum');
+        return self::hasOne('UTasks','vehicle_code','task_carnum')
+            ->order('task_id')
+            ->where('trans_dtime','>','2022-05-16');
+
     }
 
 
