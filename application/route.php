@@ -237,6 +237,7 @@ Route::get('gps/:version/c_factory_site/list', 'gps/:version.CFactorySite/getLis
 
 //获取所有车辆的定位信息
 Route::get('gps/:version/vehicles/points', 'gps/:version.VehiclesGPS/getVehiclesGPS');
+Route::get('gps/:version/vehicles/point/:id', 'gps/:version.VehiclesGPS/getVehiclePoint');
 
 
 

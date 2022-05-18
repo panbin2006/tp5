@@ -28,7 +28,6 @@ class UVehicles extends Model
         'unBurdenWaitMin','inFactoryMin','percentageBackCarList'
     ];
 
-
     //车辆在回场辆列表中离公司的距离百分比
     public function getPercentageBackCarListAttr(){
         if($this->task){
@@ -82,7 +81,6 @@ class UVehicles extends Model
                 date_default_timezone_set('Asia/Shanghai'); //设置时区
                 $now = date("Y-m-d H:i:s"); //当前时间
                 $minute=floor((strtotime($now)-strtotime($outFactoryTime))/60);
-//                return  "now:<>" . strtotime($now)  ."outTime:" . strtotime($outFactoryTime);
             }
         }
 
@@ -211,7 +209,6 @@ class UVehicles extends Model
         return is_null($mileage) ? 0 : $mileage;
     }
 
-
     //查询待命车辆
     public static function  getWorkingVehicles(){
 
@@ -228,7 +225,7 @@ class UVehicles extends Model
         'VehicleTeamID', 'FactoryID', 'Work_Status', 'isInFactoryFlag', 'out_dtime', 'in_dtime', 'iTag', 'DeviceType', 'Note',
         'AppendTime', 'ModifyTime', 'Inure', 'Effect', 'UpdateWorkStatusTime', 'ProtocolVersion'])
         ->where('Work_Status','=','1')
-            ->where('out_dtime','>','2022-05-16')
+            ->where('out_dtime','>','2022-05-17 07:00:00')
             ->order('in_dtime')
         ->select();
 
@@ -243,7 +240,7 @@ class UVehicles extends Model
     {
         return self::hasOne('UTasks','vehicle_code','task_carnum')
             ->order('task_id')
-            ->where('trans_dtime','>','2022-05-16');
+            ->where('trans_dtime','>','2022-05-17 07:00:00');
 
     }
 
@@ -254,10 +251,12 @@ class UVehicles extends Model
    }
 
 
-    public static  function  getMostRecent($size, $page)
+    public static  function  getMostRecent()
     {
-        $u_vehicles = self::paginate($size,false, ['page' => $page]);
-        return $u_vehicles;
+
+        $u_vehicles = self::field(  'car_code' )
+        ->select();
+        return $u_vehicles ->append(null,true);  //去掉追加的属性
     }
 
     /**

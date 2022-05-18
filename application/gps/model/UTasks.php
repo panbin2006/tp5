@@ -19,7 +19,7 @@ class  UTasks extends Model
     protected  $append=['AveDistance'];
 
     public static  function getTransTasks(){
-        $tasks = self::where('trans_dtime','>','2022-05-16')
+        $tasks = self::where('trans_dtime','>','2022-05-17')
             ->field(['task_id', 'task_code', 'task_oldcode', 'mis_code', 'vehicle_code', 'cur_load', 'trans_index',
                 'acpt_counts', 'trans_dtime', 'driver_name', 'task_tag', 'isreturn', 'out_factory_dtime', 'in_factory_dtime',
                 'site_in_dtime', 'unburden_dtime', 'unburden_end_dtime', 'site_out_dtime', 'lc', 'lc2', 'totalLc',

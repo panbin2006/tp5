@@ -53,12 +53,9 @@ class UVehicles
         return 'index';
     }
     //车辆分页查询
-    public static function  getRecent($size,$page)
+    public static function  getRecent()
     {
-        (new Count())->goCheck($size);
-        (new PageNumberMustBePositiveInt())->goCheck($page);
-
-        $vehicles = UVehiclesModel::getMostRecent($size, $page);
+        $vehicles = UVehiclesModel::getMostRecent();
         if (!$vehicles->isEmpty()) {
             return $vehicles;
         }
