@@ -204,33 +204,14 @@ Route::get('gps/:version/uvehicle/work_status_group', 'gps/:version.UVehicles/wo
 Route::get('gps/:version/uvehicle/working', 'gps/:version.UVehicles/getWorkingVehicles');
 
 
-//排队车辆
-Route::get('gps/:version/uvehicle/queue', 'gps/:version.UVehicles/getQueueVehicles');
-
-//回程车辆
-Route::get('gps/:version/uvehicle/return', 'gps/:version.UVehicles/getReturnVehicles');
-
-
-
-//获取车辆的最后一条发货单
-Route::get('gps/:version/uvehicle/last_tasks', 'gps/:version.UVehicles/getLastTasks');
-
 //查询正在运输中的送货单
 Route::get('gps/:version/utasks/transing','gps/:version.UTasks/getTransTasks');
 
 
-//任务单_分页查询
-Route::get('gps/:version/umissions/recent', 'gps/:version.Umissions/getRecent');
 
 //任务单_正供
 Route::get('gps/:version/umissions/running', 'gps/:version.Umissions/getRunningMissions');
 
-//任务单—单个任务
-Route::get('gps/:version/umissions/single', 'gps/:version.Umissions/getMission');
-
-
-//车辆里程记录分页查询
-Route::get('gps/:version/c_vehicle_gps/recent', 'gps/:version.CVehicleGps/getRecent');
 
 //查询搅拌站信息（包含电子围栏）
 Route::get('gps/:version/c_factory_site/list', 'gps/:version.CFactorySite/getList');

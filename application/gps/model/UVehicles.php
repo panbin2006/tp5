@@ -10,9 +10,7 @@ namespace app\gps\model;
 
 
 use think\Db;
-use think\db\Query;
 use think\Model;
-use app\gps\model\UTasks;
 //车辆表
 class UVehicles extends Model
 {
@@ -212,6 +210,9 @@ class UVehicles extends Model
     //查询待命车辆
     public static function  getWorkingVehicles(){
 
+        date_default_timezone_set('Asia/Shanghai'); //设置时区
+        $queryTime = date("Y-m-d H:i:s",time()-14400); //往前4个小时时间作为查询时间
+
         // 'Inure', 'Effect', 'UnLoadCount',, 'IsGenTempSite', 'iBak', 'DataSyncTime','ModifyTime',
         $Vehicles = self::with(['xslc'=>function($query){
             $query->field(['ID','VehicleCode','Mileage','ModifyTime']);
@@ -225,7 +226,7 @@ class UVehicles extends Model
         'VehicleTeamID', 'FactoryID', 'Work_Status', 'isInFactoryFlag', 'out_dtime', 'in_dtime', 'iTag', 'DeviceType', 'Note',
         'AppendTime', 'ModifyTime', 'Inure', 'Effect', 'UpdateWorkStatusTime', 'ProtocolVersion'])
         ->where('Work_Status','=','1')
-            ->where('out_dtime','>','2022-05-17 07:00:00')
+            ->where('out_dtime','>',$queryTime)
             ->order('in_dtime')
         ->select();
 
@@ -238,9 +239,12 @@ class UVehicles extends Model
     //车辆当前运输任务
     public   function  task()
     {
+        date_default_timezone_set('Asia/Shanghai'); //设置时区
+        $queryTime = date("Y-m-d H:i:s",time()-14400); //往前4个小时时间作为查询时间
+
         return self::hasOne('UTasks','vehicle_code','task_carnum')
             ->order('task_id')
-            ->where('trans_dtime','>','2022-05-17 07:00:00');
+            ->where('trans_dtime','>',$queryTime);
 
     }
 

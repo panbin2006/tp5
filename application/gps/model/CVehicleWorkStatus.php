@@ -18,14 +18,13 @@ class CVehicleWorkStatus extends Model
     protected  $table='c_VehicleWorkStatus';
 
     public function vehicles(){
-        return self::hasMany('UVehicles','Work_Status','Value')
+        $vehicles =  self::hasMany('UVehicles','Work_Status','Value')
             ->field(['id','car_code','Work_Status']);
+        return $vehicles->append([],true);
     }
 
     public  static  function getVehiclesByWorkStatus(){
-        $vehicles = self::with(['vehicles'=>function($query){
-           // $query->field(['id','car_code','Work_Status']);
-        }])->select();
+        $vehicles = self::with(['vehicles'])->select();
         return $vehicles;
     }
 }
