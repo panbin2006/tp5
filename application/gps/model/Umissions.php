@@ -55,7 +55,7 @@ class Umissions extends Model
     public   function enginSite(){
 
         return self::belongsTo('UEngineSites','compact_code','compact_code')
-            ->bind('engine_name,engine_addr,service_unit,longitude,latitude,CustomerName,EngineAveDistance');
+            ->bind('engine_name,engine_addr,service_unit,longitude,latitude,CustomerName,EngineAveDistance,GEngineSitePoints');
     }
 
     //查询当前计划最后一张送货单
