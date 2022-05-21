@@ -28,18 +28,15 @@ class UVehicles extends Model
 
     //车辆在回场辆列表中离公司的距离百分比
     public function getPercentageBackCarListAttr(){
-        if($this->task){
-            return 0;
-        }
-        //车辆运行状态： 0:装料未出场  1:去程   2:回程   3:排队车辆    4:到达工地
         $percentage = 0;
-        $listDistance = 20; //车辆列表中显示的距离20km
-        $returnMileage = $this->returnMileage;              //返程公里数
+        if($this->task){
+            $listDistance = 20; //车辆列表中显示的距离20km
+            $returnMileage = $this->returnMileage;              //返程公里数
 
-        if(($this->isreturn == 2) && $returnMileage<20 ){//返程
-            $percentage = bcdiv(bcsub($listDistance,$returnMileage),$listDistance,2);
+            if(($this->isreturn == 2) && $returnMileage<20 ){//返程
+                $percentage = bcdiv(bcsub($listDistance,$returnMileage,2),$listDistance,2);
+            }
         }
-
         return   $percentage;
     }
 
