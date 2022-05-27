@@ -18,7 +18,8 @@
     "require": {
         "php": ">=5.4.0",
         "topthink/framework": "5.0.7",
-        "endroid/qrcode": "^2.5"
+        "endroid/qrcode": "^2.5",
+        "aliyuncs/oss-sdk-php": "^2.5"
     },
     "autoload": {
         "psr-4": {
@@ -29,6 +30,17 @@
         "think-path": "thinkphp"
     },
     "config": {
-        "preferred-install": "dist"
+        "preferred-install": "dist",
+        "disable-tls": false,
+        "secure-http": false,
+        "allow-plugins": {
+            "topthink/think-installer": false
+        }
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://mirrors.aliyun.com/composer/"
+        }
     }
 }

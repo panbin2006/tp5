@@ -189,6 +189,11 @@ Route::post('api/:version/basedata/recent', 'api/:version.Basedata/getBasedata')
 //获取微信openId
 Route::post('api/:version/wx/openid', 'api/:version.Wx/getOpenId');
 
+//aliyunoss接口测试
+Route::get('api/:version/aliyunoss/upload', 'api/:version.Aliyunoss/uploadFile');
+
+
+
 // +----------------------------------------------------------------------
 // | gps接口
 // +----------------------------------------------------------------------
