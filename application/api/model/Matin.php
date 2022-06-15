@@ -51,7 +51,7 @@ class Matin extends Model
 //    ];
 
     public static function getSummarySupplierMat($where,$whereBetween){
-        $summaryGroup = self::whereBetween('Pdate',$whereBetween)
+        $summaryGroup = self::whereBetween('DateOut',$whereBetween)
             ->where($where)
             ->group('SupplierName,MatName')
             ->order('SupplierName,MatName')
@@ -65,7 +65,7 @@ class Matin extends Model
     }
 
     public static function getSummaryMatname($where,$whereBetween){
-        $summaryGroup = self::whereBetween('Pdate',$whereBetween)
+        $summaryGroup = self::whereBetween('DateOut',$whereBetween)
             ->where($where)
             ->group('MatName')
             ->order('MatName')
