@@ -33,19 +33,24 @@ class Matstorestatall
      */
     public function getMatstoreiostat( )
     {
-        //拼接sql语句
-        $this->getParamsStr();
 
+
+        // 拼接sql语句
+        $this->getParamsStr();
         Db::startTrans();
 
         try {
 
             //这里特别注意，执行存储过程有返回值的用Db::query,没有返回值的用Db::execute,
             //不然会报错：SQLSTATE[IMSSP]: The active result for the query contains no fields.
-            Db::execute($this->sql);
+            $instance = Db::connect();
+            // $instance->getPdo()->exec("execute sp_MatStoreNowAll   '2022-07-07 17:24:24','01','DateOut','0','PDate','',''");
+            $instance->getPdo()->exec($this->sql);
             $tmpStoreStatNow = TmpMatStoreNowModel::getMatStoreiostatRecent();
            //  提交事务
             Db::commit();
+
+
             return $tmpStoreStatNow;
 
         } catch (\Exception $e) {
@@ -81,7 +86,7 @@ class Matstorestatall
             $this->params = array_merge($Edate, $this->params);
         }
 
-        $produce = "exec sp_MatStoreNowAll   '";
+        $produce = "execute sp_MatStoreNowAll   '";
         $paramsStr = implode("','", $this->params) . "'";
         $this->sql = $produce . $paramsStr;
 
