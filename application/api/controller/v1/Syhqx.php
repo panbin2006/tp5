@@ -62,6 +62,8 @@ class Syhqx
         }
     }
 
+
+
     //对比电话号码
     private static function  comparePhoneNumber($wxPhoneNumber,$userPhoneNumber)
     {
@@ -74,6 +76,8 @@ class Syhqx
             return json(new UserException(['msg'=>'微信用户绑定的号码不匹配']), 2002);
         }
     }
+
+
 
     public static function edit(){
         $params = input('post.');
