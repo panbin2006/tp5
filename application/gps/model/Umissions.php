@@ -9,6 +9,7 @@
 namespace app\gps\model;
 
 
+use think\Db;
 use think\Model;
 //任务单
 class Umissions extends Model
@@ -49,13 +50,12 @@ class Umissions extends Model
         return $this->lastTask->acpt_counts;
     }
 
-
-
     //关联查询工程信息
     public   function enginSite(){
 
         return self::belongsTo('UEngineSites','compact_code','compact_code')
-            ->bind('engine_name,engine_addr,service_unit,longitude,latitude,CustomerName,EngineAveDistance,GEngineSitePoints');
+            ->bind('engine_name,engine_addr,service_unit,longitude,latitude,CustomerName,EngineAveDistance,GEngineSitePoints,Salesman');
+
     }
 
     //查询当前计划最后一张送货单
@@ -71,8 +71,6 @@ class Umissions extends Model
             ->where('isreturn','<>','3');
     }
 
-
-
     /*
      * 查询正供计划方案一：计划状态
      */
@@ -85,7 +83,8 @@ class Umissions extends Model
             ->where('state_id','=','1')
             ->where('ModifyStatusTime','>',$queryTime)
             ->select();
-
         return $missions;
     }
+
+
 }
