@@ -103,6 +103,10 @@ Route::post('api/:version/mpplan/state', 'api/:version.Mpplan/setState');
 Route::post('api/:version/mphbprod/recent', 'api/:version.Mphbprod/getRecent');
 Route::post('api/:version/mphbprod/single', 'api/:version.Mphbprod/getOne');
 
+//生产配方2(主从模式)
+Route::post('api/:version/mphbprodm/recent', 'api/:version.Mphbprodm/getRecent');
+Route::post('api/:version/mphbprodm/single', 'api/:version.Mphbprodm/getOne');
+
 //标准配方
 Route::post('api/:version/mphbm/recent', 'api/:version.Mphbm/getRecent');
 Route::get('api/:version/mphbm/:id', 'api/:version.Mphbm/getOne');
