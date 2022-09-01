@@ -21,7 +21,7 @@ class Mphbm extends Model
     public static  function  getMostRecent($size, $page, $where){
         $mphbms =  self::where($where)
             ->field(['PhbID','Grade','CoID','tld','BTrans','Weight','NoteMan','CreateTime','EditMan','EditTime','EditTag',
-                    'SNStyle','WJJStyle','JBSJ','PDate','SJB','PhbType','BZRZ','PhbGroup'])
+                'SNStyle','WJJStyle','JBSJ','PDate','SJB','PhbType','BZRZ'])
             ->order('Grade asc')
             ->paginate($size, false, ['page' => $page]);
         return $mphbms;
