@@ -234,8 +234,11 @@ Route::get('gps/:version/vehicles/points', 'gps/:version.VehiclesGPS/getVehicles
 Route::get('gps/:version/vehicles/point/:id', 'gps/:version.VehiclesGPS/getVehiclePoint');
 
 
+// +----------------------------------------------------------------------
+// | git webhook： git push 后，自动更新本地服务器代码
+// +----------------------------------------------------------------------
 
-
-
+// git pull 更新本地代码
+Route::post('api/:version/webhook', 'api/:version.Webhook/pull');
 
 
