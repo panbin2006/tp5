@@ -34,7 +34,9 @@ class Webhook extends Controller
         $date = $inputs['head_commit']['timestamp'];
         //判断master分支上是否有提交
         if ($ref=='refs/heads/master') {
-            $cmd = 'cd  '.$path.'  && git pull gitee master 2>&1';
+            // $cmd = 'cd  '.$path.'  && git pull gitee master 2>&1';
+            // $cmd = 'd: && cd /code/PHP/zscd01/ && git pull github master 2>&1';
+            $cmd = 'd: && cd /phpstudy_pro/WWW/dyapi/ && git pull github master 2>&1';
             exec($cmd,$arr,$result);
             echo '<pre>';
             // var_dump($arr);
