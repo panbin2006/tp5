@@ -36,7 +36,7 @@ class Webhook extends Controller
         if ($ref=='refs/heads/master') {
             // $cmd = 'cd  '.$path.'  && git pull gitee master 2>&1';
             // $cmd = 'd: && cd /code/PHP/zscd01/ && git pull github master 2>&1';
-            $cmd = 'd: && cd /phpstudy_pro/WWW/dyapi/ && git pull github master 2>&1';
+            $cmd = 'd: && cd /phpstudy_pro/WWW/dyapi/ && git pull gitee master 2>&1';
             exec($cmd,$arr,$result);
             echo '<pre>';
             // var_dump($arr);
