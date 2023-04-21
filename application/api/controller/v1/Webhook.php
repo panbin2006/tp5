@@ -37,8 +37,9 @@ class Webhook extends Controller
             $cmd = 'cd  '.$path.'  && git pull gitee master 2>&1';
             exec($cmd,$arr,$result);
             echo '<pre>';
-            var_dump($arr);
-            var_dump($result);
+            // var_dump($arr);
+            // var_dump($result);
+            Log::write($result);
             Log::write($user.'于'.$date.'向仓库'.$repository.'提交了代码');
         }
         echo 'done';
